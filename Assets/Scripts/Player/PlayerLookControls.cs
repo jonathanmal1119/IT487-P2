@@ -33,7 +33,7 @@ public class PlayerLookControls : MonoBehaviour
         Cursor.visible = true;
     }
 
-    //please dont ask me what happened here
+    //Just a small glimpse into my sick, twisted world
     private void Update()
     {
         rotChange = lookAction.ReadValue<Vector2>();
@@ -49,8 +49,8 @@ public class PlayerLookControls : MonoBehaviour
         verticalPivot.localEulerAngles = new Vector3(Vrot, verticalPivot.localEulerAngles.y, verticalPivot.localEulerAngles.z);
         */
 
-        Hrot += horizontalLookSpeed * rotChange.x * Time.deltaTime;
-        Vrot -= verticalLookSpeed * rotChange.y * Time.deltaTime;
+        Hrot += horizontalLookSpeed * rotChange.x;
+        Vrot -= verticalLookSpeed * rotChange.y;
 
         Vrot = Mathf.Clamp(Vrot, verticalLookClamp.x, verticalLookClamp.y);
 
