@@ -75,7 +75,7 @@ public class PlayerWalkControls : MonoBehaviour
 
             if (jumpAction.triggered)
             {
-                Debug.Log("Player jumped");
+                //Debug.Log("Player jumped");
                 moveVector.y = jumpVelocity;
             }
         }
