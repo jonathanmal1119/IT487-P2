@@ -167,7 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   playerLook: {fileID: 551630824124643667}
   controller: {fileID: 446692790135485877}
-  walkSpeed: 6
+  walkSpeed: 5.5
   jumpVelocity: 7
   moveVector: {x: 0, y: 0, z: 0}
   groundCheckPosition: {fileID: 2156190804019284605}
@@ -176,7 +176,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   gravity: 15
-  groundHoldVelocity: 0
+  groundHoldVelocity: 5
 --- !u!114 &551630824124643667
 MonoBehaviour:
   m_ObjectHideFlags: 0
