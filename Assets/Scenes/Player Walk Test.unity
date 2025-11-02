@@ -2397,7 +2397,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 999
+  m_Text: 
 --- !u!222 &1316464243
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3850,9 +3850,17 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3282894780114167723, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3282894780114167723, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
       propertyPath: ammoCounter
       value: 
       objectReference: {fileID: 1316464242}
+    - target: {fileID: 6586855431055879443, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7109229398297639457, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
