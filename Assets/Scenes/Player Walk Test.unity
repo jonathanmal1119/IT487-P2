@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5632958
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1319,6 +1319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c191b1a86014a794baea01de01e1309e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  EnemyText: {fileID: 884013066}
 --- !u!1 &615182088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1786,7 +1787,7 @@ GameObject:
   - component: {fileID: 884013067}
   - component: {fileID: 884013066}
   m_Layer: 5
-  m_Name: Win Condition
+  m_Name: Enemy Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1844,9 +1845,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Enemies: 10
-
-'
+  m_Text: 'Enemies: 0'
 --- !u!222 &884013067
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4795,6 +4794,14 @@ PrefabInstance:
       propertyPath: ammoCounter
       value: 
       objectReference: {fileID: 1316464242}
+    - target: {fileID: 5450882390592699504, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
+      propertyPath: HealthUI
+      value: 
+      objectReference: {fileID: 1406070954}
+    - target: {fileID: 5450882390592699504, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
+      propertyPath: RestartScreen
+      value: 
+      objectReference: {fileID: 5632957}
     - target: {fileID: 6586855431055879443, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
       propertyPath: m_IsActive
       value: 1
