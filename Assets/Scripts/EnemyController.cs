@@ -60,7 +60,21 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet")
         {
-            TakeDamage(10);
+            //tries to find the bullet's PlayerBullet script, which contains information on how much damage it deals
+            PlayerBullet bulletInfo = collision.gameObject.GetComponent<PlayerBullet>();
+
+            //If this scipt found the bullet's script, it can deal the proper amount of damage. Otherwise it will just deal 10.
+            if(bulletInfo != null)
+            {
+                TakeDamage(bulletInfo.damage);
+            }
+            else
+            {
+                TakeDamage(10);
+            }
+
+            //The bullet has served its purpose. May it share its glory in Valhalla.
+            Destroy(collision.gameObject);
         }
     }
 }

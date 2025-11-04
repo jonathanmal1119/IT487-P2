@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 5300344487954762626}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -271,3 +271,4 @@ MonoBehaviour:
   health: 100
   movementSpeed: 5
   detectionRange: 10
+  attackRange: 0
