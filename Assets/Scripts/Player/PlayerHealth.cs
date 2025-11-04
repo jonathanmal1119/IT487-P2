@@ -40,9 +40,7 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("Player Died");
-        Time.timeScale = 0f;
         GetComponent<PlayerLookControls>().enabled = false;
         RestartScreen.SetActive(true);
-
     }
 }

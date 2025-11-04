@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -7,11 +8,14 @@ public class EnemyController : MonoBehaviour
     public int health = 1000;
     public int movementSpeed = 5;
     public int detectionRange;
-    public int attackRange;
+    public int attackRange = 3;
+    public int attackAmt = 10;
+    public float attackTime = 1.5f;
 
     GameObject Player;
 
     bool playerDetected = false;
+    bool attacking = false;
 
     Rigidbody rb;
     void Start()
@@ -40,11 +44,25 @@ public class EnemyController : MonoBehaviour
             transform.LookAt(Player.transform.position);
         }
 
-        if (Vector3.Distance(rb.position, Player.transform.position) <= attackRange)
+        if (Vector3.Distance(rb.position, Player.transform.position) <= attackRange && !attacking)
         {
-            // TODO: Make the Player Take Damage.
+            StartCoroutine(DamageCoroutine());
         }
     }
+
+    IEnumerator DamageCoroutine()
+    {
+        attacking = true;
+
+        while (Vector3.Distance(rb.position, Player.transform.position) <= attackRange)
+        {
+            Player.GetComponent<PlayerHealth>().TakeDamage(attackAmt);
+            yield return new WaitForSeconds(attackTime);
+        }
+
+        attacking = false;
+    }
+
 
     public void TakeDamage(int Amt)
     {
