@@ -1,0 +1,3 @@
+Our gold spike was making the switch between fighting and driving work smoothly.
+We needed to prove the player could finish a battle, get in the car, and drive to the next area without breaking the game.
+We now have the system working — you can defeat enemies, hop in the vehicle, and drive around the test level.

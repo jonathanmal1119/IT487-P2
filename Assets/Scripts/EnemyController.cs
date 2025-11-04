@@ -94,5 +94,10 @@ public class EnemyController : MonoBehaviour
             //The bullet has served its purpose. May it share its glory in Valhalla.
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.tag == "Vehicle")
+        {
+            TakeDamage(100);
+        }
     }
 }

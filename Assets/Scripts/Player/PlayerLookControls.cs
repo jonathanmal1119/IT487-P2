@@ -7,6 +7,7 @@ public class PlayerLookControls : MonoBehaviour
     public Transform verticalPivot;
 
     InputAction lookAction;
+    InputAction interactAction;
 
     public float horizontalLookSpeed = 1f;
     public float verticalLookSpeed = 1f;
@@ -16,19 +17,26 @@ public class PlayerLookControls : MonoBehaviour
 
     public Vector2 verticalLookClamp;
 
+    public Camera playerCam;
+    public LayerMask interactLayer;
+
     private void Awake()
     {
         lookAction = InputSystem.actions.FindAction("Player/Look");
+        interactAction = InputSystem.actions.FindAction("Player/Interact");
     }
 
     private void OnEnable()
     {
         lookAction.Enable();
+        interactAction.Enable();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
     private void OnDisable()
     {
+        lookAction.Disable();
+        interactAction.Disable();
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -56,6 +64,30 @@ public class PlayerLookControls : MonoBehaviour
 
         horizontalOrientation.eulerAngles = new Vector3(0.0f, Hrot, 0.0f);
         verticalPivot.localEulerAngles = new Vector3(Vrot, 0.0f, 0.0f);
-        
+
+        if (interactAction.WasPressedThisFrame())
+        {
+            Interact();
+        }
+    }
+
+    void Interact()
+    {
+        Ray ray = new Ray(transform.position, playerCam.transform.forward);
+
+        Debug.DrawRay(ray.origin, ray.direction * 4f, Color.green, 1f);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 4f, interactLayer))
+        {
+            if (hit.collider.gameObject.tag == "Vehicle")
+            {
+                hit.collider.gameObject.GetComponentInParent<VehicleController>().enabled = true;
+                this.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            Debug.Log("Nothing hit.");
+        }
     }
 }
