@@ -1,8 +1,17 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public Text EnemyText;
+
+    void Start()
+    {
+        EnemyText.text = "Enemies: " + GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
+    }
+
 
     public void RestartGame()
     {
