@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     public int health = 1000;
     public int movementSpeed = 5;
     public int detectionRange;
+    public int attackRange;
 
     GameObject Player;
 
@@ -37,6 +38,29 @@ public class EnemyController : MonoBehaviour
             rb.MovePosition(newPosition);
 
             transform.LookAt(Player.transform.position);
+        }
+
+        if (Vector3.Distance(rb.position, Player.transform.position) <= attackRange)
+        {
+            // TODO: Make the Player Take Damage.
+        }
+    }
+
+    public void TakeDamage(int Amt)
+    {
+        if (health - Amt <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+
+        health -= Amt;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Bullet")
+        {
+            TakeDamage(10);
         }
     }
 }
