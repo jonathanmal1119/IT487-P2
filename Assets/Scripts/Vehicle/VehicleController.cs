@@ -53,6 +53,7 @@ public class VehicleController : MonoBehaviour
 
             frontLeftWheelCollider.brakeTorque = frontRightWheelCollider.brakeTorque = 10000f;
             rearLeftWheelCollider.brakeTorque = rearRightWheelCollider.brakeTorque = 10000f;
+
             return;
         }
 
@@ -60,7 +61,7 @@ public class VehicleController : MonoBehaviour
             input = move.action.ReadValue<Vector2>();
 
         // Drive
-        rearLeftWheelCollider.motorTorque = rearRightWheelCollider.motorTorque = input.y * carPower;
+        rearLeftWheelCollider.motorTorque = rearRightWheelCollider.motorTorque = frontRightWheelCollider.motorTorque = frontLeftWheelCollider.motorTorque = input.y * carPower;
 
         if (handbrake && handbrake.action.IsPressed())
         {
