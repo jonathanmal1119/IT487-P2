@@ -146,4 +146,3 @@ MonoBehaviour:
   splineContainer: {fileID: 1596181042891678017}
   roadWidth: 5.51
   segments: 100
-  metersPerTile: 1
