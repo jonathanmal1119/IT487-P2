@@ -73,7 +73,7 @@ public class EnemyController : MonoBehaviour
 
         health -= Amt;
     }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Bullet")
@@ -82,7 +82,7 @@ public class EnemyController : MonoBehaviour
             PlayerBullet bulletInfo = collision.gameObject.GetComponent<PlayerBullet>();
 
             //If this scipt found the bullet's script, it can deal the proper amount of damage. Otherwise it will just deal 10.
-            if(bulletInfo != null)
+            if(bulletInfo != null && bulletInfo.waitingToDestroy == false)
             {
                 TakeDamage(bulletInfo.damage);
             }
@@ -91,11 +91,44 @@ public class EnemyController : MonoBehaviour
                 TakeDamage(10);
             }
 
-            //The bullet has served its purpose. May it share its glory in Valhalla.
-            Destroy(collision.gameObject);
+            if(bulletInfo != null && bulletInfo.destroyOnHit)
+            {
+                Destroy(collision.gameObject);
+                bulletInfo.waitingToDestroy = true;
+            }
         }
 
         if (collision.gameObject.tag == "Vehicle")
+        {
+            TakeDamage(100);
+        }
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Bullet")
+        {
+            //tries to find the bullet's PlayerBullet script, which contains information on how much damage it deals
+            PlayerBullet bulletInfo = other.gameObject.GetComponent<PlayerBullet>();
+
+            //If this scipt found the bullet's script, it can deal the proper amount of damage. Otherwise it will just deal 10.
+            if (bulletInfo != null && bulletInfo.waitingToDestroy == false)
+            {
+                TakeDamage(bulletInfo.damage);
+            }
+            else
+            {
+                TakeDamage(10);
+            }
+
+            if (bulletInfo != null && bulletInfo.destroyOnHit)
+            {
+                Destroy(other.gameObject);
+                bulletInfo.waitingToDestroy = true;
+            }
+        }
+
+        if (other.gameObject.tag == "Vehicle")
         {
             TakeDamage(100);
         }
