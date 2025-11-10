@@ -21,7 +21,7 @@ public class VehicleController : MonoBehaviour
 
     [Header("Car Stats")]
     [SerializeField]
-    int fuelLevel = 100;
+    float fuelLevel = 100;
     int maxFuelLevel = 100;
 
     [SerializeField]
@@ -29,6 +29,9 @@ public class VehicleController : MonoBehaviour
 
     [SerializeField]
     int enginePerformance = 100;
+
+    [SerializeField]
+    float fuelConsumptionRate = 1f;
 
     [Header("Car Parts")]
     public WheelCollider frontLeftWheelCollider;
@@ -88,7 +91,7 @@ public class VehicleController : MonoBehaviour
             return;
         }
 
-        if (move && fuelLevel > 0)
+        if (move)
             input = move.action.ReadValue<Vector2>();
 
         // Drive
@@ -108,9 +111,12 @@ public class VehicleController : MonoBehaviour
         // Steer
         frontLeftWheelCollider.steerAngle = frontRightWheelCollider.steerAngle = maxSteeringAngle * input.x;
 
-		// Fuel consumption increases with speed (simple linear model)
-		fuelLevel = Mathf.Max(0, fuelLevel - Mathf.RoundToInt(rb.linearVelocity.magnitude * 2 * Time.deltaTime));
-        fuelLevelText.text = "Fuel: " + fuelLevel.ToString();
+        if (rb.linearVelocity.magnitude > 0.2f)
+        {
+            fuelLevel -= Time.deltaTime * fuelConsumptionRate;
+            fuelLevelText.text = "Fuel: " + fuelLevel.ToString("0");
+        }
+        
     }
 
     void FixedUpdate()
@@ -137,11 +143,24 @@ public class VehicleController : MonoBehaviour
     {
         fuelLevel += amount;
         fuelLevel = Mathf.Clamp(fuelLevel, 0, maxFuelLevel);
+        fuelLevelText.text = "Fuel: " + fuelLevel.ToString();
     }
 
     public bool CanRefuel()
     {
         return fuelLevel < maxFuelLevel;
+    }
+
+    public bool CanRepair()
+    {
+        return engineHealth < 100;
+    }
+
+    public void Repair(int amount)
+    {
+        engineHealth += amount;
+        engineHealth = Mathf.Clamp(engineHealth, 0, 100);
+        carHP.text = "Car: " + engineHealth.ToString();
     }
 
     public void TakeDamage(int damage)

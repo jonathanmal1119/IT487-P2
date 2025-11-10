@@ -11,14 +11,9 @@ public class RoadSplineGenerator : MonoBehaviour
     public SplineContainer splineContainer;
     [Range(0.5f, 50f)] public float roadWidth = 2f;
     [Range(4, 500)] public int segments = 100;
-	[Min(0.01f)] public float metersPerTile = 1f;
 
-	// Returns true if all components are finite numbers
-	private static bool IsFinite(Vector3 v)
-	{
-		return !(float.IsNaN(v.x) || float.IsNaN(v.y) || float.IsNaN(v.z) ||
-			float.IsInfinity(v.x) || float.IsInfinity(v.y) || float.IsInfinity(v.z));
-	}
+	// Single generated mesh instance to avoid leaking Mesh objects
+	private Mesh generatedMesh;
 
     void OnEnable()
     {
@@ -30,11 +25,33 @@ public class RoadSplineGenerator : MonoBehaviour
         GenerateRoad();
     }
 
-	void Update()
+	void OnDisable()
 	{
-		if (!Application.isPlaying)
+		// In play mode, Destroy; in editor, DestroyImmediate to prevent leaks
+		if (generatedMesh != null)
 		{
-			GenerateRoad();
+#if UNITY_EDITOR
+			if (!Application.isPlaying) DestroyImmediate(generatedMesh);
+			else Destroy(generatedMesh);
+#else
+			Destroy(generatedMesh);
+#endif
+			generatedMesh = null;
+		}
+	}
+	
+	void OnDestroy()
+	{
+		// Extra safety: clean up if object is removed
+		if (generatedMesh != null)
+		{
+#if UNITY_EDITOR
+			if (!Application.isPlaying) DestroyImmediate(generatedMesh);
+			else Destroy(generatedMesh);
+#else
+			Destroy(generatedMesh);
+#endif
+			generatedMesh = null;
 		}
 	}
 
@@ -44,65 +61,43 @@ public class RoadSplineGenerator : MonoBehaviour
         if (splineContainer == null) return;
 		if (segments < 2) segments = 2;
 
-		// Early validation: if spline evaluates to invalid values, skip to avoid invalid meshes
-		Vector3 p0 = splineContainer.EvaluatePosition(0f);
-		Vector3 p1 = splineContainer.EvaluatePosition(1f);
-		Vector3 tMid = splineContainer.EvaluateTangent(0.5f);
-		if (!IsFinite(p0) || !IsFinite(p1) || !IsFinite(tMid))
+		// Create or reuse the generated mesh to prevent leaks
+		if (generatedMesh == null)
 		{
-			return;
+			generatedMesh = new Mesh();
+			generatedMesh.name = "RoadSplineMesh";
+			generatedMesh.MarkDynamic();
+		}
+		else
+		{
+			generatedMesh.Clear();
 		}
 
-        Mesh mesh = new Mesh();
-		mesh.name = "RoadSplineMesh";
         Vector3[] vertices = new Vector3[segments * 2];
         Vector2[] uvs = new Vector2[segments * 2];
         int[] triangles = new int[(segments - 1) * 6];
-
-		float vCoord = 0f;
-		Vector3 prevPos = Vector3.zero;
-		bool hasPrev = false;
-		bool invalid = false;
 
         for (int i = 0; i < segments; i++)
         {
             float t = i / (float)(segments - 1);
 
-			// Evaluate along the spline (positions and tangents are in world space for SplineContainer)
 			Vector3 pos = splineContainer.EvaluatePosition(t);
 			Vector3 tangent = splineContainer.EvaluateTangent(t);
-			if (!IsFinite(pos) || !IsFinite(tangent))
-			{
-				invalid = true;
-				break;
-			}
             tangent = tangent.normalized;
 
-			// Choose an up-axis that avoids degeneracy when tangent is near world up
-			Vector3 upAxis = Mathf.Abs(Vector3.Dot(tangent, Vector3.up)) > 0.99f ? Vector3.right : Vector3.up;
-            Vector3 right = Vector3.Cross(upAxis, tangent);
-			if (right.sqrMagnitude < 1e-8f)
-			{
-				right = Vector3.right; // final fallback
-			}
+			// Simple frame: cross with world up; basic fallback if degenerate
+			Vector3 right = Vector3.Cross(Vector3.up, tangent);
+			if (right.sqrMagnitude < 1e-8f) right = Vector3.right;
 			right = right.normalized;
 
-			if (hasPrev)
-			{
-				float meters = Vector3.Distance(prevPos, pos);
-				vCoord += meters / Mathf.Max(0.01f, metersPerTile);
-			}
-			prevPos = pos;
-			hasPrev = true;
-
-			// Convert to this MeshFilter's local space so the mesh sits correctly under this object
 			Vector3 leftWorld = pos - right * (roadWidth * 0.5f);
 			Vector3 rightWorld = pos + right * (roadWidth * 0.5f);
 			vertices[i * 2] = transform.InverseTransformPoint(leftWorld);
 			vertices[i * 2 + 1] = transform.InverseTransformPoint(rightWorld);
 
-            uvs[i * 2] = new Vector2(0, vCoord);
-            uvs[i * 2 + 1] = new Vector2(1, vCoord);
+			// Simple UVs: v goes 0..1 along the spline
+			uvs[i * 2] = new Vector2(0f, t);
+			uvs[i * 2 + 1] = new Vector2(1f, t);
 
             if (i < segments - 1)
             {
@@ -117,35 +112,24 @@ public class RoadSplineGenerator : MonoBehaviour
             }
         }
 
-		if (invalid)
+        generatedMesh.vertices = vertices;
+        generatedMesh.uv = uvs;
+        generatedMesh.triangles = triangles;
+        generatedMesh.RecalculateNormals();
+        generatedMesh.RecalculateBounds();
+
+        var mf = GetComponent<MeshFilter>();
+		if (mf != null)
 		{
-			return;
+			mf.sharedMesh = generatedMesh;
 		}
-
-        mesh.vertices = vertices;
-        mesh.uv = uvs;
-        mesh.triangles = triangles;
-        mesh.RecalculateNormals();
-        mesh.RecalculateBounds();
-
-        GetComponent<MeshFilter>().sharedMesh = mesh;
 
 		// Update MeshCollider if present
 		var meshCollider = GetComponent<MeshCollider>();
 		if (meshCollider != null)
 		{
 			meshCollider.sharedMesh = null;
-			meshCollider.sharedMesh = mesh;
+			meshCollider.sharedMesh = generatedMesh;
 		}
-
-#if UNITY_EDITOR
-        if (!Application.isPlaying)
-		{
-            EditorUtility.SetDirty(this);
-			var mf = GetComponent<MeshFilter>();
-			if (mf != null) EditorUtility.SetDirty(mf);
-			if (meshCollider != null) EditorUtility.SetDirty(meshCollider);
-		}
-#endif
     }
 }

@@ -10,14 +10,21 @@ public class FuelPump : MonoBehaviour
     public int fuelRate = 10;
     public float fuelingTime = 1f;
 
-    bool fueling = false;
+    [Header("Repairing Settings")]
+    public int repairRate = 10;
+    public float repairingTime = 1f;
 
+    bool fueling = false;
+    bool repairing = false;
+    
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Vehicle"))
         {
             fueling = true;
+            repairing = true;
             StartCoroutine(FuelingCoroutine(other.GetComponentInParent<VehicleController>()));
+            StartCoroutine(RepairingCoroutine(other.GetComponentInParent<VehicleController>()));
         }
     }
 
@@ -26,6 +33,7 @@ public class FuelPump : MonoBehaviour
         if (other.CompareTag("Vehicle"))
         {
             fueling = false;
+            repairing = false;
         }
     }
 
@@ -49,6 +57,22 @@ public class FuelPump : MonoBehaviour
             vehicle.Refuel(fuelRate);
 
             yield return new WaitForSeconds(fuelingTime);
+        }
+    }
+
+    IEnumerator RepairingCoroutine(VehicleController vehicle)
+    {
+        while (repairing)
+        {
+            if (!vehicle.CanRepair())
+            {
+                repairing = false;
+                break;
+            }
+
+            vehicle.Repair(repairRate);
+
+            yield return new WaitForSeconds(repairingTime);
         }
     }
 }
