@@ -6239,10 +6239,6 @@ PrefabInstance:
       propertyPath: RestartScreen
       value: 
       objectReference: {fileID: 5632957}
-    - target: {fileID: 6128416663737429754, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7109229398297639457, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
