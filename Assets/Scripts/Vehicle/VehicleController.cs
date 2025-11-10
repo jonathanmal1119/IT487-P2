@@ -7,10 +7,23 @@ public class VehicleController : MonoBehaviour
     public InputActionReference handbrake;
     public InputActionReference exit;
 
+    [Header("Car Settings")]
     public float carPower = 1500f;
     public float brakeingPower = 3000f;
     public float maxSteeringAngle = 30f;
 
+    [Header("Car Stats")]
+    [SerializeField] 
+    int fuelLevel = 100;
+    int maxFuelLevel = 100;
+
+    [SerializeField]
+    int engineHealth = 100;
+
+    [SerializeField]
+    int enginePerformance = 100;
+
+    [Header("Car Parts")]
     public WheelCollider frontLeftWheelCollider;
     public WheelCollider frontRightWheelCollider;
     public WheelCollider rearLeftWheelCollider;
@@ -23,8 +36,11 @@ public class VehicleController : MonoBehaviour
 
     Vector2 input = Vector2.zero;
 
+    [Header("Player Refs")]
     public GameObject Player;
     public GameObject Camera;
+
+
 
     void Awake()
     {
@@ -91,5 +107,16 @@ public class VehicleController : MonoBehaviour
 
         wheel.position = pos;
         wheel.rotation = rot;
+    }
+
+    public void Refuel(int amount)
+    {
+        fuelLevel += amount;
+        fuelLevel = Mathf.Clamp(fuelLevel, 0, maxFuelLevel);
+    }
+
+    public bool CanRefuel()
+    {
+        return fuelLevel < maxFuelLevel;
     }
 }
