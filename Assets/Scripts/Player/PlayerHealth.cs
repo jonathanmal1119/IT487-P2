@@ -43,4 +43,23 @@ public class PlayerHealth : MonoBehaviour
         GetComponent<PlayerLookControls>().enabled = false;
         RestartScreen.SetActive(true);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "EnemyBullet")
+        {
+            EnemyBullet bulletInfo = collision.gameObject.GetComponent<EnemyBullet>();
+
+            if (bulletInfo != null)
+            {
+                TakeDamage(bulletInfo.damage);
+            }
+            else
+            {
+                TakeDamage(10);
+            }
+
+            Destroy(collision.gameObject);
+        }
+    }
 }
