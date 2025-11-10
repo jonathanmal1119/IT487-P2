@@ -1,19 +1,26 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class VehicleController : MonoBehaviour
 {
-    public InputActionReference move;        
+    Rigidbody rb;
+
+    public InputActionReference move;
     public InputActionReference handbrake;
     public InputActionReference exit;
 
-    [Header("Car Settings")]
     public float carPower = 1500f;
     public float brakeingPower = 3000f;
     public float maxSteeringAngle = 30f;
 
+
+    [Header("Dynamics")]
+    [Tooltip("Acceleration applied opposite to lateral (sideways) speed. Units: 1/s")]
+    public float sidewaysDragCoefficient = 2.0f;
+
     [Header("Car Stats")]
-    [SerializeField] 
+    [SerializeField]
     int fuelLevel = 100;
     int maxFuelLevel = 100;
 
@@ -38,34 +45,42 @@ public class VehicleController : MonoBehaviour
 
     [Header("Player Refs")]
     public GameObject Player;
-    public GameObject Camera;
+    public GameObject carCamera;
 
+    bool isEngineDestroyed = false;
 
+    [Header("UI Refs")]
+    public Text carHP;
+    public Text fuelLevelText;
 
     void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         enabled = false;
-        Camera.SetActive(false);
+        carCamera.SetActive(false);
     }
 
     void OnEnable()
     {
+        if (isEngineDestroyed) return;
+
         move.action.Enable();
         handbrake.action.Enable();
         exit.action.Enable();
         if (handbrake) handbrake.action.Enable();
-        Camera.SetActive(true);
+        carCamera.SetActive(true);
     }
 
     void Update()
     {
+
         // BUG WITH INPUT
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (Keyboard.current.eKey.wasPressedThisFrame || isEngineDestroyed)
         {
             Player.SetActive(true);
             Player.transform.position = transform.TransformPoint(new Vector3(3f, 1f, 0f));
             this.enabled = false;
-            Camera.SetActive(false);
+            carCamera.SetActive(false);
 
             frontLeftWheelCollider.brakeTorque = frontRightWheelCollider.brakeTorque = 10000f;
             rearLeftWheelCollider.brakeTorque = rearRightWheelCollider.brakeTorque = 10000f;
@@ -73,7 +88,7 @@ public class VehicleController : MonoBehaviour
             return;
         }
 
-        if (move) 
+        if (move && fuelLevel > 0)
             input = move.action.ReadValue<Vector2>();
 
         // Drive
@@ -89,25 +104,34 @@ public class VehicleController : MonoBehaviour
             frontLeftWheelCollider.brakeTorque = frontRightWheelCollider.brakeTorque = 0;
             rearLeftWheelCollider.brakeTorque = rearRightWheelCollider.brakeTorque = 0;
         }
-        
+
         // Steer
         frontLeftWheelCollider.steerAngle = frontRightWheelCollider.steerAngle = maxSteeringAngle * input.x;
 
-        // BUGGED
-        // Align the wheels to the colider
-        //AlignWheels(frontLeftWheelCollider, frontLeftWheelPos);
-        //AlignWheels(frontRightWheelCollider, frontRightWheelPos);
-        //AlignWheels(rearLeftWheelCollider, rearLeftWheelPos);
-        //AlignWheels(rearRightWheelCollider, rearRightWheelPos);
+		// Fuel consumption increases with speed (simple linear model)
+		fuelLevel = Mathf.Max(0, fuelLevel - Mathf.RoundToInt(rb.linearVelocity.magnitude * 2 * Time.deltaTime));
+        fuelLevelText.text = "Fuel: " + fuelLevel.ToString();
     }
 
-    static void AlignWheels(WheelCollider col, Transform wheel)
+    void FixedUpdate()
     {
-        col.GetWorldPose(out var pos, out var rot);
-
-        wheel.position = pos;
-        wheel.rotation = rot;
+        ApplySidewaysDrag();
     }
+
+    void ApplySidewaysDrag()
+    {
+        if (rb == null) return;
+
+        Vector3 localVelocity = transform.InverseTransformDirection(rb.linearVelocity);
+        float lateralSpeed = localVelocity.x;
+
+        if (Mathf.Abs(lateralSpeed) < 0.001f) return;
+
+        float dragAcceleration = -lateralSpeed * sidewaysDragCoefficient;
+        Vector3 dragForceWorld = transform.right * dragAcceleration;
+        rb.AddForce(dragForceWorld, ForceMode.Acceleration);
+    }
+
 
     public void Refuel(int amount)
     {
@@ -118,5 +142,16 @@ public class VehicleController : MonoBehaviour
     public bool CanRefuel()
     {
         return fuelLevel < maxFuelLevel;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        engineHealth = Mathf.Clamp(engineHealth - damage, 0, 100);
+        if (engineHealth <= 0)
+        {
+            isEngineDestroyed = true;
+        }
+
+        carHP.text = "Car: " + engineHealth.ToString();
     }
 }
