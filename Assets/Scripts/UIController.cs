@@ -17,11 +17,11 @@ public class UIController : MonoBehaviour
     {
         // Will work for Gold Spike
         EnemyText.text = "Enemies: " + GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
-        if (GameObject.FindGameObjectsWithTag("Enemy").Count() <= 0)
-        {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLookControls>().enabled = false;
-            WinScreen.SetActive(true);
-        }
+        //if (GameObject.FindGameObjectsWithTag("Enemy").Count() <= 0)
+        //{
+        //    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLookControls>().enabled = false;
+        //    WinScreen.SetActive(true);
+        //}
     }
 
     public void RestartGame()
