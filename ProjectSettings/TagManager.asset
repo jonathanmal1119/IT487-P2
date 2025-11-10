@@ -7,8 +7,6 @@ TagManager:
   - Enemy
   - Bullet
   - Vehicle
-  - FuelPump
-  - Obstacle
   layers:
   - Default
   - TransparentFX
