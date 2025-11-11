@@ -10,6 +10,8 @@ TagManager:
   - FuelPump
   - Obstacle
   - EnemyBullet
+  - POI
+  - ObjectivePart
   layers:
   - Default
   - TransparentFX

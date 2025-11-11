@@ -14,6 +14,8 @@ public class VehicleController : MonoBehaviour
     public float brakeingPower = 3000f;
     public float maxSteeringAngle = 30f;
 
+    public bool isPlayerInCar = false;
+
 
     [Header("Dynamics")]
     [Tooltip("Acceleration applied opposite to lateral (sideways) speed. Units: 1/s")]
@@ -72,6 +74,7 @@ public class VehicleController : MonoBehaviour
         exit.action.Enable();
         if (handbrake) handbrake.action.Enable();
         carCamera.SetActive(true);
+        isPlayerInCar = true;
     }
 
     void Update()
@@ -88,6 +91,7 @@ public class VehicleController : MonoBehaviour
             frontLeftWheelCollider.brakeTorque = frontRightWheelCollider.brakeTorque = 10000f;
             rearLeftWheelCollider.brakeTorque = rearRightWheelCollider.brakeTorque = 10000f;
 
+            isPlayerInCar = false;
             return;
         }
 
