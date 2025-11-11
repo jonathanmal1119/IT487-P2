@@ -26,7 +26,6 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
             
-
         health -= Amt;
         HealthUI.text = "HP: " + health.ToString();
     }
@@ -48,6 +47,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.gameObject.tag == "EnemyBullet")
         {
+            Debug.Log("Player hit by enemy bullet");
             EnemyBullet bulletInfo = collision.gameObject.GetComponent<EnemyBullet>();
 
             if (bulletInfo != null)
