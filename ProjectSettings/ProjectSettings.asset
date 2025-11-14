@@ -831,7 +831,7 @@ PlayerSettings:
   scriptingDefineSymbols: {}
   additionalCompilerArguments:
     Standalone:
-    - -nullable+
+    - -nullable:enable
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
