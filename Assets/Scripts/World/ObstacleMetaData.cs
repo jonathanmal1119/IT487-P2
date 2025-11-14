@@ -7,23 +7,29 @@ public class ObstacleMetaData : MonoBehaviour
     public float speedForMaxDamage = 20f;
     public float minMultiplier = 0.25f;
     public float maxMultiplier = 1.5f;
+    public float slownDownAmt = 0.5f;
 
     public void OnCollisionEnter(Collision collision)
     {
+        OnTriggerEnter(collision.collider);
+    }
 
-        if (collision.gameObject.tag == "Vehicle")
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Vehicle")
         {
             float t = 1f;
             if (speedForMaxDamage > 0f)
-                t = Mathf.Clamp(collision.relativeVelocity.magnitude / speedForMaxDamage, minMultiplier, maxMultiplier);
+                t = Mathf.Clamp(other.GetComponentInParent<Rigidbody>().linearVelocity.magnitude / speedForMaxDamage, minMultiplier, maxMultiplier);
 
             int scaledDamage = Mathf.Max(1, Mathf.RoundToInt(damageToCar * t));
 
-            collision.gameObject.GetComponent<VehicleController>().TakeDamage(scaledDamage);
+            VehicleController vc = other.gameObject.GetComponentInParent<VehicleController>();
+            vc.TakeDamage(scaledDamage);
+            vc.SlowDown(slownDownAmt);
 
             if (destructible || scaledDamage == damageToCar * maxMultiplier)
                 Destroy(gameObject, 0.1f);
         }
-
     }
 }

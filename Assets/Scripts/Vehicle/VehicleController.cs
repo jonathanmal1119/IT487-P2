@@ -177,4 +177,10 @@ public class VehicleController : MonoBehaviour
 
         carHP.text = "Car: " + engineHealth.ToString();
     }
+
+    public void SlowDown(float amt = 0.5f)
+    {
+        rb.linearVelocity *= amt;
+        rb.angularVelocity *= amt;
+    }
 }
