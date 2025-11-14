@@ -28,7 +28,7 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -82,7 +82,7 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "641cd816-40e6-41b4-8c3d-04687c349290",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -97,9 +97,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Scrollwheel",
+                    "name": "MoveCam",
                     "type": "Button",
-                    "id": "5449c847-970b-4b4e-94f0-db896f4dc2aa",
+                    "id": "bacfa689-7236-4e13-9cb0-958e515cc425",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -504,37 +504,26 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "5c35e49f-6220-46ca-8384-b35891f6ad79",
-                    "path": "1DAxis",
+                    "name": "",
+                    "id": "05a65e9d-61ab-44c4-abfb-ad9791bb60dd",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Scrollwheel",
-                    "isComposite": true,
+                    "action": "MoveCam",
+                    "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "d889551e-4b63-453c-bf2b-07553de7c1e3",
-                    "path": "<Mouse>/scroll/up",
+                    "name": "",
+                    "id": "3ecbb629-2850-4336-a814-97d308014b9f",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Scrollwheel",
+                    "groups": "",
+                    "action": "MoveCam",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "c88e7d20-50de-4789-b927-7a4ba9d77c1e",
-                    "path": "<Mouse>/scroll/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Scrollwheel",
-                    "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         },

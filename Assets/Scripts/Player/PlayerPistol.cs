@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class PlayerPistol : MonoBehaviour
 {
-    public string weaponName;
-
     public Transform bulletSpawnSource;
     public GameObject bulletPrefab;
     public GameObject gunModel;
@@ -20,22 +18,9 @@ public class PlayerPistol : MonoBehaviour
     //public float reloadTime = 1.5f;
     float nextShot = 0f;
 
-    //random eulerAngle rotation of bullets when shooting. No Z value because that is for roll, which isn't useful in this circumstance.
-    public Vector2 hipFireRandomSpread;
-    public Vector2 aimFireRandomSpread;
-    bool aimDownSights = false;
-    
-    [Header("leave weaponXOffset null if the weapon doesn't allow aim-down-sight")]
-    public GameObject weaponXOffset;
-    public float aimOffsetDistance = 0.3f;
-
     public bool holdToAutomaticallyShoot = false;
 
-    [Header("Ammunition Stuff")]
-
     public int ammunition = 999;
-    public int ammoUsedPerShot = 1;
-    public bool hideOnNoAmmo = false;
 
     private void Awake()
     {
@@ -73,32 +58,13 @@ public class PlayerPistol : MonoBehaviour
 
     void Update()
     {
-        if(weaponXOffset != null)
-        {
-            if (Mouse.current.rightButton.isPressed)
-            {
-                weaponXOffset.transform.localPosition = new Vector3(aimOffsetDistance * -1f, 0.1f, 0f);
-                aimDownSights = true;
-            }
-            else
-            {
-                weaponXOffset.transform.localPosition = new Vector3(0f, 0f, 0f);
-                aimDownSights = false;
-            }
-        }
-
         if(ammoCounter != null)
         {
             ammoCounter.text = ammunition.ToString();
         }
 
-        if(ammunition > 0 || ammoUsedPerShot <= 0)
+        if(ammunition > 0)
         {
-            if (gunModel.activeSelf == false && hideOnNoAmmo)
-            {
-                gunModel.SetActive(true);
-            }
-
             if(Time.time >= nextShot)
             {
                 //press button to shoot.
@@ -113,10 +79,6 @@ public class PlayerPistol : MonoBehaviour
                 }
             }
         }
-        else if (hideOnNoAmmo)
-        {
-            gunModel.SetActive(false);
-        }
     }
 
     void Shoot()
@@ -126,17 +88,8 @@ public class PlayerPistol : MonoBehaviour
             animator.SetTrigger("Shoot");
         }
 
-        GameObject pb = Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
-        if (aimDownSights)
-        {
-            pb.transform.Rotate(Random.Range(aimFireRandomSpread.x * -1f, aimFireRandomSpread.x), Random.Range(aimFireRandomSpread.y * -1f, aimFireRandomSpread.y), 0f);
-        }
-        else
-        {
-            pb.transform.Rotate(Random.Range(hipFireRandomSpread.x * -1f, hipFireRandomSpread.x), Random.Range(hipFireRandomSpread.y * -1f, hipFireRandomSpread.y), 0f);
-        }
-        
+        Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
         nextShot = Time.time + timeBetweenShots;
-        ammunition -= ammoUsedPerShot;
+        ammunition -= 1;
     }
 }

@@ -6,10 +6,6 @@ public class PlayerBullet : MonoBehaviour
     public float launchForce = 50f;
     public int damage = 1;
     public float lifetime = 5f;
-    public bool destroyOnHit = true;
-    public bool ignoreGround = false;
-
-    public bool waitingToDestroy = false;
 
     void Start()
     {
@@ -24,7 +20,7 @@ public class PlayerBullet : MonoBehaviour
         {
             //Debug.LogWarning("TODO: implement player bullets damaging enemies on hit");
         }
-        else if(ignoreGround == false && other.gameObject.layer == 0 && other.CompareTag("Player") == false)
+        else if(other.gameObject.layer == 0 && other.CompareTag("Player") == false)
         {
             Destroy(gameObject);
         }

@@ -8,9 +8,6 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 100;
     public int health;
 
-    [Header("Armor percent. 0 = no armor, 1 = all damage negated")]
-    public float armorDamageReductionPercent = 0f;
-
     [Header("UI Refs")]
     public Text HealthUI;
     public GameObject RestartScreen;
@@ -23,7 +20,6 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int Amt)
     {
-        Amt = (int)((float)Amt * (1f - armorDamageReductionPercent));
        if (health - Amt <= 0)
         {
             Die();
