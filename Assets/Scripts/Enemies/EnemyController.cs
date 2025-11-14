@@ -107,7 +107,7 @@ public class EnemyController : MonoBehaviour
             PlayerBullet bulletInfo = collision.gameObject.GetComponent<PlayerBullet>();
 
             //If this scipt found the bullet's script, it can deal the proper amount of damage. Otherwise it will just deal 10.
-            if(bulletInfo != null)
+            if (bulletInfo != null && bulletInfo.waitingToDestroy == false)
             {
                 TakeDamage(bulletInfo.damage);
             }
@@ -116,8 +116,11 @@ public class EnemyController : MonoBehaviour
                 TakeDamage(10);
             }
 
-            //The bullet has served its purpose. May it share its glory in Valhalla.
-            Destroy(collision.gameObject);
+            if (bulletInfo.destroyOnHit)
+            {
+                Destroy(collision.gameObject);
+                bulletInfo.waitingToDestroy = true;
+            }
         }
 
         if (collision.gameObject.tag == "Vehicle")
@@ -132,5 +135,32 @@ public class EnemyController : MonoBehaviour
     {
             yield return new WaitForSeconds(7f);
             playerDetected = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Bullet")
+        {
+            playerDetected = true;
+
+            //tries to find the bullet's PlayerBullet script, which contains information on how much damage it deals
+            PlayerBullet bulletInfo = other.gameObject.GetComponent<PlayerBullet>();
+
+            //If this scipt found the bullet's script, it can deal the proper amount of damage. Otherwise it will just deal 10.
+            if (bulletInfo != null && bulletInfo.waitingToDestroy == false)
+            {
+                TakeDamage(bulletInfo.damage);
+            }
+            else
+            {
+                TakeDamage(10);
+            }
+
+            if (bulletInfo.destroyOnHit)
+            {
+                Destroy(other.gameObject);
+                bulletInfo.waitingToDestroy = true;
+            }
+        }
     }
 }

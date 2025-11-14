@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 6628132766138880468}
   m_Layer: 0
   m_Name: Car Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -246,7 +246,7 @@ Transform:
   m_GameObject: {fileID: 2289793616768709839}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.197, z: -4.442}
+  m_LocalPosition: {x: 0, y: 2.77, z: -6.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -716,7 +716,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5261112059571894179}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.846593, y: 0.3695242, z: 1.47955}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1110,7 +1110,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.511246, y: 0.518, z: 0.2221933}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8730416221781451515}
@@ -1153,7 +1153,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9214906340906940121}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -1251,10 +1251,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: bacfa689-7236-4e13-9cb0-958e515cc425
-    m_ActionName: 'Player/MoveCam[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -1267,21 +1263,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9214906340906940121}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: beb5bb6fa9c862947a1eff62f6bf4c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
   move: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   handbrake: {fileID: -180009432325820009, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  exit: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   carPower: 1500
   brakeingPower: 3000
   maxSteeringAngle: 30
-  sidewaysDragCoefficient: 2
-  fuelLevel: 100
-  engineHealth: 100
-  enginePerformance: 100
   frontLeftWheelCollider: {fileID: 5418269271096719481}
   frontRightWheelCollider: {fileID: 4218115016679748707}
   rearLeftWheelCollider: {fileID: 612318713330184738}
@@ -1290,7 +1281,3 @@ MonoBehaviour:
   frontRightWheelPos: {fileID: 5207065069708406486}
   rearLeftWheelPos: {fileID: 5342727797192300372}
   rearRightWheelPos: {fileID: 5969765966790768991}
-  Player: {fileID: 0}
-  carCamera: {fileID: 2289793616768709839}
-  carHP: {fileID: 0}
-  fuelLevelText: {fileID: 0}
