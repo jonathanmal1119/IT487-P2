@@ -1251,6 +1251,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5449c847-970b-4b4e-94f0-db896f4dc2aa
+    m_ActionName: 'Player/Scrollwheel[/Mouse/scroll/up,/Mouse/scroll/down]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -1270,9 +1274,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   move: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   handbrake: {fileID: -180009432325820009, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  exit: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   carPower: 1500
   brakeingPower: 3000
   maxSteeringAngle: 30
+  isPlayerInCar: 0
+  sidewaysDragCoefficient: 2
+  fuelLevel: 100
+  engineHealth: 100
+  enginePerformance: 100
+  fuelConsumptionRate: 1
   frontLeftWheelCollider: {fileID: 5418269271096719481}
   frontRightWheelCollider: {fileID: 4218115016679748707}
   rearLeftWheelCollider: {fileID: 612318713330184738}
@@ -1281,3 +1292,7 @@ MonoBehaviour:
   frontRightWheelPos: {fileID: 5207065069708406486}
   rearLeftWheelPos: {fileID: 5342727797192300372}
   rearRightWheelPos: {fileID: 5969765966790768991}
+  Player: {fileID: 0}
+  carCamera: {fileID: 2289793616768709839}
+  carHP: {fileID: 0}
+  fuelLevelText: {fileID: 0}
