@@ -1,3 +1,5 @@
+using Assets.Scripts;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -37,6 +39,8 @@ public class PlayerPistol : MonoBehaviour
     public int ammoUsedPerShot = 1;
     public bool hideOnNoAmmo = false;
 
+    public Action? AmmoChanged => GetComponent<PlayerWeaponManager>().N()?.AmmoChanged;
+
     private void Awake()
     {
         shootAction = InputSystem.actions.FindAction("Player/Attack");
@@ -59,10 +63,11 @@ public class PlayerPistol : MonoBehaviour
     private void OnDisable()
     {
         gunModel.SetActive(false);
-        if (ammoCounter != null)
-        {
-            ammoCounter.text = "";
-        }
+        //if (ammoCounter != null)
+        //{
+        //    ammoCounter.text = "";
+        //}
+        AmmoChanged?.Invoke();
     }
 
     void Start()
@@ -87,12 +92,13 @@ public class PlayerPistol : MonoBehaviour
             }
         }
 
-        if(ammoCounter != null)
-        {
-            ammoCounter.text = ammunition.ToString();
-        }
+        //if(ammoCounter != null)
+        //{
+        //    ammoCounter.text = ammunition.ToString();
+        //}
+        AmmoChanged?.Invoke();
 
-        if(ammunition > 0 || ammoUsedPerShot <= 0)
+        if (ammunition > 0 || ammoUsedPerShot <= 0)
         {
             if (gunModel.activeSelf == false && hideOnNoAmmo)
             {
@@ -129,11 +135,11 @@ public class PlayerPistol : MonoBehaviour
         GameObject pb = Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
         if (aimDownSights)
         {
-            pb.transform.Rotate(Random.Range(aimFireRandomSpread.x * -1f, aimFireRandomSpread.x), Random.Range(aimFireRandomSpread.y * -1f, aimFireRandomSpread.y), 0f);
+            pb.transform.Rotate(UnityEngine.Random.Range(aimFireRandomSpread.x * -1f, aimFireRandomSpread.x), UnityEngine.Random.Range(aimFireRandomSpread.y * -1f, aimFireRandomSpread.y), 0f);
         }
         else
         {
-            pb.transform.Rotate(Random.Range(hipFireRandomSpread.x * -1f, hipFireRandomSpread.x), Random.Range(hipFireRandomSpread.y * -1f, hipFireRandomSpread.y), 0f);
+            pb.transform.Rotate(UnityEngine.Random.Range(hipFireRandomSpread.x * -1f, hipFireRandomSpread.x), UnityEngine.Random.Range(hipFireRandomSpread.y * -1f, hipFireRandomSpread.y), 0f);
         }
         
         nextShot = Time.time + timeBetweenShots;

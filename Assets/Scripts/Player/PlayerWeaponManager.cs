@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,6 +11,11 @@ public class PlayerWeaponManager : MonoBehaviour
     InputAction scrollAction, nextAction, previousAction;
 
     public Text debugCurrentWeaponText;
+
+    public PlayerPistol ActiveWeapon => weapons[activeWeapon];
+
+    public Action? WeaponChanged;
+    public Action? AmmoChanged;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -53,11 +59,7 @@ public class PlayerWeaponManager : MonoBehaviour
             w.enabled = false;
         }
         weapons[i].enabled = true;
-
-        if(debugCurrentWeaponText != null)
-        {
-            debugCurrentWeaponText.text = "Current Weapon: " + weapons[i].weaponName;
-        }
+        WeaponChanged?.Invoke();
     }
 
     public bool AddAmmo(int amount, int index)
