@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
+[RequireComponent(typeof(PlayerLookControls))]
 public class PlayerHealth : MonoBehaviour
 {
 
@@ -12,33 +13,33 @@ public class PlayerHealth : MonoBehaviour
     public float armorDamageReductionPercent = 0f;
 
     [Header("UI Refs")]
-    public Text HealthUI;
     public GameObject RestartScreen;
+
+    public Action? HealthChanged;
 
     void Start()
     {
         health = maxHealth - 50;
-        HealthUI.text = "HP: " + health.ToString();
     }
 
-    public void TakeDamage(int Amt)
+    public void TakeDamage(int amt)
     {
-        Amt = (int)((float)Amt * (1f - armorDamageReductionPercent));
-       if (health - Amt <= 0)
-        {
-            Die();
-            return;
-        }
-            
+        amt = (int)(amt * (1 - armorDamageReductionPercent));
 
-        health -= Amt;
-        HealthUI.text = "HP: " + health.ToString();
+        health -= amt;
+        HealthChanged?.Invoke();
+
+        if (health <= 0)
+        {
+            health = 0;
+            Die();
+        }
     }
 
     public void Heal(int Amt)
     {
         health = Mathf.Clamp(health, health + Amt, maxHealth);
-        HealthUI.text = "HP: " + health.ToString();
+        HealthChanged.Invoke();
     }
 
     void Die()
