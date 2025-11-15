@@ -36,8 +36,6 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
-        EnemyText.text = "Enemies: " + GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
-
         playerHealth = Player.GetComponent<PlayerHealth>();
 
         healthUI = transform.Find("Health").gameObject;
