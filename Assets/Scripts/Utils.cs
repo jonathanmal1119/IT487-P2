@@ -10,8 +10,7 @@ namespace Assets.Scripts
         public static float Round(this float num) => Mathf.Round(num);
         public static Vector3 Round(this Vector3 vec) => new(vec.x.Round(), vec.y.Round(), vec.z.Round());
 
-
+        public static float SineTime(double speed) => SineTime((float)speed);
         public static float SineTime(float speed) => (Mathf.Sin(Time.time * (float)speed) + 1) / 2;
-        public static float SineTime(double speed) => (Mathf.Sin(Time.time * (float)speed) + 1) / 2;
     }
 }

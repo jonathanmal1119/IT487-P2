@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerWeaponManager : MonoBehaviour
 {
@@ -9,8 +8,6 @@ public class PlayerWeaponManager : MonoBehaviour
     public int activeWeapon = 0;
 
     InputAction scrollAction, nextAction, previousAction;
-
-    public Text debugCurrentWeaponText;
 
     public PlayerPistol ActiveWeapon => weapons[activeWeapon];
 

@@ -2,7 +2,6 @@ using Assets.Scripts;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerPistol : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class PlayerPistol : MonoBehaviour
     public Transform bulletSpawnSource;
     public GameObject bulletPrefab;
     public GameObject gunModel;
-    public Text ammoCounter;
+
     public Animator animator;
 
     InputAction shootAction;
@@ -38,7 +37,7 @@ public class PlayerPistol : MonoBehaviour
     public int ammunition = 999;
     public int ammoUsedPerShot = 1;
     public bool hideOnNoAmmo = false;
-
+    
     public Action? AmmoChanged => GetComponent<PlayerWeaponManager>().N()?.AmmoChanged;
 
     private void Awake()
@@ -63,10 +62,6 @@ public class PlayerPistol : MonoBehaviour
     private void OnDisable()
     {
         gunModel.SetActive(false);
-        //if (ammoCounter != null)
-        //{
-        //    ammoCounter.text = "";
-        //}
         AmmoChanged?.Invoke();
     }
 
@@ -82,20 +77,16 @@ public class PlayerPistol : MonoBehaviour
         {
             if (Mouse.current.rightButton.isPressed)
             {
-                weaponXOffset.transform.localPosition = new Vector3(aimOffsetDistance * -1f, 0.1f, 0f);
+                weaponXOffset.transform.localPosition = Vector3.Lerp(weaponXOffset.transform.localPosition, new(aimOffsetDistance * -1f, 0.1f, 0f), Time.deltaTime * 24);
                 aimDownSights = true;
             }
             else
             {
-                weaponXOffset.transform.localPosition = new Vector3(0f, 0f, 0f);
+                weaponXOffset.transform.localPosition = Vector3.Lerp(weaponXOffset.transform.localPosition, new Vector3(0f, 0f, 0f), Time.deltaTime * 24);
                 aimDownSights = false;
             }
         }
 
-        //if(ammoCounter != null)
-        //{
-        //    ammoCounter.text = ammunition.ToString();
-        //}
         AmmoChanged?.Invoke();
 
         if (ammunition > 0 || ammoUsedPerShot <= 0)
