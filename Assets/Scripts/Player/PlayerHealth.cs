@@ -17,6 +17,9 @@ public class PlayerHealth : MonoBehaviour
 
     public Action? HealthChanged;
 
+    public bool IsInvincible => Time.time - lastHitTime < 0.5f;
+    private float lastHitTime = float.MinValue;
+
     void Start()
     {
         health = maxHealth - 50;
@@ -24,14 +27,17 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amt)
     {
+        if (IsInvincible)
+            return;
+
         amt = (int)(amt * (1 - armorDamageReductionPercent));
 
-        health -= amt;
+        health = health - amt > 0 ? health - amt : 0;
         HealthChanged?.Invoke();
+        lastHitTime = Time.time;
 
         if (health <= 0)
         {
-            health = 0;
             Die();
         }
     }
@@ -39,7 +45,7 @@ public class PlayerHealth : MonoBehaviour
     public void Heal(int Amt)
     {
         health = Mathf.Clamp(health, health + Amt, maxHealth);
-        HealthChanged.Invoke();
+        HealthChanged?.Invoke();
     }
 
     void Die()

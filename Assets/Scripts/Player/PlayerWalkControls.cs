@@ -36,8 +36,8 @@ public class PlayerWalkControls : MonoBehaviour
     public float staminaRegenPerSecond = 0.1f;
     public bool waitForRefill = false;
 
-    public Slider staminaBar;
-    public Text staminaText;
+    //public Slider staminaBar;
+    //public Text staminaText;
 
     //public int DEBUGFRAMERATE = 60;
 
@@ -55,11 +55,11 @@ public class PlayerWalkControls : MonoBehaviour
         jumpAction.Enable();
         sprintAction.Enable();
 
-        if (staminaBar != null)
-        {
-            staminaBar.minValue = 0;
-            staminaBar.maxValue = 1;
-        }
+        //if (staminaBar != null)
+        //{
+        //    staminaBar.minValue = 0;
+        //    staminaBar.maxValue = 1;
+        //}
     }
     /*
      * ########## Because I am using the project-wide actions, disabling them here will also disable them everywhere. I don't want to do that. ##########
@@ -134,13 +134,13 @@ public class PlayerWalkControls : MonoBehaviour
         controller.Move((playerLook.horizontalOrientation.right * moveVector.x * Time.deltaTime) + (playerLook.horizontalOrientation.forward * moveVector.z * Time.deltaTime) + (playerLook.horizontalOrientation.up * moveVector.y * Time.deltaTime));
 
         //Stamina UI stuff
-        if(staminaBar != null)
-        {
-            staminaBar.value = stamina;
-        }
-        if(staminaText != null)
-        {
-            staminaText.text = "Stamina: " + stamina.ToString();
-        }
+        //if(staminaBar != null)
+        //{
+        //    staminaBar.value = stamina;
+        //}
+        //if(staminaText != null)
+        //{
+        //    staminaText.text = "Stamina: " + stamina.ToString();
+        //}
     }
 }

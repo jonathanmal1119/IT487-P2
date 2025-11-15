@@ -1,5 +1,6 @@
 using Assets.Scripts;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,22 +19,32 @@ public class UIController : MonoBehaviour
     private GameObject healthBar;
     private float origHbWidth;
 
+    private PlayerWalkControls playerWalkControls;
+    private GameObject staminaBar;
+    private float origSbWidth;
+
 
 
     void Start()
     {
         EnemyText.text = "Enemies: " + GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
 
-        healthBar = transform.Find("Health").gameObject;
-        //origHbWidth = healthBar.transform.Find("Bar/HP").GetComponent<RectTransform>().sizeDelta.x;
-
         playerHealth = Player.GetComponent<PlayerHealth>();
 
-        //Player.GetComponent<PlayerHealth>().HealthChanged += HealthChanged;
-        //HealthChanged();
-        RectTransform bar = healthBar.transform.Find("Bar/HP").GetComponent<RectTransform>();
-        origHbWidth = bar.rect.width;
-        bar.sizeDelta = new(-1 * origHbWidth * (1 - PlayerHealthPercent), bar.sizeDelta.y);
+        healthBar = transform.Find("Health").gameObject;
+        RectTransform hpBar = healthBar.transform.Find("Bar/HP").GetComponent<RectTransform>();
+        origHbWidth = hpBar.rect.width;
+        hpBar.sizeDelta = new(-1 * origHbWidth * (1 - PlayerHealthPercent), hpBar.sizeDelta.y);
+        playerHealth.HealthChanged += HealthChanged;
+        HealthChanged();
+
+
+        playerWalkControls = Player.GetComponent<PlayerWalkControls>();
+
+        staminaBar = transform.Find("Stamina").gameObject;
+        RectTransform stBar = staminaBar.transform.Find("Bar/ST").GetComponent<RectTransform>();
+        origSbWidth = stBar.rect.width;
+        hpBar.sizeDelta = new(-1 * origSbWidth * (1 - playerWalkControls.stamina), hpBar.sizeDelta.y);
     }
 
     private void Update()
@@ -47,13 +58,18 @@ public class UIController : MonoBehaviour
         else
             hpBar.GetComponent<Image>().color = Color.white;
 
-
+        Transform stBar = staminaBar.transform.Find("Bar/ST");
+        stBar.GetComponent<RectTransform>().sizeDelta = new(-1 * origSbWidth * (1 - playerWalkControls.stamina), stBar.GetComponent<RectTransform>().sizeDelta.y);
+        //stBar.GetComponent<Image>().color = Color.Lerp(new(1f, 1f, 1f), new(0.75f, 0.75f, 0.75f), 1 - (playerWalkControls.stamina * 2)); // change color based on stamina
+        if (playerWalkControls.stamina >= 1)
+            staminaBar.transform.localScale = new(0, 0, 0);
+        else
+            staminaBar.transform.localScale = new(1, 1, 1);
     }
 
     private void HealthChanged()
     {
-        //RectTransform bar = healthBar.transform.Find("Bar/HP").GetComponent<RectTransform>();
-        //bar.sizeDelta = new(origHbWidth * PlayerHealthPercent, bar.sizeDelta.y);
+        healthBar.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = playerHealth.health.ToString();
     }
 
     public void RestartGame()
