@@ -57,7 +57,8 @@ public class UIController : MonoBehaviour
         playerWeaponManager.WeaponChanged += WeaponUpdated;
         playerWeaponManager.AmmoChanged += WeaponUpdated;
         WeaponUpdated();
-        playerWeaponManager.OnHit += OnWeaponHit;
+        playerWeaponManager.OnHit += () => OnWeaponHit();
+        playerWeaponManager.OnKill += () => OnWeaponHit(true);
 
         crosshairUI = transform.Find("Crosshair").gameObject;
         hitmarkerUI = crosshairUI.transform.Find("Hitmarkers").gameObject;
@@ -105,10 +106,8 @@ public class UIController : MonoBehaviour
         weaponName.GetComponent<RectTransform>().sizeDelta = new(weaponName.preferredWidth, weaponUI.GetComponent<RectTransform>().sizeDelta.y);
     }
 
-    private void OnWeaponHit()
+    private void OnWeaponHit(bool killed = false)
     {
-        bool killed = false;
-
         for (int i = 0; i < 4; i++)
         {
             GameObject square = new("UIHitmarker");
@@ -122,8 +121,8 @@ public class UIController : MonoBehaviour
             Image image = square.AddComponent<Image>();
             if (killed)
             {
-                rectTransform.sizeDelta = new Vector2(10, 4f);
-                image.color = new(0.5f, 0.07f, 0.01f);
+                rectTransform.sizeDelta = new Vector2(8.5f, 3.25f);
+                image.color = new(0.4f, 0.025f, 0.01f);
             }
             else
             {
@@ -146,8 +145,8 @@ public class UIController : MonoBehaviour
             Image image = square.AddComponent<Image>();
             if (killed)
             {
-                rectTransform.sizeDelta = new Vector2(9, 3f);
-                image.color = new(1f, 0.27f, 0.24f);
+                rectTransform.sizeDelta = new Vector2(7.5f, 2.25f);
+                image.color = new(0.9f, 0.05f, 0.025f);
             }
             else
             {

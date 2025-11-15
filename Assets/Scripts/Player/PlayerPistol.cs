@@ -1,5 +1,6 @@
 using Assets.Scripts;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -132,6 +133,8 @@ public class PlayerPistol : MonoBehaviour
         }
         if (pb.GetComponent<PlayerBullet>() != null)
             pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>().N();
+        if (pb.GetComponent<PlayerGrenade>() != null)
+            pb.GetComponent<PlayerGrenade>().Owner = GetComponent<PlayerWeaponManager>().N();
 
         nextShot = Time.time + timeBetweenShots;
         ammunition -= ammoUsedPerShot;

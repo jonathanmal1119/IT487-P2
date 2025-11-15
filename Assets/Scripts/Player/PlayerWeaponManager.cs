@@ -14,6 +14,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public Action? WeaponChanged;
     public Action? AmmoChanged;
     public Action? OnHit;
+    public Action? OnKill;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

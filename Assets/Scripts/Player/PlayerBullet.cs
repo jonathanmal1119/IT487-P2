@@ -25,7 +25,7 @@ public class PlayerBullet : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             //Debug.LogWarning("TODO: implement player bullets damaging enemies on hit");
-            Owner?.OnHit?.Invoke();
+            //Owner?.OnHit?.Invoke();
         }
         else if(ignoreGround == false && other.gameObject.layer == 0 && other.CompareTag("Player") == false)
         {
