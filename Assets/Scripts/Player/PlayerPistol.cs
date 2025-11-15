@@ -130,7 +130,9 @@ public class PlayerPistol : MonoBehaviour
         {
             pb.transform.Rotate(UnityEngine.Random.Range(hipFireRandomSpread.x * -1f, hipFireRandomSpread.x), UnityEngine.Random.Range(hipFireRandomSpread.y * -1f, hipFireRandomSpread.y), 0f);
         }
-        
+        if (pb.GetComponent<PlayerBullet>() != null)
+            pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>().N();
+
         nextShot = Time.time + timeBetweenShots;
         ammunition -= ammoUsedPerShot;
         AmmoChanged?.Invoke();

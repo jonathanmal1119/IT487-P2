@@ -26,6 +26,9 @@ public class UIController : MonoBehaviour
     private GameObject weaponUI;
     private PlayerWeaponManager playerWeaponManager;
 
+    private GameObject crosshairUI;
+    private GameObject hitmarkerUI;
+
 
 
     void Start()
@@ -54,6 +57,10 @@ public class UIController : MonoBehaviour
         playerWeaponManager.WeaponChanged += WeaponUpdated;
         playerWeaponManager.AmmoChanged += WeaponUpdated;
         WeaponUpdated();
+        playerWeaponManager.OnHit += OnWeaponHit;
+
+        crosshairUI = transform.Find("Crosshair").gameObject;
+        hitmarkerUI = crosshairUI.transform.Find("Hitmarkers").gameObject;
     }
 
     private void Update()
@@ -74,6 +81,8 @@ public class UIController : MonoBehaviour
             staminaUI.transform.localScale = new(0, 0, 0);
         else
             staminaUI.transform.localScale = new(1, 1, 1);
+
+        UpdateHits();
     }
 
     private void HealthChanged()
@@ -94,6 +103,77 @@ public class UIController : MonoBehaviour
 
         weaponUI.GetComponent<RectTransform>().sizeDelta = new(weaponName.preferredWidth + 8, weaponUI.GetComponent<RectTransform>().sizeDelta.y);
         weaponName.GetComponent<RectTransform>().sizeDelta = new(weaponName.preferredWidth, weaponUI.GetComponent<RectTransform>().sizeDelta.y);
+    }
+
+    private void OnWeaponHit()
+    {
+        bool killed = false;
+
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject square = new("UIHitmarker");
+            square.transform.SetParent(hitmarkerUI.transform, false);
+            square.transform.localEulerAngles = new Vector3(0, 0, 45 + (i * 90));
+
+            RectTransform rectTransform = square.AddComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(8, 3f);
+            rectTransform.anchoredPosition = Vector2.zero;
+
+            Image image = square.AddComponent<Image>();
+            if (killed)
+            {
+                rectTransform.sizeDelta = new Vector2(10, 4f);
+                image.color = new(0.5f, 0.07f, 0.01f);
+            }
+            else
+            {
+                image.color = Color.gray;
+            }
+
+            Destroy(square, 0.2f);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject square = new("UIHitmarker");
+            square.transform.SetParent(hitmarkerUI.transform, false);
+            square.transform.localEulerAngles = new Vector3(0, 0, 45 + (i * 90));
+
+            RectTransform rectTransform = square.AddComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(7, 2f);
+            rectTransform.anchoredPosition = Vector2.zero;
+
+            Image image = square.AddComponent<Image>();
+            if (killed)
+            {
+                rectTransform.sizeDelta = new Vector2(9, 3f);
+                image.color = new(1f, 0.27f, 0.24f);
+            }
+            else
+            {
+                image.color = Color.white;
+            }
+
+            Destroy(square, 0.2f);
+        }
+    }
+
+    private void UpdateHits()
+    {
+        foreach (Transform child in hitmarkerUI.transform)
+        {
+            if (child == null || child.name != "UIHitmarker")
+                continue;
+
+            float angle = child.transform.localEulerAngles.z * Mathf.Deg2Rad;
+            Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
+            RectTransform rectTransform = child.GetComponent<RectTransform>();
+            rectTransform.anchoredPosition += 180 * Time.deltaTime * direction;
+
+            float newX = Mathf.Pow(1.015f, Time.deltaTime * 140);
+            float newY = Mathf.Pow(0.975f, Time.deltaTime * 140);
+            rectTransform.sizeDelta *= new Vector2(newX, newY);
+        }
     }
 
     public void RestartGame()
