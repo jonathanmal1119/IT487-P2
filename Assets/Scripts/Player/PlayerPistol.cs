@@ -87,8 +87,6 @@ public class PlayerPistol : MonoBehaviour
             }
         }
 
-        AmmoChanged?.Invoke();
-
         if (ammunition > 0 || ammoUsedPerShot <= 0)
         {
             if (gunModel.activeSelf == false && hideOnNoAmmo)
@@ -135,5 +133,6 @@ public class PlayerPistol : MonoBehaviour
         
         nextShot = Time.time + timeBetweenShots;
         ammunition -= ammoUsedPerShot;
+        AmmoChanged?.Invoke();
     }
 }
