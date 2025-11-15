@@ -14,11 +14,24 @@ public class VehicleController : MonoBehaviour
     public float brakeingPower = 3000f;
     public float maxSteeringAngle = 30f;
 
+    [Header("Steering Response")]
+    [Tooltip("How fast steering ramps up toward the target angle (deg/sec).")]
+    public float steerRiseRateDegPerSec = 60f;
+    [Tooltip("How fast steering ramps down/returns to center (deg/sec).")]
+    public float steerFallRateDegPerSec = 120f;
+    float currentSteerAngle = 0f;
+
+    [Header("High-Speed Steering Limit")]
+    [Tooltip("Speed in kph at which steering angle approaches the reduced percent.")]
+    public float highSpeedKph = 80f;
+    [Range(0f,1f)]
+    [Tooltip("Percent of max steering allowed at high speed.")]
+    public float highSpeedSteerPercent = 0.35f;
+
     public bool isPlayerInCar = false;
 
 
     [Header("Dynamics")]
-    [Tooltip("Acceleration applied opposite to lateral (sideways) speed. Units: 1/s")]
     public float sidewaysDragCoefficient = 2.0f;
 
     [Header("Car Stats")]
@@ -113,7 +126,21 @@ public class VehicleController : MonoBehaviour
         }
 
         // Steer
-        frontLeftWheelCollider.steerAngle = frontRightWheelCollider.steerAngle = maxSteeringAngle * input.x;
+        float speedKph = rb.linearVelocity.magnitude * 3.6f;
+        float limiterT = Mathf.InverseLerp(0f, highSpeedKph, speedKph);
+
+        // Reduce available steering angle at high speed
+        float steerLimiter = Mathf.Lerp(1f, highSpeedSteerPercent, limiterT);
+        float targetSteerAngle = maxSteeringAngle * steerLimiter * input.x;
+
+        // Also slow the ramp rate at high speed
+        float rateScale = Mathf.Lerp(1f, 0.5f, limiterT);
+        bool increasingMagnitude = Mathf.Abs(targetSteerAngle) > Mathf.Abs(currentSteerAngle);
+        float baseRate = increasingMagnitude ? steerRiseRateDegPerSec : steerFallRateDegPerSec;
+        float rate = baseRate * rateScale;
+
+        currentSteerAngle = Mathf.MoveTowards(currentSteerAngle, targetSteerAngle, rate * Time.deltaTime);
+        frontLeftWheelCollider.steerAngle = frontRightWheelCollider.steerAngle = currentSteerAngle;
 
         if (rb.linearVelocity.magnitude > 0.2f)
         {
