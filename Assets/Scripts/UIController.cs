@@ -1,7 +1,7 @@
 using Assets.Scripts;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,7 +29,10 @@ public class UIController : MonoBehaviour
     private GameObject crosshairUI;
     private GameObject hitmarkerUI;
 
+    private GameObject objectivesUI;
 
+    // turn objectives into a custom class instead of a tuple eventually hopefully we can just have a list of objectives that gets converted into the ui elements automatically idk
+    private readonly List<(GameObject title, GameObject value)> objectives = new();
 
     void Start()
     {
@@ -62,11 +65,15 @@ public class UIController : MonoBehaviour
 
         crosshairUI = transform.Find("Crosshair").gameObject;
         hitmarkerUI = crosshairUI.transform.Find("Hitmarkers").gameObject;
+
+        objectivesUI = transform.Find("Objectives").gameObject;
+        foreach (Transform child in objectivesUI.transform.Find("ObjectiveList").transform)
+            objectives.Add((child.gameObject, child.Find("Value").gameObject));
     }
 
     private void Update()
     {
-        EnemyText.text = "Enemies: " + GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
+        objectives[0].value.GetComponent<TextMeshProUGUI>().text = GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
 
         Transform hpBar = healthUI.transform.Find("Bar/HP");
         hpBar.GetComponent<RectTransform>().sizeDelta = Vector2.Lerp(hpBar.GetComponent<RectTransform>().sizeDelta, new(-1 * origHbWidth * (1 - PlayerHealthPercent), hpBar.GetComponent<RectTransform>().sizeDelta.y), Time.deltaTime * 16);
@@ -86,10 +93,7 @@ public class UIController : MonoBehaviour
         UpdateHits();
     }
 
-    private void HealthChanged()
-    {
-        healthUI.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = playerHealth.health.ToString();
-    }
+    private void HealthChanged() => healthUI.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = playerHealth.health.ToString();
 
     private void WeaponUpdated()
     {
