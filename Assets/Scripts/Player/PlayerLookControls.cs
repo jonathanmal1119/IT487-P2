@@ -20,6 +20,31 @@ public class PlayerLookControls : MonoBehaviour
     public Camera playerCam;
     public LayerMask interactLayer;
 
+    public VehicleController? VehicleController { get; set; }
+
+    private bool enableMouse = true;
+    public bool EnableMouse { 
+        get => enableMouse;
+        set {
+            enableMouse = value;
+            if (!enableMouse)
+            {
+                lookAction.Disable();
+                interactAction.Disable();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                lookAction.Enable();
+                interactAction.Enable();
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
+    }
+    public float Sensitivity { get; set; } = 1;
+
     private void Awake()
     {
         lookAction = InputSystem.actions.FindAction("Player/Look");
@@ -44,6 +69,8 @@ public class PlayerLookControls : MonoBehaviour
     //Just a small glimpse into my sick, twisted world
     private void Update()
     {
+        if (!enableMouse) return;
+
         rotChange = lookAction.ReadValue<Vector2>();
 
         /*
@@ -57,8 +84,8 @@ public class PlayerLookControls : MonoBehaviour
         verticalPivot.localEulerAngles = new Vector3(Vrot, verticalPivot.localEulerAngles.y, verticalPivot.localEulerAngles.z);
         */
 
-        Hrot += horizontalLookSpeed * rotChange.x;
-        Vrot -= verticalLookSpeed * rotChange.y;
+        Hrot += horizontalLookSpeed * rotChange.x * Sensitivity;
+        Vrot -= verticalLookSpeed * rotChange.y * Sensitivity;
 
         Vrot = Mathf.Clamp(Vrot, verticalLookClamp.x, verticalLookClamp.y);
 
@@ -73,16 +100,17 @@ public class PlayerLookControls : MonoBehaviour
 
     void Interact()
     {
-        Ray ray = new Ray(transform.position, playerCam.transform.forward);
+        Ray ray = new(transform.position, playerCam.transform.forward);
 
         Debug.DrawRay(ray.origin, ray.direction * 4f, Color.green, 1f);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 4f, interactLayer))
         {
-            if (hit.collider.gameObject.tag == "Vehicle")
+            if (hit.collider.gameObject.CompareTag("Vehicle"))
             {
-                hit.collider.gameObject.GetComponentInParent<VehicleController>().enabled = true;
-                this.gameObject.SetActive(false);
+                VehicleController = hit.collider.gameObject.GetComponentInParent<VehicleController>();
+                VehicleController.enabled = true;
+                gameObject.SetActive(false);
             }
         }
         else
