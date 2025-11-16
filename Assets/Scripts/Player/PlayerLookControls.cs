@@ -22,6 +22,8 @@ public class PlayerLookControls : MonoBehaviour
 
     public VehicleController? VehicleController { get; set; }
 
+    public bool EnableLook { get; set; } = true;
+
     private void Awake()
     {
         lookAction = InputSystem.actions.FindAction("Player/Look");
@@ -46,6 +48,8 @@ public class PlayerLookControls : MonoBehaviour
     //Just a small glimpse into my sick, twisted world
     private void Update()
     {
+        if (!EnableLook) return;
+
         rotChange = lookAction.ReadValue<Vector2>();
 
         /*

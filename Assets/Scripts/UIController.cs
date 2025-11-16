@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -36,11 +37,13 @@ public class UIController : MonoBehaviour
     // turn objectives into a custom class instead of a tuple eventually hopefully we can just have a list of objectives that gets converted into the ui elements automatically idk
     private readonly List<(GameObject title, GameObject value)> objectives = new();
 
+    private bool paused = false;
+
     void Start()
     {
         playerHealth = Player.GetComponent<PlayerHealth>();
 
-        healthUI = transform.Find("Health").gameObject;
+        healthUI = transform.Find("HUD/Health").gameObject;
         RectTransform hpBar = healthUI.transform.Find("Bar/HP").GetComponent<RectTransform>();
         origHbWidth = hpBar.rect.width;
         hpBar.sizeDelta = new(-1 * origHbWidth * (1 - PlayerHealthPercent), hpBar.sizeDelta.y);
@@ -50,14 +53,14 @@ public class UIController : MonoBehaviour
 
         playerWalkControls = Player.GetComponent<PlayerWalkControls>();
 
-        staminaUI = transform.Find("Stamina").gameObject;
+        staminaUI = transform.Find("HUD/Stamina").gameObject;
         RectTransform stBar = staminaUI.transform.Find("Bar/ST").GetComponent<RectTransform>();
         origSbWidth = stBar.rect.width;
         stBar.sizeDelta = new(-1 * origSbWidth * (1 - playerWalkControls.stamina), stBar.sizeDelta.y);
 
         playerLookControls = Player.GetComponent<PlayerLookControls>();
 
-        weaponUI = transform.Find("Weapon").gameObject;
+        weaponUI = transform.Find("HUD/Weapon").gameObject;
         playerWeaponManager = Player.GetComponent<PlayerWeaponManager>();
         playerWeaponManager.WeaponChanged += WeaponUpdated;
         playerWeaponManager.AmmoChanged += WeaponUpdated;
@@ -65,10 +68,10 @@ public class UIController : MonoBehaviour
         playerWeaponManager.OnHit += () => OnWeaponHit();
         playerWeaponManager.OnKill += () => OnWeaponHit(true);
 
-        crosshairUI = transform.Find("Crosshair").gameObject;
+        crosshairUI = transform.Find("HUD/Crosshair").gameObject;
         hitmarkerUI = crosshairUI.transform.Find("Hitmarkers").gameObject;
 
-        objectivesUI = transform.Find("Objectives").gameObject;
+        objectivesUI = transform.Find("HUD/Objectives").gameObject;
         foreach (Transform child in objectivesUI.transform.Find("ObjectiveList").transform)
             objectives.Add((child.gameObject, child.Find("Value").gameObject));
     }
@@ -100,6 +103,21 @@ public class UIController : MonoBehaviour
 
 
         UpdateHits();
+
+        // idk how inputs work 
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (paused = !paused)
+            {
+                transform.Find("HUD").gameObject.SetActive(false);
+                transform.Find("Pause").gameObject.SetActive(true);
+            }
+            else
+            {
+                transform.Find("HUD").gameObject.SetActive(true);
+                transform.Find("Pause").gameObject.SetActive(false);
+            }
+        }
     }
 
     private void HealthChanged() => healthUI.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = playerHealth.health.ToString();
