@@ -22,7 +22,28 @@ public class PlayerLookControls : MonoBehaviour
 
     public VehicleController? VehicleController { get; set; }
 
-    public bool EnableLook { get; set; } = true;
+    private bool enableMouse = true;
+    public bool EnableMouse { 
+        get => enableMouse;
+        set {
+            enableMouse = value;
+            if (!enableMouse)
+            {
+                lookAction.Disable();
+                interactAction.Disable();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                lookAction.Enable();
+                interactAction.Enable();
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
+    }
+    public float Sensitivity { get; set; } = 1;
 
     private void Awake()
     {
@@ -48,7 +69,7 @@ public class PlayerLookControls : MonoBehaviour
     //Just a small glimpse into my sick, twisted world
     private void Update()
     {
-        if (!EnableLook) return;
+        if (!enableMouse) return;
 
         rotChange = lookAction.ReadValue<Vector2>();
 
@@ -63,8 +84,8 @@ public class PlayerLookControls : MonoBehaviour
         verticalPivot.localEulerAngles = new Vector3(Vrot, verticalPivot.localEulerAngles.y, verticalPivot.localEulerAngles.z);
         */
 
-        Hrot += horizontalLookSpeed * rotChange.x;
-        Vrot -= verticalLookSpeed * rotChange.y;
+        Hrot += horizontalLookSpeed * rotChange.x * Sensitivity;
+        Vrot -= verticalLookSpeed * rotChange.y * Sensitivity;
 
         Vrot = Mathf.Clamp(Vrot, verticalLookClamp.x, verticalLookClamp.y);
 

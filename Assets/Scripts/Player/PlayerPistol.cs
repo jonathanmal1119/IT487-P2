@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerLookControls))]
 public class PlayerPistol : MonoBehaviour
 {
     public string weaponName;
@@ -76,7 +77,7 @@ public class PlayerPistol : MonoBehaviour
     {
         if(weaponXOffset != null)
         {
-            if (Mouse.current.rightButton.isPressed)
+            if (Mouse.current.rightButton.isPressed && GetComponent<PlayerLookControls>().EnableMouse)
             {
                 weaponXOffset.transform.localPosition = Vector3.Lerp(weaponXOffset.transform.localPosition, new(aimOffsetDistance * -1f, 0.1f, 0f), Time.deltaTime * 24);
                 aimDownSights = true;
@@ -95,15 +96,15 @@ public class PlayerPistol : MonoBehaviour
                 gunModel.SetActive(true);
             }
 
-            if(Time.time >= nextShot)
+            if (Time.time >= nextShot)
             {
                 //press button to shoot.
-                if (shootAction.WasPressedThisFrame())
+                if (shootAction.WasPressedThisFrame() && GetComponent<PlayerLookControls>().EnableMouse)
                 {
                     Shoot();
                 }
                 //hold button to continuously shoot, if enabled.
-                else if (holdToAutomaticallyShoot && shootAction.IsPressed())
+                else if (holdToAutomaticallyShoot && shootAction.IsPressed() && GetComponent<PlayerLookControls>().EnableMouse)
                 {
                     Shoot();
                 }

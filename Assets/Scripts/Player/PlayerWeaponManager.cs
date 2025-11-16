@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerLookControls))]
 public class PlayerWeaponManager : MonoBehaviour
 {
     public PlayerPistol[] weapons;
@@ -38,11 +39,11 @@ public class PlayerWeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (scrollAction.ReadValue<float>() > 0 || nextAction.WasPressedThisFrame())
+        if ((scrollAction.ReadValue<float>() > 0 || nextAction.WasPressedThisFrame()) && GetComponent<PlayerLookControls>().EnableMouse)
         {
             SetActiveWeapon(activeWeapon + 1);
         }
-        else if (scrollAction.ReadValue<float>() < 0 || previousAction.WasPressedThisFrame())
+        else if ((scrollAction.ReadValue<float>() < 0 || previousAction.WasPressedThisFrame()) && GetComponent<PlayerLookControls>().EnableMouse)
         {
             SetActiveWeapon(activeWeapon - 1);
         }

@@ -74,6 +74,15 @@ public class UIController : MonoBehaviour
         objectivesUI = transform.Find("HUD/Objectives").gameObject;
         foreach (Transform child in objectivesUI.transform.Find("ObjectiveList").transform)
             objectives.Add((child.gameObject, child.Find("Value").gameObject));
+
+        transform.Find("Pause/Menu/Sensitivity/Value").GetComponent<TMP_InputField>().text = playerLookControls.Sensitivity.ToString("0.00");
+        transform.Find("Pause/Menu/Sensitivity/Value").GetComponent<TMP_InputField>().onValueChanged.AddListener(value =>
+        {
+            if (float.TryParse(value, out float newSensitivity))
+            {
+                playerLookControls.Sensitivity = newSensitivity;
+            }
+        });
     }
 
     private void Update()
@@ -104,18 +113,19 @@ public class UIController : MonoBehaviour
 
         UpdateHits();
 
-        // idk how inputs work 
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             if (paused = !paused)
             {
                 transform.Find("HUD").gameObject.SetActive(false);
                 transform.Find("Pause").gameObject.SetActive(true);
+                playerLookControls.EnableMouse = false;
             }
             else
             {
                 transform.Find("HUD").gameObject.SetActive(true);
                 transform.Find("Pause").gameObject.SetActive(false);
+                playerLookControls.EnableMouse = true;
             }
         }
     }
