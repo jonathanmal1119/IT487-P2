@@ -20,6 +20,8 @@ public class PlayerLookControls : MonoBehaviour
     public Camera playerCam;
     public LayerMask interactLayer;
 
+    public VehicleController? VehicleController { get; set; }
+
     private void Awake()
     {
         lookAction = InputSystem.actions.FindAction("Player/Look");
@@ -73,16 +75,17 @@ public class PlayerLookControls : MonoBehaviour
 
     void Interact()
     {
-        Ray ray = new Ray(transform.position, playerCam.transform.forward);
+        Ray ray = new(transform.position, playerCam.transform.forward);
 
         Debug.DrawRay(ray.origin, ray.direction * 4f, Color.green, 1f);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 4f, interactLayer))
         {
-            if (hit.collider.gameObject.tag == "Vehicle")
+            if (hit.collider.gameObject.CompareTag("Vehicle"))
             {
-                hit.collider.gameObject.GetComponentInParent<VehicleController>().enabled = true;
-                this.gameObject.SetActive(false);
+                VehicleController = hit.collider.gameObject.GetComponentInParent<VehicleController>();
+                VehicleController.enabled = true;
+                gameObject.SetActive(false);
             }
         }
         else
