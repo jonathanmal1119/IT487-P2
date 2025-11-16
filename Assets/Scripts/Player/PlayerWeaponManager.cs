@@ -70,6 +70,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
         weapons[index].ammunition += amount;
 
+        AmmoChanged?.Invoke();
+
         return true;
     }
 }
