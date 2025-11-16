@@ -69,6 +69,8 @@ public class UIController : MonoBehaviour
         playerWeaponManager.OnKill += () => OnWeaponHit(true);
 
         crosshairUI = transform.Find("HUD/Crosshair").gameObject;
+        CreateCrosshairLines();
+
         hitmarkerUI = crosshairUI.transform.Find("Hitmarkers").gameObject;
 
         objectivesUI = transform.Find("HUD/Objectives").gameObject;
@@ -112,6 +114,7 @@ public class UIController : MonoBehaviour
 
 
         UpdateHits();
+        UpdateCrosshairLines();
 
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
@@ -213,6 +216,80 @@ public class UIController : MonoBehaviour
             float newX = Mathf.Pow(1.015f, Time.deltaTime * 140);
             float newY = Mathf.Pow(0.975f, Time.deltaTime * 140);
             rectTransform.sizeDelta *= new Vector2(newX, newY);
+        }
+    }
+
+    //private void CreateCrosshairLines(int count = 3, int startAngle = 90) if you want the tri prong crosshair thing
+    private void CreateCrosshairLines(int count = 4, int startAngle = 0)
+    {
+        // remove existing crosshair lines
+        foreach (Transform child in crosshairUI.transform)
+        {
+            if (child.N()?.name == "UICrosshairLine" || child.N()?.name == "UICrosshairDot")
+                Destroy(child.gameObject);
+        }
+
+        {
+            GameObject crosshairDot = new("UICrosshairDot");
+            crosshairDot.transform.SetParent(crosshairUI.transform, false);
+
+            RectTransform rectTransform = crosshairDot.AddComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(2, 2);
+
+            Image image = crosshairDot.AddComponent<Image>();
+            image.color = Color.white;
+
+            Outline outline = crosshairDot.AddComponent<Outline>();
+            outline.effectColor = new(0, 0, 0, 0.25f);
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            float angle = (i * (360 / count) + startAngle);
+
+            GameObject crosshairLine = new("UICrosshairLine");
+            crosshairLine.transform.SetParent(crosshairUI.transform, false);
+            crosshairLine.transform.localEulerAngles = new Vector3(0, 0, angle);
+
+            RectTransform rectTransform = crosshairLine.AddComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(12, 2);
+
+            rectTransform.anchoredPosition = 15 * new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+
+            Image image = crosshairLine.AddComponent<Image>();
+            image.color = Color.white;
+
+            Outline outline = crosshairLine.AddComponent<Outline>();
+            outline.effectColor = new(0, 0, 0, 0.25f);
+        }
+    }
+
+    private void UpdateCrosshairLines()
+    {
+        foreach (Transform crosshairLine in crosshairUI.transform)
+        {
+            if (crosshairLine == null || crosshairLine.name != "UICrosshairLine")
+                continue;
+
+            float angle = crosshairLine.transform.localEulerAngles.z * Mathf.Deg2Rad;
+            Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
+            RectTransform rectTransform = crosshairLine.GetComponent<RectTransform>();
+            float currentDistance = (rectTransform.anchoredPosition / direction).x;
+            rectTransform.anchoredPosition = Mathf.Lerp(currentDistance, playerWeaponManager.ActiveWeapon.EffectiveSpread * 10 + 12, Time.deltaTime * 16) * direction;
+
+            Image image = crosshairLine.GetComponent<Image>();
+            if (playerWeaponManager.ActiveWeapon.IsAiming)
+            {
+                Color newColor = image.color;
+                newColor.a = Mathf.Lerp(newColor.a, 0, Time.deltaTime * 40);
+                image.color = newColor;
+            }
+            else
+            {
+                Color newColor = image.color;
+                newColor.a = Mathf.Lerp(newColor.a, 1, Time.deltaTime * 40);
+                image.color = newColor;
+            }
         }
     }
 

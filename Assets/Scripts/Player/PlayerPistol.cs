@@ -26,6 +26,9 @@ public class PlayerPistol : MonoBehaviour
     //random eulerAngle rotation of bullets when shooting. No Z value because that is for roll, which isn't useful in this circumstance.
     public Vector2 hipFireRandomSpread;
     public Vector2 aimFireRandomSpread;
+
+    public float EffectiveSpread => aimDownSights ? Mathf.Max(aimFireRandomSpread.x, aimFireRandomSpread.y) : Mathf.Max(hipFireRandomSpread.x, hipFireRandomSpread.y);
+
     bool aimDownSights = false;
     
     [Header("leave weaponXOffset null if the weapon doesn't allow aim-down-sight")]
@@ -41,6 +44,7 @@ public class PlayerPistol : MonoBehaviour
     public bool hideOnNoAmmo = false;
     
     public Action? AmmoChanged => GetComponent<PlayerWeaponManager>().N()?.AmmoChanged;
+    public bool IsAiming => aimDownSights;
 
     private void Awake()
     {
