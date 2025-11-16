@@ -22,12 +22,27 @@ public class PlayerPistol : MonoBehaviour
     public float switchToWeaponTime = 0.5f;
     //public float reloadTime = 1.5f;
     float nextShot = 0f;
+    int continuousShots = 0;
 
     //random eulerAngle rotation of bullets when shooting. No Z value because that is for roll, which isn't useful in this circumstance.
     public Vector2 hipFireRandomSpread;
+    public float bulletSpreadIncreasePerShot;
+
     public Vector2 aimFireRandomSpread;
 
-    public float EffectiveSpread => aimDownSights ? Mathf.Max(aimFireRandomSpread.x, aimFireRandomSpread.y) : Mathf.Max(hipFireRandomSpread.x, hipFireRandomSpread.y);
+    public Vector2 EffectiveSpread { 
+        get {
+            if (aimDownSights)
+            {
+                return aimFireRandomSpread;
+            }
+            else
+            {
+                float extraSpread = (float)Math.Log(continuousShots + 0.5) * bulletSpreadIncreasePerShot;
+                return new(hipFireRandomSpread.x + extraSpread, hipFireRandomSpread.y + extraSpread);
+            }
+        } 
+    }
 
     bool aimDownSights = false;
     
@@ -118,6 +133,9 @@ public class PlayerPistol : MonoBehaviour
         {
             gunModel.SetActive(false);
         }
+
+        if (nextShot + 0.25f < Time.time)
+            continuousShots = 0;
     }
 
     void Shoot()
@@ -128,18 +146,13 @@ public class PlayerPistol : MonoBehaviour
         }
 
         GameObject pb = Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
-        if (aimDownSights)
-        {
-            pb.transform.Rotate(UnityEngine.Random.Range(aimFireRandomSpread.x * -1f, aimFireRandomSpread.x), UnityEngine.Random.Range(aimFireRandomSpread.y * -1f, aimFireRandomSpread.y), 0f);
-        }
-        else
-        {
-            pb.transform.Rotate(UnityEngine.Random.Range(hipFireRandomSpread.x * -1f, hipFireRandomSpread.x), UnityEngine.Random.Range(hipFireRandomSpread.y * -1f, hipFireRandomSpread.y), 0f);
-        }
+        pb.transform.Rotate(UnityEngine.Random.Range(EffectiveSpread.x * -1, EffectiveSpread.x), UnityEngine.Random.Range(EffectiveSpread.y * -1, EffectiveSpread.y), 0f);
         if (pb.GetComponent<PlayerBullet>() != null)
             pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>().N();
         if (pb.GetComponent<PlayerGrenade>() != null)
             pb.GetComponent<PlayerGrenade>().Owner = GetComponent<PlayerWeaponManager>().N();
+
+        continuousShots++;
 
         nextShot = Time.time + timeBetweenShots;
         ammunition -= ammoUsedPerShot;

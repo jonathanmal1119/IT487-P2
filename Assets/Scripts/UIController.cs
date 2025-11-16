@@ -275,7 +275,7 @@ public class UIController : MonoBehaviour
             Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
             RectTransform rectTransform = crosshairLine.GetComponent<RectTransform>();
             float currentDistance = (rectTransform.anchoredPosition / direction).x;
-            rectTransform.anchoredPosition = Mathf.Lerp(currentDistance, playerWeaponManager.ActiveWeapon.EffectiveSpread * 10 + 12, Time.deltaTime * 16) * direction;
+            rectTransform.anchoredPosition = Mathf.Lerp(currentDistance, playerWeaponManager.ActiveWeapon.EffectiveSpread.x * 12 + 12, Time.deltaTime * 32) * direction;
 
             Image image = crosshairLine.GetComponent<Image>();
             if (playerWeaponManager.ActiveWeapon.IsAiming)

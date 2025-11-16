@@ -186,8 +186,6 @@ MonoBehaviour:
   runStaminaPerSecond: 0.35
   staminaRegenPerSecond: 0.25
   waitForRefill: 0
-  staminaBar: {fileID: 0}
-  staminaText: {fileID: 0}
 --- !u!114 &551630824124643667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +224,6 @@ MonoBehaviour:
   - {fileID: 226510116165374558}
   - {fileID: 1776395401915636146}
   activeWeapon: 0
-  debugCurrentWeaponText: {fileID: 0}
 --- !u!114 &3282894780114167723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,11 +240,11 @@ MonoBehaviour:
   bulletSpawnSource: {fileID: 1831088548427473237}
   bulletPrefab: {fileID: 5714155450476413498, guid: c004548c8568fbf4e963c72b76f39dc2, type: 3}
   gunModel: {fileID: 6586855431055879443}
-  ammoCounter: {fileID: 0}
   animator: {fileID: 4124634378025209756}
   timeBetweenShots: 0.25
   switchToWeaponTime: 0.5
-  hipFireRandomSpread: {x: 2, y: 2}
+  hipFireRandomSpread: {x: 1.5, y: 1.5}
+  bulletSpreadIncreasePerShot: 0.5
   aimFireRandomSpread: {x: 0, y: 0}
   weaponXOffset: {fileID: 9061843439806742531}
   aimOffsetDistance: 0.35
@@ -271,11 +268,11 @@ MonoBehaviour:
   bulletSpawnSource: {fileID: 7134361081335340609}
   bulletPrefab: {fileID: 222167095660442845, guid: 4b22d6da1360f3346969e9fa9167a753, type: 3}
   gunModel: {fileID: 7610471156016250750}
-  ammoCounter: {fileID: 0}
   animator: {fileID: 2872756840699121962}
   timeBetweenShots: 1
   switchToWeaponTime: 1
   hipFireRandomSpread: {x: 0, y: 0}
+  bulletSpreadIncreasePerShot: 0
   aimFireRandomSpread: {x: 0, y: 0}
   weaponXOffset: {fileID: 0}
   aimOffsetDistance: 0.3
@@ -299,11 +296,11 @@ MonoBehaviour:
   bulletSpawnSource: {fileID: 3169252896886394467}
   bulletPrefab: {fileID: 7432778182290540994, guid: 86ed420d8997e994a8b83ebe46058a5a, type: 3}
   gunModel: {fileID: 2572543073069625971}
-  ammoCounter: {fileID: 0}
   animator: {fileID: 9096009342380725907}
   timeBetweenShots: 0.75
   switchToWeaponTime: 0.75
   hipFireRandomSpread: {x: 0, y: 0}
+  bulletSpreadIncreasePerShot: 0
   aimFireRandomSpread: {x: 0, y: 0}
   weaponXOffset: {fileID: 0}
   aimOffsetDistance: 0.3
@@ -353,7 +350,6 @@ MonoBehaviour:
   maxHealth: 100
   health: 0
   armorDamageReductionPercent: 0
-  HealthUI: {fileID: 0}
   RestartScreen: {fileID: 0}
 --- !u!1 &2572543073069625971
 GameObject:
