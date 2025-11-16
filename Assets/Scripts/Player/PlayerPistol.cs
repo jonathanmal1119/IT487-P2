@@ -60,6 +60,7 @@ public class PlayerPistol : MonoBehaviour
     
     public Action? AmmoChanged => GetComponent<PlayerWeaponManager>().N()?.AmmoChanged;
     public bool IsAiming => aimDownSights;
+    public bool HasSpread => hipFireRandomSpread != Vector2.zero || bulletSpreadIncreasePerShot > 0f || aimFireRandomSpread != Vector2.zero;
 
     private void Awake()
     {
