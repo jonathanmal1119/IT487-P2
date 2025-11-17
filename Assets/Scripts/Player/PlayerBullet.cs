@@ -29,7 +29,11 @@ public class PlayerBullet : MonoBehaviour
         }
         else if(ignoreGround == false && other.gameObject.layer == 0 && other.CompareTag("Player") == false)
         {
-            Destroy(gameObject);
+            // keeping it alive for a bit lets the trail disappear normally instead of abruptly disappearing
+            GetComponent<Collider>().enabled = false;
+            rb.isKinematic = false;
+            rb.linearVelocity = Vector3.zero;
+            Destroy(gameObject, 0.25f); 
         }
     }
     private void OnCollisionEnter(Collision collision)

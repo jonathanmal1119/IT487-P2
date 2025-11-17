@@ -129,7 +129,12 @@ public class EnemyController : MonoBehaviour
 
             if (bulletInfo?.destroyOnHit == true)
             {
-                Destroy(collision.gameObject);
+                collision.gameObject.GetComponent<Collider>().enabled = false;
+                collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                collision.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                Destroy(collision.gameObject, 0.25f);
+
+                //Destroy(collision.gameObject);
                 bulletInfo.waitingToDestroy = true;
             }
         }
@@ -173,7 +178,12 @@ public class EnemyController : MonoBehaviour
 
             if (bulletInfo?.destroyOnHit == true)
             {
-                Destroy(other.gameObject);
+                other.gameObject.GetComponent<Collider>().enabled = false;
+                other.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                other.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                Destroy(other.gameObject, 0.25f);
+
+                //Destroy(other.gameObject);
                 bulletInfo.waitingToDestroy = true;
             }
         }
