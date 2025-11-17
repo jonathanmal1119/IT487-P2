@@ -9,8 +9,10 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 100;
     public int health;
 
-    [Header("Armor percent. 0 = no armor, 1 = all damage negated")]
+    [Header("Demage negation percent. 0 = take all damage, 1 = all damage negated")]
     public float armorDamageReductionPercent = 0f;
+    [Header("Armor as a secondary health value. Absorbs all damage so long as it is greater than zero.")]
+    public int armorPoints = 0;
 
     [Header("UI Refs")]
     public GameObject RestartScreen;
@@ -30,9 +32,28 @@ public class PlayerHealth : MonoBehaviour
         if (IsInvincible)
             return;
 
-        amt = (int)(amt * (1 - armorDamageReductionPercent));
+        //player has armor
+        if(armorPoints > 0)
+        {
+            armorPoints -= (int)(amt * (1 - armorDamageReductionPercent));
 
-        health = health - amt > 0 ? health - amt : 0;
+            //damage main health if the armor is now a negative value
+            if(armorPoints < 0)
+            {
+                amt = Math.Abs(armorPoints);
+
+                amt = (int)(amt * (1 - armorDamageReductionPercent));
+                health = health - amt > 0 ? health - amt : 0;
+            }
+        }
+        //no armor
+        else
+        {
+            amt = (int)(amt * (1 - armorDamageReductionPercent));
+
+            health = health - amt > 0 ? health - amt : 0;
+        }
+        
         HealthChanged?.Invoke();
         lastHitTime = Time.time;
 
@@ -72,5 +93,11 @@ public class PlayerHealth : MonoBehaviour
 
             Destroy(collision.gameObject);
         }
+    }
+
+    public void AddArmor(int amt)
+    {
+        armorPoints = amt;
+        HealthChanged?.Invoke();
     }
 }

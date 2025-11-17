@@ -171,7 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77c3ebba9af5284ca1c8e486442b4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  percentNegation: 0.25
+  percentNegation: 0
+  armorPoints: 15
 --- !u!1001 &8467516333789849153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -223,7 +224,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: af69010bf330c6a458acdebdd3fc1425, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3efd81bd90ae3764ab633bff5a04c692, type: 2}
+      objectReference: {fileID: 2100000, guid: f74bf0c4a23d97348930fc46893752c0, type: 2}
     - target: {fileID: 919132149155446097, guid: af69010bf330c6a458acdebdd3fc1425, type: 3}
       propertyPath: m_Name
       value: Shield
