@@ -17,7 +17,9 @@ public class PlayerBullet : MonoBehaviour
     void Start()
     {
         rb.AddForce(transform.forward * launchForce, ForceMode.Impulse);
-        Destroy(gameObject, lifetime);
+        
+        Invoke("DisableBullet", lifetime); // disable bullet based on lifetime
+        Destroy(gameObject, lifetime + 5); // keep object alive after disabling so the vfx can finish playing before destroying
     }
 
     private void OnTriggerEnter(Collider other)
