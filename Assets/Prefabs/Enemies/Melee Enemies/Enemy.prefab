@@ -76,10 +76,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   health: 100
   movementSpeed: 5
+  idleSpeed: 1
   detectionRange: 10
   attackRange: 1
   attackAmt: 10
-  attackTime: 1.5
+  attackTime: 2
+  isDead: 0
+  animator: {fileID: 1537984739089156128}
+  death: {fileID: 9100000, guid: 6882b6fda1ca307409d32a3839b91e64, type: 2}
+  attack: {fileID: 9100000, guid: 350c80f7b05ea874d8369b922616cf41, type: 2}
   playerDetected: 0
   drops: []
 --- !u!136 &4496212816123565094
@@ -153,6 +158,62 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3545461305216090317, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.43144163
+      objectReference: {fileID: 0}
+    - target: {fileID: -3545461305216090317, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.3563382
+      objectReference: {fileID: 0}
+    - target: {fileID: -3545461305216090317, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5695186
+      objectReference: {fileID: 0}
+    - target: {fileID: -3545461305216090317, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.6021044
+      objectReference: {fileID: 0}
+    - target: {fileID: -3545461305216090317, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 22.231
+      objectReference: {fileID: 0}
+    - target: {fileID: -3545461305216090317, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -83.964
+      objectReference: {fileID: 0}
+    - target: {fileID: -3545461305216090317, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 88.701
+      objectReference: {fileID: 0}
+    - target: {fileID: -2795259288829128869, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.43437982
+      objectReference: {fileID: 0}
+    - target: {fileID: -2795259288829128869, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.35130903
+      objectReference: {fileID: 0}
+    - target: {fileID: -2795259288829128869, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.59270936
+      objectReference: {fileID: 0}
+    - target: {fileID: -2795259288829128869, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5801653
+      objectReference: {fileID: 0}
+    - target: {fileID: -2795259288829128869, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 22.491
+      objectReference: {fileID: 0}
+    - target: {fileID: -2795259288829128869, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 86.863
+      objectReference: {fileID: 0}
+    - target: {fileID: -2795259288829128869, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -85.034
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_Name
       value: Characters_Zombie_SuitMan_1
@@ -164,7 +225,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9100000, guid: 837f79bcbf98ea946b3c32443e6b3c48, type: 2}
     - target: {fileID: 5866666021909216657, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
       propertyPath: m_CullingMode
       value: 0
@@ -182,6 +243,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+--- !u!95 &1537984739089156128 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}
+  m_PrefabInstance: {fileID: 4914149921577317809}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4879694366741647962 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 885eac34fd0d577439e6670a7ca3777e, type: 3}

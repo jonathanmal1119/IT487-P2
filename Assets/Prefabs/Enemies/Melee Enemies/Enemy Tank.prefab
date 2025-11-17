@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3747938342528550776}
-  - component: {fileID: 7226324939629078090}
   - component: {fileID: 146526294299043742}
   - component: {fileID: 4940355837660466601}
   - component: {fileID: 5300344487954762626}
@@ -36,14 +35,6 @@ Transform:
   - {fileID: 2512380751826539597}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7226324939629078090
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498369331963960891}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!136 &146526294299043742
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -108,10 +99,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   health: 150
   movementSpeed: 3.4
+  idleSpeed: 1
   detectionRange: 10
   attackRange: 1
   attackAmt: 10
-  attackTime: 1.5
+  attackTime: 2
+  isDead: 0
+  animator: {fileID: 8376106170680315447}
+  death: {fileID: 9100000, guid: 6882b6fda1ca307409d32a3839b91e64, type: 2}
+  attack: {fileID: 9100000, guid: 350c80f7b05ea874d8369b922616cf41, type: 2}
   playerDetected: 0
   drops: []
 --- !u!1001 &3548582727158228157
@@ -170,6 +166,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 837f79bcbf98ea946b3c32443e6b3c48, type: 2}
+    - target: {fileID: 4972802055694576266, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
+      propertyPath: m_CullingMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -178,5 +178,10 @@ PrefabInstance:
 --- !u!4 &2512380751826539597 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
+  m_PrefabInstance: {fileID: 3548582727158228157}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8376106170680315447 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4972802055694576266, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
   m_PrefabInstance: {fileID: 3548582727158228157}
   m_PrefabAsset: {fileID: 0}

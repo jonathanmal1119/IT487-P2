@@ -376,10 +376,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   health: 100
   movementSpeed: 5
+  idleSpeed: 2
   detectionRange: 10
   attackRange: 0
   attackAmt: 10
   attackTime: 1.5
+  isDead: 0
+  animator: {fileID: 0}
+  death: {fileID: 9100000, guid: 6882b6fda1ca307409d32a3839b91e64, type: 2}
+  attack: {fileID: 0}
   playerDetected: 0
   drops: []
 --- !u!114 &4281037638696343427
@@ -465,6 +470,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MP_Clovis
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: b7e41c3674cab1b4fab3efcb00c3a3dd, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 837f79bcbf98ea946b3c32443e6b3c48, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
