@@ -173,4 +173,4 @@ MonoBehaviour:
   speedForMaxDamage: 20
   minMultiplier: 0.25
   maxMultiplier: 1.5
-  slownDownAmt: 0.5
+  slownDownAmt: 0.8

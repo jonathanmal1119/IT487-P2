@@ -7,7 +7,7 @@ public class ObstacleMetaData : MonoBehaviour
     public float speedForMaxDamage = 20f;
     public float minMultiplier = 0.25f;
     public float maxMultiplier = 1.5f;
-    public float slownDownAmt = 0.5f;
+    public float slownDownAmt = 0.8f;
 
     public void OnCollisionEnter(Collision collision)
     {
