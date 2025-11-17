@@ -24,12 +24,11 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int Amt)
     {
         Amt = (int)((float)Amt * (1f - armorDamageReductionPercent));
-       if (health - Amt <= 0)
+        if (health - Amt <= 0)
         {
             Die();
             return;
         }
-            
 
         health -= Amt;
         HealthUI.text = "HP: " + health.ToString();

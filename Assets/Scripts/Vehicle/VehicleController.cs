@@ -109,21 +109,66 @@ public class VehicleController : MonoBehaviour
         }
 
         if (move)
+        {
             input = move.action.ReadValue<Vector2>();
-
-        // Drive
-        rearLeftWheelCollider.motorTorque = rearRightWheelCollider.motorTorque = frontRightWheelCollider.motorTorque = frontLeftWheelCollider.motorTorque = input.y * carPower;
-
-        if (handbrake && handbrake.action.IsPressed())
-        {
-            frontLeftWheelCollider.brakeTorque = frontRightWheelCollider.brakeTorque = brakeingPower;
-            rearLeftWheelCollider.brakeTorque = rearRightWheelCollider.brakeTorque = brakeingPower;
+            if (!isPlayerInCar)
+            {
+                isPlayerInCar = true;
+                Player.transform.position = transform.position;
+            }
+                
         }
-        else
-        {
-            frontLeftWheelCollider.brakeTorque = frontRightWheelCollider.brakeTorque = 0;
-            rearLeftWheelCollider.brakeTorque = rearRightWheelCollider.brakeTorque = 0;
-        }
+            
+
+		// Drive and braking/reverse logic
+		float forwardSpeed = transform.InverseTransformDirection(rb.linearVelocity).z;
+		float motorTorque = 0f;
+		float brakeTorque = 0f;
+		bool isHandbraking = (handbrake && handbrake.action.IsPressed());
+		const float stopThreshold = 0.5f; 
+
+		if (isHandbraking)
+		{
+			motorTorque = 0f;
+			brakeTorque = brakeingPower;
+		}
+		else
+		{
+            if (input.y < -0.01f)
+            {
+                if (forwardSpeed > stopThreshold)
+                {
+                    motorTorque = 0f;
+                    brakeTorque = brakeingPower;
+                }
+                else
+                {
+                    brakeTorque = 0f;
+                    motorTorque = input.y * carPower;
+                }
+            }
+            else if (input.y > 0.01f)
+            {
+                if (forwardSpeed < -stopThreshold)
+                {
+                    motorTorque = 0f;
+                    brakeTorque = brakeingPower;
+                }
+                else
+                {
+                    brakeTorque = 0f;
+                    motorTorque = input.y * carPower;
+                }
+            }
+            else
+            {
+                motorTorque = 0f;
+                brakeTorque = 0f;
+            }
+		}
+
+		frontLeftWheelCollider.motorTorque = frontRightWheelCollider.motorTorque = rearLeftWheelCollider.motorTorque = rearRightWheelCollider.motorTorque = motorTorque;
+		frontLeftWheelCollider.brakeTorque = frontRightWheelCollider.brakeTorque = rearLeftWheelCollider.brakeTorque = rearRightWheelCollider.brakeTorque = brakeTorque;
 
         // Steer
         float speedKph = rb.linearVelocity.magnitude * 3.6f;
@@ -148,6 +193,7 @@ public class VehicleController : MonoBehaviour
             fuelLevelText.text = "Fuel: " + fuelLevel.ToString("0");
         }
 
+        
     }
 
     void FixedUpdate()
@@ -168,8 +214,8 @@ public class VehicleController : MonoBehaviour
         Vector3 dragForceWorld = transform.right * dragAcceleration;
         rb.AddForce(dragForceWorld, ForceMode.Acceleration);
     }
-
-
+        
+    
     public void Refuel(int amount)
     {
         fuelLevel += amount;
@@ -209,5 +255,10 @@ public class VehicleController : MonoBehaviour
     {
         rb.linearVelocity *= amt;
         rb.angularVelocity *= amt;
+    }
+
+    public bool CanGetHurtByCar()
+    {
+        return isPlayerInCar;
     }
 }
