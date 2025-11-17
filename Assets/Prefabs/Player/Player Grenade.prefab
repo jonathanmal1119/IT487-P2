@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   rb: {fileID: 4085108719629664182}
-  launchForce: 10
-  fuseTime: 3
+  launchForce: 12
+  fuseTime: 2.5
   randomRotationRange: {x: 1, y: 2}
   explosionObject: {fileID: 8924261361647473477, guid: eefaf34098b1c1644bd306bb9470329f, type: 3}
 --- !u!1001 &5346369826264051077
