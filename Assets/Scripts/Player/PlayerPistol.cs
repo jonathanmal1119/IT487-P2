@@ -15,13 +15,13 @@ public class PlayerPistol : MonoBehaviour
 
     public Animator animator;
 
-    InputAction shootAction;
+    public InputAction shootAction;
     //InputAction reloadAction;
 
     public float timeBetweenShots = 0.2f;
     public float switchToWeaponTime = 0.5f;
     //public float reloadTime = 1.5f;
-    float nextShot = 0f;
+    public float nextShot = 0f;
     int continuousShots = 0;
 
     //random eulerAngle rotation of bullets when shooting. No Z value because that is for roll, which isn't useful in this circumstance.
