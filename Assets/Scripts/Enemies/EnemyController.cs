@@ -16,8 +16,11 @@ public class EnemyController : MonoBehaviour
     public bool isDead = false;
 
     GameObject Player;
+    public AudioSource audio;
+    public AudioClip growl;
 
     public Animator animator;
+    public RuntimeAnimatorController walk;
     public RuntimeAnimatorController death;
     public RuntimeAnimatorController attack;
 
@@ -35,11 +38,14 @@ public class EnemyController : MonoBehaviour
     bool isChangingDirection = false;
 
     Rigidbody rb;
+
+    bool isPlayingSound = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         Player = GameObject.FindWithTag("Player");
         animator = GetComponentInChildren<Animator>();
+        audio = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -76,6 +82,7 @@ public class EnemyController : MonoBehaviour
 
             if (Vector3.Distance(rb.position, Player.transform.position) <= attackRange && !attacking)
             {
+                attacking = true;
                 StartCoroutine(DamageCoroutine());
             }
 
@@ -100,13 +107,25 @@ public class EnemyController : MonoBehaviour
             if (this.rb.position.y < -100)
                 StartCoroutine(Death());
 
+            if (isPlayingSound == false && audio != null)
+            {
+                isPlayingSound = true;
+                StartCoroutine(playSound());
+            }
         }
+    }
+
+    IEnumerator playSound()
+    {
+        int wait = Random.Range(0, 10);
+        audio.clip = growl;
+        audio.Play();
+        yield return new WaitForSeconds(wait);
+        isPlayingSound = false;
     }
 
     IEnumerator DamageCoroutine()
     {
-        attacking = true;
-
         while (Vector3.Distance(rb.position, Player.transform.position) <= attackRange)
         {
             Player.GetComponent<PlayerHealth>().TakeDamage(attackAmt);
@@ -114,6 +133,7 @@ public class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(attackTime);
         }
 
+        animator.runtimeAnimatorController = walk;
         attacking = false;
     }
 
