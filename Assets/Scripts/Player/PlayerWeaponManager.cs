@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
+[RequireComponent(typeof(PlayerLookControls))]
 public class PlayerWeaponManager : MonoBehaviour
 {
     public PlayerPistol[] weapons;
@@ -9,7 +10,12 @@ public class PlayerWeaponManager : MonoBehaviour
 
     InputAction scrollAction, nextAction, previousAction;
 
-    public Text debugCurrentWeaponText;
+    public PlayerPistol ActiveWeapon => weapons[activeWeapon];
+
+    public Action? WeaponChanged;
+    public Action? AmmoChanged;
+    public Action? OnHit;
+    public Action? OnKill;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,11 +39,11 @@ public class PlayerWeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (scrollAction.ReadValue<float>() > 0 || nextAction.WasPressedThisFrame())
+        if ((scrollAction.ReadValue<float>() > 0 || nextAction.WasPressedThisFrame()) && GetComponent<PlayerLookControls>().EnableMouse)
         {
             SetActiveWeapon(activeWeapon + 1);
         }
-        else if (scrollAction.ReadValue<float>() < 0 || previousAction.WasPressedThisFrame())
+        else if ((scrollAction.ReadValue<float>() < 0 || previousAction.WasPressedThisFrame()) && GetComponent<PlayerLookControls>().EnableMouse)
         {
             SetActiveWeapon(activeWeapon - 1);
         }
@@ -53,11 +59,7 @@ public class PlayerWeaponManager : MonoBehaviour
             w.enabled = false;
         }
         weapons[i].enabled = true;
-
-        if(debugCurrentWeaponText != null)
-        {
-            debugCurrentWeaponText.text = "Current Weapon: " + weapons[i].weaponName;
-        }
+        WeaponChanged?.Invoke();
     }
 
     public bool AddAmmo(int amount, int index)
@@ -67,6 +69,8 @@ public class PlayerWeaponManager : MonoBehaviour
         if(weapons[index] == null) { return false; }
 
         weapons[index].ammunition += amount;
+
+        AmmoChanged?.Invoke();
 
         return true;
     }
