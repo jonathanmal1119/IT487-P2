@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class PlayerBullet : MonoBehaviour
 {
     public Rigidbody rb;
@@ -29,15 +30,19 @@ public class PlayerBullet : MonoBehaviour
         }
         else if(ignoreGround == false && other.gameObject.layer == 0 && other.CompareTag("Player") == false)
         {
-            // keeping it alive for a bit lets the trail disappear normally instead of abruptly disappearing
-            GetComponent<Collider>().enabled = false;
-            rb.isKinematic = false;
-            rb.linearVelocity = Vector3.zero;
-            Destroy(gameObject, 0.25f); 
+            // keeping it alive lets the trail disappear normally instead of abruptly disappearing
+            DisableBullet();
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
         OnTriggerEnter(collision.collider);
+    }
+
+    public void DisableBullet()
+    {
+        GetComponent<Collider>().enabled = false;
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
     }
 }

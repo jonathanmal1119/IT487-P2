@@ -129,10 +129,7 @@ public class EnemyController : MonoBehaviour
 
             if (bulletInfo?.destroyOnHit == true)
             {
-                collision.gameObject.GetComponent<Collider>().enabled = false;
-                collision.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                collision.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-                Destroy(collision.gameObject, 0.25f);
+                bulletInfo.DisableBullet();
 
                 //Destroy(collision.gameObject);
                 bulletInfo.waitingToDestroy = true;
@@ -178,10 +175,7 @@ public class EnemyController : MonoBehaviour
 
             if (bulletInfo?.destroyOnHit == true)
             {
-                other.gameObject.GetComponent<Collider>().enabled = false;
-                other.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                other.gameObject.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
-                Destroy(other.gameObject, 0.25f);
+                bulletInfo.DisableBullet();
 
                 //Destroy(other.gameObject);
                 bulletInfo.waitingToDestroy = true;
