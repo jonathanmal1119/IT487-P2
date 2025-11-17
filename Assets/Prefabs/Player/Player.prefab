@@ -515,7 +515,7 @@ MonoBehaviour:
   grenadeExplosion: {fileID: 8924261361647473477, guid: eefaf34098b1c1644bd306bb9470329f, type: 3}
   fuseDisplay: {fileID: 4668516930918270189}
   grenadeFuseLength: 3
-  health: {fileID: 0}
+  health: {fileID: 5450882390592699504}
   grenadeOvercookExplosionDamage: 50
 --- !u!114 &1776395401915636146
 MonoBehaviour:
@@ -597,6 +597,7 @@ MonoBehaviour:
   maxHealth: 100
   health: 0
   armorDamageReductionPercent: 0
+  armorPoints: 0
   RestartScreen: {fileID: 0}
 --- !u!1 &2572543073069625971
 GameObject:
