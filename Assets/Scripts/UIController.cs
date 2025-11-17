@@ -137,6 +137,9 @@ public class UIController : MonoBehaviour
 
     private void WeaponUpdated()
     {
+        if (weaponUI == null)
+            return;
+        
         TextMeshProUGUI weaponName = weaponUI.transform.Find("WeaponName").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI ammoCount = weaponUI.transform.Find("AmmoCount").GetComponent<TextMeshProUGUI>();
         weaponName.text = playerWeaponManager.ActiveWeapon.weaponName;
