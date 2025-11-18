@@ -24,7 +24,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        health = maxHealth - 50;
+        health = maxHealth;
     }
 
     public void TakeDamage(int amt)

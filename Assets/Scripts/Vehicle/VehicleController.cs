@@ -191,7 +191,7 @@ public class VehicleController : MonoBehaviour
         if (rb.linearVelocity.magnitude > 0.2f)
         {
             fuelLevel -= Time.deltaTime * fuelConsumptionRate;
-            fuelLevelText.text = "Fuel: " + fuelLevel.ToString("0");
+            //fuelLevelText.text = "Fuel: " + fuelLevel.ToString("0");
         }
 
         
@@ -221,7 +221,7 @@ public class VehicleController : MonoBehaviour
     {
         fuelLevel += amount;
         fuelLevel = Mathf.Clamp(fuelLevel, 0, maxFuelLevel);
-        fuelLevelText.text = "Fuel: " + fuelLevel.ToString();
+        //fuelLevelText.text = "Fuel: " + fuelLevel.ToString();
     }
 
     public bool CanRefuel()
@@ -238,7 +238,7 @@ public class VehicleController : MonoBehaviour
     {
         engineHealth += amount;
         engineHealth = Mathf.Clamp(engineHealth, 0, 100);
-        carHP.text = "Car: " + engineHealth.ToString();
+        //carHP.text = "Car: " + engineHealth.ToString();
     }
 
     public void TakeDamage(int damage)
@@ -249,7 +249,7 @@ public class VehicleController : MonoBehaviour
             isEngineDestroyed = true;
         }
 
-        carHP.text = "Car: " + engineHealth.ToString();
+        //carHP.text = "Car: " + engineHealth.ToString();
     }
 
     public void SlowDown(float amt = 0.8f)

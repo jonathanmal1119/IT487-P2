@@ -113,7 +113,12 @@ MonoBehaviour:
   death: {fileID: 9100000, guid: 6882b6fda1ca307409d32a3839b91e64, type: 2}
   attack: {fileID: 9100000, guid: 350c80f7b05ea874d8369b922616cf41, type: 2}
   playerDetected: 0
-  drops: []
+  drops:
+  - {fileID: 5142690500720088064, guid: c023411a557fd8445b843447f158e3dc, type: 3}
+  - {fileID: 5142690500720088064, guid: 2c8c40535e92d434d907ff97c5617e75, type: 3}
+  - {fileID: 8267886643902274698, guid: 207a8c19166fc7041bd6798a9ad0f42d, type: 3}
+  - {fileID: 5142690500720088064, guid: bcf3c888a9b4fb54ca18df422f9d86d4, type: 3}
+  - {fileID: 5142690500720088064, guid: b33b9cc35859bed428e902f5e5885755, type: 3}
 --- !u!82 &-4586163658156742328
 AudioSource:
   m_ObjectHideFlags: 0

@@ -1,10 +1,11 @@
 using Assets.Scripts;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
+//using Unity.VisualScripting;
+//using UnityEditor.Experimental.GraphView;
+//using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static UnityEngine.UI.GridLayoutGroup;
+//using UnityEngine.Rendering;
+//using static UnityEngine.UI.GridLayoutGroup;
 
 public class EnemyController : MonoBehaviour
 {
@@ -201,6 +202,9 @@ public class EnemyController : MonoBehaviour
 
         if (collision.gameObject.tag == "Vehicle")
         {
+            if (!collision.gameObject.GetComponent<VehicleController>().isPlayerInCar)
+                return;
+
             TakeDamage(100, out _);
         }
     }

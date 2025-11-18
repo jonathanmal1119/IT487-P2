@@ -12,6 +12,7 @@ TagManager:
   - EnemyBullet
   - POI
   - Collectible
+  - UI
   layers:
   - Default
   - TransparentFX

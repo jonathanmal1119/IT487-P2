@@ -86,11 +86,19 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
-        objectives.ElementAtOrDefault(0).value.GetComponent<TextMeshProUGUI>().text = GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
+        objectives.ElementAtOrDefault(0).value.GetComponent<TextMeshProUGUI>().text = GameObject.FindGameObjectWithTag("POI").GetComponent<poiMetaData>().enemiesInTrigger.Count().ToString();
+        
+        // TEMP we can replace with actual objective system.
+        if (GameObject.FindGameObjectWithTag("POI").GetComponent<poiMetaData>().CanShowWin())
+        {
+            objectives.ElementAtOrDefault(0).title.GetComponent<TextMeshProUGUI>().text = "Collect the wheel at the front.";
+            objectives.ElementAtOrDefault(0).value.GetComponent<TextMeshProUGUI>().text = "";
+        }
 
         // health bar
         {
             Transform hpBar = healthUI.transform.Find("Bar/HP");
+            //hpBar.GetComponent<RectTransform>().sizeDelta = Vector2.Lerp(hpBar.GetComponent<RectTransform>().sizeDelta, new(-1 * origHbWidth * (1 - PlayerHealthPercent), hpBar.GetComponent<RectTransform>().sizeDelta.y), Time.deltaTime * 16);
             hpBar.GetComponent<RectTransform>().sizeDelta = Vector2.Lerp(hpBar.GetComponent<RectTransform>().sizeDelta, new(-1 * origHbWidth * (1 - PlayerHealthPercent), hpBar.GetComponent<RectTransform>().sizeDelta.y), Time.deltaTime * 16);
             if (PlayerHealthPercent < 0.25)
                 hpBar.GetComponent<Image>().color = Color.Lerp(new(0.85f, 0.05f, 0.05f), new(0.5f, 0.075f, 0.075f), Utils.SineTime(2.5));

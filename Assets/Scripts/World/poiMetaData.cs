@@ -6,6 +6,8 @@ public class poiMetaData : MonoBehaviour
 	public ObjectiveData POI_data;
 	public GameObject spawnLoc;
 
+	private GameObject part = null;
+
 	[Header("Enemies In Trigger")]
 	public HashSet<GameObject> enemiesInTrigger = new HashSet<GameObject>();
 
@@ -21,7 +23,7 @@ public class poiMetaData : MonoBehaviour
 			{
 				if (enemiesInTrigger.Count == 1)
 				{
-					GameObject part = Instantiate(POI_data.objectivePart);
+					part = Instantiate(POI_data.objectivePart);
 					part.transform.position = spawnLoc.transform.position;
 						
 				}
@@ -38,10 +40,8 @@ public class poiMetaData : MonoBehaviour
 		enemiesInTrigger.Add(other.gameObject);
 	}
 
-	void OnTriggerExit(Collider other)
+	public bool CanShowWin()
 	{
-		if (!other || !other.CompareTag("Enemy")) return;
-
-		enemiesInTrigger.Remove(other.gameObject);
+		return part;
 	}
 }
