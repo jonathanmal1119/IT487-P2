@@ -18,6 +18,9 @@ public class PlayerThrowGrenade : PlayerPistol
     //damage dealt to the player after cooking their grenade for too long
     public int grenadeOvercookExplosionDamage = 50;
 
+    public float CurrentFuseTime => cookingGrenade ? fuseEndTime - Time.time : grenadeFuseLength;
+    public bool IsCooking => cookingGrenade;
+
     //---NOTE: these have been commented out because the parent class already does these. Also, Unity was throwing errors about managing the input stuff twice for some reason.-----
     /*
     private void Awake()
@@ -42,7 +45,7 @@ public class PlayerThrowGrenade : PlayerPistol
 
     }
     */
-    
+
     private void OnDisable()
     {
         gunModel.SetActive(false);
@@ -85,15 +88,7 @@ public class PlayerThrowGrenade : PlayerPistol
                 else if (shootAction.WasReleasedThisFrame())
                 {
                     //throw a cooked grenade
-                    if (cookingGrenade)
-                    {
-                        ThrowGrenade(fuseEndTime - Time.time);
-                    }
-                    //throw an uncooked grenade. This is just a possible edge case
-                    else
-                    {
-                        ThrowGrenade(grenadeFuseLength);
-                    }
+                    ThrowGrenade(CurrentFuseTime);
                     cookingGrenade = false;
                 }
                 //grenade explodes in the players face when held too long

@@ -278,10 +278,22 @@ public class UIController : MonoBehaviour
             Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
             RectTransform rectTransform = crosshairLine.GetComponent<RectTransform>();
             float currentDistance = (rectTransform.anchoredPosition / direction).x;
-            rectTransform.anchoredPosition = Mathf.Lerp(currentDistance, playerWeaponManager.ActiveWeapon.EffectiveSpread.x * 12 + 12, Time.deltaTime * 32) * direction;
+            
+            bool showLines;
+            if (playerWeaponManager.ActiveWeapon is PlayerThrowGrenade g)
+            {
+                //showLines = g.IsCooking; // 4 prong crosshair
+                showLines = g.IsCooking && ((angle * Mathf.Rad2Deg).Round() == 0 || (angle * Mathf.Rad2Deg).Round() == 180); // 2 prong crosshair
+                rectTransform.anchoredPosition = Mathf.Lerp(currentDistance, Mathf.Abs(Mathf.Sin(Mathf.PI * g.CurrentFuseTime)) * 20 + 10, Time.deltaTime * 32) * direction;
+            }
+            else
+            {
+                showLines = !playerWeaponManager.ActiveWeapon.IsAiming && playerWeaponManager.ActiveWeapon.HasSpread;
+                rectTransform.anchoredPosition = Mathf.Lerp(currentDistance, playerWeaponManager.ActiveWeapon.EffectiveSpread.x * 12 + 12, Time.deltaTime * 32) * direction;
+            }
 
             Image image = crosshairLine.GetComponent<Image>();
-            if (playerWeaponManager.ActiveWeapon.IsAiming || !playerWeaponManager.ActiveWeapon.HasSpread)
+            if (!showLines)
             {
                 Color newColor = image.color;
                 newColor.a = Mathf.Lerp(newColor.a, 0, Time.deltaTime * 40);
