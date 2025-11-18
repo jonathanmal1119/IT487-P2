@@ -14,7 +14,8 @@ public class PlayerGrenade : MonoBehaviour
 
     void Start()
     {
-        rb.AddForce(transform.forward * launchForce, ForceMode.Impulse);
+
+        rb.AddForce((transform.forward + transform.up * 0.25f).normalized * launchForce, ForceMode.Impulse);
         rb.angularVelocity = new Vector3(Random.Range(randomRotationRange.x, randomRotationRange.y), Random.Range(randomRotationRange.x, randomRotationRange.y), Random.Range(randomRotationRange.x, randomRotationRange.y));
         Invoke("Explode", fuseTime);
     }

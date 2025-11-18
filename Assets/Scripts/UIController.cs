@@ -9,9 +9,6 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Text EnemyText;
-    public GameObject WinScreen;
-
     public GameObject Player;
 
     private PlayerHealth playerHealth;
@@ -89,7 +86,7 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
-        objectives[0].value.GetComponent<TextMeshProUGUI>().text = GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
+        objectives.ElementAtOrDefault(0).value.GetComponent<TextMeshProUGUI>().text = GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
 
         // health bar
         {
@@ -269,29 +266,66 @@ public class UIController : MonoBehaviour
 
     private void UpdateCrosshairLines()
     {
-        foreach (Transform crosshairLine in crosshairUI.transform)
+        foreach (Transform crosshairElement in crosshairUI.transform)
         {
-            if (crosshairLine == null || crosshairLine.name != "UICrosshairLine")
+            if (crosshairElement == null)
                 continue;
 
-            float angle = crosshairLine.transform.localEulerAngles.z * Mathf.Deg2Rad;
-            Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
-            RectTransform rectTransform = crosshairLine.GetComponent<RectTransform>();
-            float currentDistance = (rectTransform.anchoredPosition / direction).x;
-            rectTransform.anchoredPosition = Mathf.Lerp(currentDistance, playerWeaponManager.ActiveWeapon.EffectiveSpread.x * 12 + 12, Time.deltaTime * 32) * direction;
+            if (crosshairElement.name == "UICrosshairLine")
+            {
+                float angle = crosshairElement.transform.localEulerAngles.z * Mathf.Deg2Rad;
+                Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
+                RectTransform rectTransform = crosshairElement.GetComponent<RectTransform>();
+                float currentDistance = (rectTransform.anchoredPosition / direction).x;
 
-            Image image = crosshairLine.GetComponent<Image>();
-            if (playerWeaponManager.ActiveWeapon.IsAiming || !playerWeaponManager.ActiveWeapon.HasSpread)
-            {
-                Color newColor = image.color;
-                newColor.a = Mathf.Lerp(newColor.a, 0, Time.deltaTime * 40);
-                image.color = newColor;
+                bool showLines;
+                if (playerWeaponManager.ActiveWeapon is PlayerThrowGrenade g)
+                {
+                    //showLines = g.IsCooking; // 4 prong crosshair
+                    showLines = g.IsCooking && ((angle * Mathf.Rad2Deg).Round() == 0 || (angle * Mathf.Rad2Deg).Round() == 180); // 2 prong crosshair
+                    rectTransform.anchoredPosition = Mathf.Lerp(currentDistance, Mathf.Abs(Mathf.Sin(Mathf.PI * g.CurrentFuseTime)) * 20 + 10, Time.deltaTime * 32) * direction;
+                }
+                else
+                {
+                    showLines = !playerWeaponManager.ActiveWeapon.IsAiming && playerWeaponManager.ActiveWeapon.HasSpread;
+                    rectTransform.anchoredPosition = Mathf.Lerp(currentDistance, playerWeaponManager.ActiveWeapon.EffectiveSpread.x * 12 + 12, Time.deltaTime * 32) * direction;
+                }
+
+                Image image = crosshairElement.GetComponent<Image>();
+                if (!showLines)
+                {
+                    Color newColor = image.color;
+                    newColor.a = Mathf.Lerp(newColor.a, 0, Time.deltaTime * 40);
+                    image.color = newColor;
+                }
+                else
+                {
+                    Color newColor = image.color;
+                    newColor.a = Mathf.Lerp(newColor.a, 1, Time.deltaTime * 40);
+                    image.color = newColor;
+                }
             }
-            else
+            else if (crosshairElement.name == "UICrosshairDot")
             {
-                Color newColor = image.color;
-                newColor.a = Mathf.Lerp(newColor.a, 1, Time.deltaTime * 40);
-                image.color = newColor;
+                bool showDot = true;
+                if (playerWeaponManager.ActiveWeapon is not PlayerThrowGrenade)
+                {
+                    showDot = playerWeaponManager.ActiveWeapon.IsAiming || !playerWeaponManager.ActiveWeapon.HasSpread;
+                }
+
+                Image image = crosshairElement.GetComponent<Image>();
+                if (!showDot)
+                {
+                    Color newColor = image.color;
+                    newColor.a = Mathf.Lerp(newColor.a, 0, Time.deltaTime * 40);
+                    image.color = newColor;
+                }
+                else
+                {
+                    Color newColor = image.color;
+                    newColor.a = Mathf.Lerp(newColor.a, 1, Time.deltaTime * 40);
+                    image.color = newColor;
+                }
             }
         }
     }
