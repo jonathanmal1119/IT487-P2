@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerLookControls))]
+[RequireComponent(typeof(PlayerWeaponManager))]
 public class PlayerPistol : MonoBehaviour
 {
     public string weaponName;
@@ -13,6 +14,7 @@ public class PlayerPistol : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject gunModel;
 
+    public Transform Muzzle;
     public GameObject shootFX;
 
     public Animator animator;
@@ -151,12 +153,12 @@ public class PlayerPistol : MonoBehaviour
         GameObject pb = Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
         pb.transform.Rotate(UnityEngine.Random.Range(EffectiveSpread.x * -1, EffectiveSpread.x), UnityEngine.Random.Range(EffectiveSpread.y * -1, EffectiveSpread.y), 0f);
         if (pb.GetComponent<PlayerBullet>() != null)
-            pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>().N();
+            pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>();
         if (pb.GetComponent<PlayerGrenade>() != null)
-            pb.GetComponent<PlayerGrenade>().Owner = GetComponent<PlayerWeaponManager>().N();
+            pb.GetComponent<PlayerGrenade>().Owner = GetComponent<PlayerWeaponManager>();
 
-        if (shootFX != null)
-            Instantiate(shootFX, bulletSpawnSource);
+        if (shootFX != null && Muzzle != null)
+            Instantiate(shootFX, Muzzle);
 
         continuousShots++;
 
