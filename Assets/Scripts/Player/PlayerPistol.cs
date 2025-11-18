@@ -13,6 +13,8 @@ public class PlayerPistol : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject gunModel;
 
+    public GameObject shootFX;
+
     public Animator animator;
 
     public InputAction shootAction;
@@ -141,7 +143,7 @@ public class PlayerPistol : MonoBehaviour
 
     void Shoot()
     {
-        if(animator != null)
+        if (animator != null)
         {
             animator.SetTrigger("Shoot");
         }
@@ -152,6 +154,9 @@ public class PlayerPistol : MonoBehaviour
             pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>().N();
         if (pb.GetComponent<PlayerGrenade>() != null)
             pb.GetComponent<PlayerGrenade>().Owner = GetComponent<PlayerWeaponManager>().N();
+
+        if (shootFX != null)
+            Instantiate(shootFX, bulletSpawnSource);
 
         continuousShots++;
 

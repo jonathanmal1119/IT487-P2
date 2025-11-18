@@ -452,6 +452,7 @@ MonoBehaviour:
   bulletSpawnSource: {fileID: 1831088548427473237}
   bulletPrefab: {fileID: 5714155450476413498, guid: c004548c8568fbf4e963c72b76f39dc2, type: 3}
   gunModel: {fileID: 6586855431055879443}
+  shootFX: {fileID: 8924261361647473477, guid: b53959b9b4ee12446b72a87699bc4331, type: 3}
   animator: {fileID: 4124634378025209756}
   shootAction:
     m_Name: Shoot
@@ -490,6 +491,7 @@ MonoBehaviour:
   bulletSpawnSource: {fileID: 7134361081335340609}
   bulletPrefab: {fileID: 222167095660442845, guid: 4b22d6da1360f3346969e9fa9167a753, type: 3}
   gunModel: {fileID: 7610471156016250750}
+  shootFX: {fileID: 0}
   animator: {fileID: 2872756840699121962}
   shootAction:
     m_Name: Shoot
@@ -533,6 +535,7 @@ MonoBehaviour:
   bulletSpawnSource: {fileID: 3169252896886394467}
   bulletPrefab: {fileID: 7432778182290540994, guid: 86ed420d8997e994a8b83ebe46058a5a, type: 3}
   gunModel: {fileID: 2572543073069625971}
+  shootFX: {fileID: 0}
   animator: {fileID: 9096009342380725907}
   shootAction:
     m_Name: Shoot
