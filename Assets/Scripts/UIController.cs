@@ -9,9 +9,6 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Text EnemyText;
-    public GameObject WinScreen;
-
     public GameObject Player;
 
     private PlayerHealth playerHealth;
