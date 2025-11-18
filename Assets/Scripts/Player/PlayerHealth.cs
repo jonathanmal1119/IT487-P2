@@ -29,6 +29,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amt)
     {
+        Amt = (int)((float)Amt * (1f - armorDamageReductionPercent));
+        if (health - Amt <= 0)
+            Die();
         if (IsInvincible)
             return;
 
