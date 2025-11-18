@@ -77,9 +77,16 @@ public class UIController : MonoBehaviour
         transform.Find("Pause/Menu/Sensitivity/Value").GetComponent<TMP_InputField>().text = playerLookControls.Sensitivity.ToString("0.00");
         transform.Find("Pause/Menu/Sensitivity/Value").GetComponent<TMP_InputField>().onValueChanged.AddListener(value =>
         {
+            TMP_InputField sensValue = transform.Find("Pause/Menu/Sensitivity/Value").GetComponent<TMP_InputField>();
+
             if (float.TryParse(value, out float newSensitivity))
             {
                 playerLookControls.Sensitivity = newSensitivity;
+                sensValue.text = newSensitivity.ToString("0.00");
+            }
+            else
+            {
+                sensValue.text = playerLookControls.Sensitivity.ToString("0.00");
             }
         });
     }
