@@ -85,8 +85,9 @@ public class VehicleController : MonoBehaviour
         {
             Player.SetActive(true);
             Player.transform.position = transform.TransformPoint(new Vector3(3f, 1f, 0f));
-            this.enabled = false;
+            enabled = false;
             carCamera.SetActive(false);
+            Player.GetComponent<PlayerLookControls>().VehicleController = null;
 
             frontLeftWheelCollider.brakeTorque = frontRightWheelCollider.brakeTorque = 10000f;
             rearLeftWheelCollider.brakeTorque = rearRightWheelCollider.brakeTorque = 10000f;

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class PlayerBullet : MonoBehaviour
 {
     public Rigidbody rb;
@@ -11,10 +12,14 @@ public class PlayerBullet : MonoBehaviour
 
     public bool waitingToDestroy = false;
 
+    public PlayerWeaponManager? Owner { get; set; }
+
     void Start()
     {
         rb.AddForce(transform.forward * launchForce, ForceMode.Impulse);
-        Destroy(gameObject, lifetime);
+        
+        Invoke("DisableBullet", lifetime); // disable bullet based on lifetime
+        Destroy(gameObject, lifetime + 5); // keep object alive after disabling so the vfx can finish playing before destroying
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,14 +28,23 @@ public class PlayerBullet : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             //Debug.LogWarning("TODO: implement player bullets damaging enemies on hit");
+            //Owner?.OnHit?.Invoke();
         }
         else if(ignoreGround == false && other.gameObject.layer == 0 && other.CompareTag("Player") == false)
         {
-            Destroy(gameObject);
+            // keeping it alive lets the trail disappear normally instead of abruptly disappearing
+            DisableBullet();
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
         OnTriggerEnter(collision.collider);
+    }
+
+    public void DisableBullet()
+    {
+        GetComponent<Collider>().enabled = false;
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
     }
 }

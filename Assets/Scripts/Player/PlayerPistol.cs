@@ -1,7 +1,10 @@
+using Assets.Scripts;
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
+[RequireComponent(typeof(PlayerLookControls))]
 public class PlayerPistol : MonoBehaviour
 {
     public string weaponName;
@@ -9,20 +12,38 @@ public class PlayerPistol : MonoBehaviour
     public Transform bulletSpawnSource;
     public GameObject bulletPrefab;
     public GameObject gunModel;
-    public Text ammoCounter;
+
     public Animator animator;
 
-    InputAction shootAction;
+    public InputAction shootAction;
     //InputAction reloadAction;
 
     public float timeBetweenShots = 0.2f;
     public float switchToWeaponTime = 0.5f;
     //public float reloadTime = 1.5f;
-    float nextShot = 0f;
+    public float nextShot = 0f;
+    int continuousShots = 0;
 
     //random eulerAngle rotation of bullets when shooting. No Z value because that is for roll, which isn't useful in this circumstance.
     public Vector2 hipFireRandomSpread;
+    public float bulletSpreadIncreasePerShot;
+
     public Vector2 aimFireRandomSpread;
+
+    public Vector2 EffectiveSpread { 
+        get {
+            if (aimDownSights)
+            {
+                return aimFireRandomSpread;
+            }
+            else
+            {
+                float extraSpread = (float)Math.Log(continuousShots + 0.5) * bulletSpreadIncreasePerShot;
+                return new(hipFireRandomSpread.x + extraSpread, hipFireRandomSpread.y + extraSpread);
+            }
+        } 
+    }
+
     bool aimDownSights = false;
     
     [Header("leave weaponXOffset null if the weapon doesn't allow aim-down-sight")]
@@ -36,6 +57,10 @@ public class PlayerPistol : MonoBehaviour
     public int ammunition = 999;
     public int ammoUsedPerShot = 1;
     public bool hideOnNoAmmo = false;
+    
+    public Action? AmmoChanged => GetComponent<PlayerWeaponManager>().N()?.AmmoChanged;
+    public bool IsAiming => aimDownSights;
+    public bool HasSpread => hipFireRandomSpread != Vector2.zero || bulletSpreadIncreasePerShot > 0f || aimFireRandomSpread != Vector2.zero;
 
     private void Awake()
     {
@@ -59,10 +84,7 @@ public class PlayerPistol : MonoBehaviour
     private void OnDisable()
     {
         gunModel.SetActive(false);
-        if (ammoCounter != null)
-        {
-            ammoCounter.text = "";
-        }
+        AmmoChanged?.Invoke();
     }
 
     void Start()
@@ -75,39 +97,34 @@ public class PlayerPistol : MonoBehaviour
     {
         if(weaponXOffset != null)
         {
-            if (Mouse.current.rightButton.isPressed)
+            if (Mouse.current.rightButton.isPressed && GetComponent<PlayerLookControls>().EnableMouse)
             {
-                weaponXOffset.transform.localPosition = new Vector3(aimOffsetDistance * -1f, 0.1f, 0f);
+                weaponXOffset.transform.localPosition = Vector3.Lerp(weaponXOffset.transform.localPosition, new(aimOffsetDistance * -1f, 0.1f, 0f), Time.deltaTime * 24);
                 aimDownSights = true;
             }
             else
             {
-                weaponXOffset.transform.localPosition = new Vector3(0f, 0f, 0f);
+                weaponXOffset.transform.localPosition = Vector3.Lerp(weaponXOffset.transform.localPosition, new Vector3(0f, 0f, 0f), Time.deltaTime * 24);
                 aimDownSights = false;
             }
         }
 
-        if(ammoCounter != null)
-        {
-            ammoCounter.text = ammunition.ToString();
-        }
-
-        if(ammunition > 0 || ammoUsedPerShot <= 0)
+        if (ammunition > 0 || ammoUsedPerShot <= 0)
         {
             if (gunModel.activeSelf == false && hideOnNoAmmo)
             {
                 gunModel.SetActive(true);
             }
 
-            if(Time.time >= nextShot)
+            if (Time.time >= nextShot)
             {
                 //press button to shoot.
-                if (shootAction.WasPressedThisFrame())
+                if (shootAction.WasPressedThisFrame() && GetComponent<PlayerLookControls>().EnableMouse)
                 {
                     Shoot();
                 }
                 //hold button to continuously shoot, if enabled.
-                else if (holdToAutomaticallyShoot && shootAction.IsPressed())
+                else if (holdToAutomaticallyShoot && shootAction.IsPressed() && GetComponent<PlayerLookControls>().EnableMouse)
                 {
                     Shoot();
                 }
@@ -117,6 +134,9 @@ public class PlayerPistol : MonoBehaviour
         {
             gunModel.SetActive(false);
         }
+
+        if (nextShot + 0.25f < Time.time)
+            continuousShots = 0;
     }
 
     void Shoot()
@@ -127,16 +147,16 @@ public class PlayerPistol : MonoBehaviour
         }
 
         GameObject pb = Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
-        if (aimDownSights)
-        {
-            pb.transform.Rotate(Random.Range(aimFireRandomSpread.x * -1f, aimFireRandomSpread.x), Random.Range(aimFireRandomSpread.y * -1f, aimFireRandomSpread.y), 0f);
-        }
-        else
-        {
-            pb.transform.Rotate(Random.Range(hipFireRandomSpread.x * -1f, hipFireRandomSpread.x), Random.Range(hipFireRandomSpread.y * -1f, hipFireRandomSpread.y), 0f);
-        }
-        
+        pb.transform.Rotate(UnityEngine.Random.Range(EffectiveSpread.x * -1, EffectiveSpread.x), UnityEngine.Random.Range(EffectiveSpread.y * -1, EffectiveSpread.y), 0f);
+        if (pb.GetComponent<PlayerBullet>() != null)
+            pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>().N();
+        if (pb.GetComponent<PlayerGrenade>() != null)
+            pb.GetComponent<PlayerGrenade>().Owner = GetComponent<PlayerWeaponManager>().N();
+
+        continuousShots++;
+
         nextShot = Time.time + timeBetweenShots;
         ammunition -= ammoUsedPerShot;
+        AmmoChanged?.Invoke();
     }
 }

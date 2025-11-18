@@ -1,8 +1,10 @@
+using Assets.Scripts;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class EnemyController : MonoBehaviour
 {
@@ -144,7 +146,7 @@ public class EnemyController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void TakeDamage(int Amt)
+    public void TakeDamage(int Amt, out bool killed)
     {
         if (health - Amt <= 0)
         {
@@ -153,7 +155,7 @@ public class EnemyController : MonoBehaviour
             {
                 int selection = Random.Range(0, drops.Length);
                 if (drops[selection] != null)
-                    Instantiate(drops[selection], rb.transform.position, this.transform.rotation);
+                    Instantiate(drops[selection], rb.transform.position, transform.rotation);
             }
             
             isDead = true;
@@ -170,28 +172,34 @@ public class EnemyController : MonoBehaviour
             playerDetected = true;
 
             //tries to find the bullet's PlayerBullet script, which contains information on how much damage it deals
-            PlayerBullet bulletInfo = collision.gameObject.GetComponent<PlayerBullet>();
+            PlayerBullet? bulletInfo = collision.gameObject.GetComponent<PlayerBullet>().N();
 
             //If this scipt found the bullet's script, it can deal the proper amount of damage. Otherwise it will just deal 10.
-            if (bulletInfo != null && bulletInfo.waitingToDestroy == false)
+            if (bulletInfo?.waitingToDestroy == false)
             {
-                TakeDamage(bulletInfo.damage);
+                TakeDamage(bulletInfo.damage, out bool killed);
+                if (killed)
+                    bulletInfo?.Owner?.OnKill?.Invoke();
+                else
+                    bulletInfo?.Owner?.OnHit?.Invoke();
             }
             else
             {
-                TakeDamage(10);
+                TakeDamage(10, out _);
             }
 
-            if (bulletInfo.destroyOnHit)
+            if (bulletInfo?.destroyOnHit == true)
             {
-                Destroy(collision.gameObject);
+                bulletInfo.DisableBullet();
+
+                //Destroy(collision.gameObject);
                 bulletInfo.waitingToDestroy = true;
             }
         }
 
         if (collision.gameObject.tag == "Vehicle")
         {
-            TakeDamage(100);
+            TakeDamage(100, out _);
         }
     }
 
@@ -222,21 +230,27 @@ public class EnemyController : MonoBehaviour
             playerDetected = true;
 
             //tries to find the bullet's PlayerBullet script, which contains information on how much damage it deals
-            PlayerBullet bulletInfo = other.gameObject.GetComponent<PlayerBullet>();
+            PlayerBullet? bulletInfo = other.gameObject.GetComponent<PlayerBullet>().N();
 
             //If this scipt found the bullet's script, it can deal the proper amount of damage. Otherwise it will just deal 10.
-            if (bulletInfo != null && bulletInfo.waitingToDestroy == false)
+            if (bulletInfo?.waitingToDestroy == false)
             {
-                TakeDamage(bulletInfo.damage);
+                TakeDamage(bulletInfo.damage, out bool killed);
+                if (killed)
+                    bulletInfo?.Owner?.OnKill?.Invoke();
+                else
+                    bulletInfo?.Owner?.OnHit?.Invoke();
             }
             else
             {
-                TakeDamage(10);
+                TakeDamage(10, out _);
             }
 
-            if (bulletInfo.destroyOnHit)
+            if (bulletInfo?.destroyOnHit == true)
             {
-                Destroy(other.gameObject);
+                bulletInfo.DisableBullet();
+
+                //Destroy(other.gameObject);
                 bulletInfo.waitingToDestroy = true;
             }
         }
