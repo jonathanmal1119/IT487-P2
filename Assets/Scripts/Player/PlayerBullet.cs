@@ -18,7 +18,7 @@ public class PlayerBullet : MonoBehaviour
     {
         rb.AddForce(transform.forward * launchForce, ForceMode.Impulse);
         
-        Invoke("DisableBullet", lifetime); // disable bullet based on lifetime
+        Invoke(nameof(DisableBullet), lifetime); // disable bullet based on lifetime
         Destroy(gameObject, lifetime + 5); // keep object alive after disabling so the vfx can finish playing before destroying
     }
 
