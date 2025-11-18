@@ -7,9 +7,10 @@ public class PlayerWalkControls : MonoBehaviour
 
     public PlayerLookControls playerLook;
     public CharacterController controller;
-    InputAction walkAction, jumpAction;
+    InputAction walkAction, jumpAction, sprintAction;
 
     public float walkSpeed = 5f;
+    public float runSpeed = 7.5f;
     public float jumpVelocity = 5f;
 
     Vector2 walkVector;
@@ -27,6 +28,13 @@ public class PlayerWalkControls : MonoBehaviour
 
     bool grounded;
 
+    [Header("Sprint and Stamina")]
+
+    public float stamina = 1f;
+    public float runStaminaPerSecond = 0.15f;
+    public float staminaRegenPerSecond = 0.1f;
+    public bool waitForRefill = false;
+
     //public int DEBUGFRAMERATE = 60;
 
     private void Awake()
@@ -34,12 +42,14 @@ public class PlayerWalkControls : MonoBehaviour
         //I don't know how else to access the project-wide input actions. This is my punishment for not learning the new Input System sooner.
         walkAction = InputSystem.actions.FindAction("Player/Move");
         jumpAction = InputSystem.actions.FindAction("Player/Jump");
+        sprintAction = InputSystem.actions.FindAction("Player/Sprint");
     }
 
     private void OnEnable()
     {
         walkAction.Enable();
         jumpAction.Enable();
+        sprintAction.Enable();
     }
     /*
      * ########## Because I am using the project-wide actions, disabling them here will also disable them everywhere. I don't want to do that. ##########
@@ -57,7 +67,33 @@ public class PlayerWalkControls : MonoBehaviour
 
         //WASD controls. The input system's axes are between -1 and 1, so I can multiply it by a desired value to set the player's speed.
 
-        walkVector = walkAction.ReadValue<Vector2>() * walkSpeed;
+        if ((!waitForRefill || stamina >= 1) && sprintAction.IsPressed())
+        {
+            waitForRefill = false;
+            walkVector = walkAction.ReadValue<Vector2>() * runSpeed;
+            stamina -= runStaminaPerSecond * Time.deltaTime;
+            if(stamina < 0)
+            {
+                stamina = 0;
+                waitForRefill = true;
+            }
+        }
+        else if(sprintAction.IsPressed() == false)
+        {
+            waitForRefill = false;
+            stamina += staminaRegenPerSecond * Time.deltaTime;
+            if(stamina > 1f) { stamina = 1f; }
+
+            walkVector = walkAction.ReadValue<Vector2>() * walkSpeed;
+        }
+        else
+        {
+            stamina += staminaRegenPerSecond * Time.deltaTime;
+            if (stamina > 1f) { stamina = 1f; }
+
+            walkVector = walkAction.ReadValue<Vector2>() * walkSpeed;
+        }
+        
         moveVector.x = walkVector.x;
         moveVector.z = walkVector.y;
 

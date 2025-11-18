@@ -64,7 +64,7 @@
                     "name": "Previous",
                     "type": "Button",
                     "id": "2776c80d-3c14-4091-8c56-d04ced07a2b0",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -73,7 +73,7 @@
                     "name": "Next",
                     "type": "Button",
                     "id": "b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -91,6 +91,15 @@
                     "name": "Handbreak",
                     "type": "Button",
                     "id": "bceab53a-48a2-406c-8317-5d9ba7b95167",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Scrollwheel",
+                    "type": "Button",
+                    "id": "5449c847-970b-4b4e-94f0-db896f4dc2aa",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -493,6 +502,39 @@
                     "action": "Handbreak",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "5c35e49f-6220-46ca-8384-b35891f6ad79",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scrollwheel",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "d889551e-4b63-453c-bf2b-07553de7c1e3",
+                    "path": "<Mouse>/scroll/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Scrollwheel",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "c88e7d20-50de-4789-b927-7a4ba9d77c1e",
+                    "path": "<Mouse>/scroll/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Scrollwheel",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148981ceb56231644ba2d9e432858d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  startingSceneName: Player Walk Test
+  startingSceneName: MainLevel
 --- !u!114 &770548294
 MonoBehaviour:
   m_ObjectHideFlags: 0

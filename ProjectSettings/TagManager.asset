@@ -7,6 +7,12 @@ TagManager:
   - Enemy
   - Bullet
   - Vehicle
+  - FuelPump
+  - Obstacle
+  - EnemyBullet
+  - POI
+  - Collectible
+  - UI
   layers:
   - Default
   - TransparentFX
