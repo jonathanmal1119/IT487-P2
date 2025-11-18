@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,8 @@ public class PlayerLookControls : MonoBehaviour
     public LayerMask interactLayer;
 
     public VehicleController? VehicleController { get; set; }
+    public Action? OnEnterExitVehicle;
+    public bool InVehicle => VehicleController != null;
 
     private bool enableMouse = true;
     public bool EnableMouse { 
@@ -110,6 +113,7 @@ public class PlayerLookControls : MonoBehaviour
             {
                 VehicleController = hit.collider.gameObject.GetComponentInParent<VehicleController>();
                 VehicleController.enabled = true;
+                OnEnterExitVehicle?.Invoke();
                 gameObject.SetActive(false);
             }
         }

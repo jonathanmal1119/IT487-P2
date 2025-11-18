@@ -39,6 +39,8 @@ public class VehicleController : MonoBehaviour
     float fuelLevel = 100;
     int maxFuelLevel = 100;
 
+    public float FuelPercent => fuelLevel / maxFuelLevel;
+
     [SerializeField]
     int engineHealth = 100;
 
@@ -101,6 +103,7 @@ public class VehicleController : MonoBehaviour
             enabled = false;
             carCamera.SetActive(false);
             Player.GetComponent<PlayerLookControls>().VehicleController = null;
+            Player.GetComponent<PlayerLookControls>().OnEnterExitVehicle?.Invoke();
 
             frontLeftWheelCollider.brakeTorque = frontRightWheelCollider.brakeTorque = 10000f;
             rearLeftWheelCollider.brakeTorque = rearRightWheelCollider.brakeTorque = 10000f;
