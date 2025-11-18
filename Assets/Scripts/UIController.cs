@@ -350,7 +350,7 @@ public class UIController : MonoBehaviour
                     newColor.a = Mathf.Lerp(newColor.a, 0, Time.deltaTime * 40);
                     image.color = newColor;
                 }
-                else if (image.color.a < 1)
+                else if (showLines && image.color.a < 1)
                 {
                     Color newColor = image.color;
                     newColor.a = Mathf.Lerp(newColor.a, 1, Time.deltaTime * 40);
@@ -374,7 +374,7 @@ public class UIController : MonoBehaviour
                     newColor.a = Mathf.Lerp(newColor.a, 0, Time.deltaTime * 40);
                     image.color = newColor;
                 }
-                else if (image.color.a < 1)
+                else if (showDot && image.color.a < 1)
                 {
                     Color newColor = image.color;
                     newColor.a = Mathf.Lerp(newColor.a, 1, Time.deltaTime * 40);
