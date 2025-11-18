@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using UnityEngine;
 
 public class PlayerGrenade : MonoBehaviour
@@ -8,6 +9,8 @@ public class PlayerGrenade : MonoBehaviour
     public Vector2 randomRotationRange;
 
     public GameObject explosionObject;
+
+    public PlayerWeaponManager? Owner { get; set; }
 
     void Start()
     {
@@ -20,7 +23,9 @@ public class PlayerGrenade : MonoBehaviour
     {
         if(explosionObject != null)
         {
-            Instantiate(explosionObject, transform.position, transform.rotation);
+            GameObject ex = Instantiate(explosionObject, transform.position, transform.rotation);
+            if (ex.GetComponent<PlayerBullet>() != null)
+                ex.GetComponent<PlayerBullet>().Owner = Owner;
         }
         Destroy(gameObject);
     }
