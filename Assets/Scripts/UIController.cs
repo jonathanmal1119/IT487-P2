@@ -89,7 +89,7 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
-        objectives[0].value.GetComponent<TextMeshProUGUI>().text = GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
+        objectives.ElementAtOrDefault(0).value.GetComponent<TextMeshProUGUI>().text = GameObject.FindGameObjectsWithTag("Enemy").Count().ToString();
 
         // health bar
         {
