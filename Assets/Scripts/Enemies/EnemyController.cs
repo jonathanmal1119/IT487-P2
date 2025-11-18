@@ -148,6 +148,8 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(int Amt, out bool killed)
     {
+        killed = false;
+
         if (health - Amt <= 0)
         {
             int dropChance = Random.Range(0, 2);
