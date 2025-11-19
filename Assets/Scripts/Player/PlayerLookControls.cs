@@ -7,6 +7,8 @@ public class PlayerLookControls : MonoBehaviour
     public Transform horizontalOrientation;
     public Transform verticalPivot;
 
+    public Transform recoilPivot;
+
     InputAction lookAction;
     InputAction interactAction;
 
@@ -49,6 +51,9 @@ public class PlayerLookControls : MonoBehaviour
         }
     }
     public float Sensitivity { get; set; } = 1;
+
+    private Vector2 remainingVisualRecoil = new();
+    private Vector2 currentRecoilAngle = new();
 
     private void Awake()
     {
@@ -102,6 +107,8 @@ public class PlayerLookControls : MonoBehaviour
         {
             Interact();
         }
+
+        HandleCameraRecoil();
     }
 
     void Interact()
@@ -124,5 +131,42 @@ public class PlayerLookControls : MonoBehaviour
         {
             Debug.Log("Nothing hit.");
         }
+    }
+
+    private void HandleCameraRecoil()
+    {
+        float recoilForce = 20;
+        float restSpeed = 15;
+
+        if (remainingVisualRecoil.x > 0)
+        {
+            remainingVisualRecoil.x = Mathf.Clamp(remainingVisualRecoil.x - 17.5f * Time.deltaTime, 0, 10);
+            currentRecoilAngle.x = Mathf.Lerp(currentRecoilAngle.x, -remainingVisualRecoil.x, recoilForce * Time.deltaTime);
+        }
+        else if (remainingVisualRecoil.x <= 0)
+        {
+            currentRecoilAngle.x = Mathf.Lerp(currentRecoilAngle.x, 0, restSpeed * Time.deltaTime);
+        }
+
+        if (remainingVisualRecoil.y != 0)
+        {
+            remainingVisualRecoil.y = Mathf.Clamp(Mathf.Sign(remainingVisualRecoil.y) * Mathf.Max(0, Mathf.Abs(remainingVisualRecoil.y) - 17.5f * Time.deltaTime), -20, 20);
+            currentRecoilAngle.y = Mathf.Lerp(currentRecoilAngle.y, remainingVisualRecoil.y, recoilForce * Time.deltaTime);
+        }
+        else if (currentRecoilAngle.y != 0)
+        {
+            currentRecoilAngle.y = Mathf.Lerp(currentRecoilAngle.y, 0, restSpeed * Time.deltaTime);
+        }
+
+        Vector3 rotation = recoilPivot.localEulerAngles;
+        rotation.x = currentRecoilAngle.x;
+        rotation.y = currentRecoilAngle.y;
+        recoilPivot.localEulerAngles = rotation;
+    }
+
+    public void AddCameraRecoil(float vertical, float randomHorizontal = 0)
+    {
+        remainingVisualRecoil.x += vertical;
+        remainingVisualRecoil.y += UnityEngine.Random.Range(-randomHorizontal, randomHorizontal);
     }
 }

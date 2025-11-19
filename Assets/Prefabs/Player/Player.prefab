@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &246677943561160976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6935745364785013271}
+  m_Layer: 2
+  m_Name: Recoil Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6935745364785013271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246677943561160976}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3192538926533650157}
+  m_Father: {fileID: 721163302948914727}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &312860683085589470
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLookControls
   horizontalOrientation: {fileID: 721163302948914727}
   verticalPivot: {fileID: 3192538926533650157}
+  recoilPivot: {fileID: 6935745364785013271}
   horizontalLookSpeed: 0.3
   verticalLookSpeed: 0.3
   verticalLookClamp: {x: -90, y: 90}
@@ -501,6 +534,8 @@ MonoBehaviour:
   hipFireRandomSpread: {x: 1.5, y: 1.5}
   bulletSpreadIncreasePerShot: 0.5
   aimFireRandomSpread: {x: 0, y: 0}
+  verticalRecoil: 4
+  randomHorizontalRecoil: 3
   weaponXOffset: {fileID: 9061843439806742531}
   aimOffsetDistance: 0.35
   aimDownSightsSpeed: 15
@@ -543,6 +578,8 @@ MonoBehaviour:
   hipFireRandomSpread: {x: 0, y: 0}
   bulletSpreadIncreasePerShot: 0
   aimFireRandomSpread: {x: 0, y: 0}
+  verticalRecoil: 0
+  randomHorizontalRecoil: 0
   weaponXOffset: {fileID: 0}
   aimOffsetDistance: 0.3
   aimDownSightsSpeed: 15
@@ -590,6 +627,8 @@ MonoBehaviour:
   hipFireRandomSpread: {x: 0, y: 0}
   bulletSpreadIncreasePerShot: 0
   aimFireRandomSpread: {x: 0, y: 0}
+  verticalRecoil: 0
+  randomHorizontalRecoil: 0
   weaponXOffset: {fileID: 0}
   aimOffsetDistance: 0.3
   aimDownSightsSpeed: 15
@@ -1312,7 +1351,7 @@ Transform:
   - {fileID: 3169252896886394467}
   - {fileID: 8586753673749981160}
   - {fileID: 6128416663737429754}
-  m_Father: {fileID: 721163302948914727}
+  m_Father: {fileID: 6935745364785013271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &5229152201234617711
 Camera:
@@ -1891,7 +1930,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3192538926533650157}
+  - {fileID: 6935745364785013271}
   m_Father: {fileID: 7109229398297639457}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7610471156016250750

@@ -42359,6 +42359,14 @@ PrefabInstance:
       propertyPath: ammoCounter
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3282894780114167723, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
+      propertyPath: verticalRecoil
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3282894780114167723, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
+      propertyPath: randomHorizontalRecoil
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4818792995208578479, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
       propertyPath: debugCurrentWeaponText
       value: 

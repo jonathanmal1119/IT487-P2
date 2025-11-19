@@ -34,6 +34,9 @@ public class PlayerPistol : MonoBehaviour
 
     public Vector2 aimFireRandomSpread;
 
+    public float verticalRecoil = 0;
+    public float randomHorizontalRecoil = 0;
+
     public Vector2 EffectiveSpread { 
         get {
             if (aimDownSights)
@@ -173,5 +176,10 @@ public class PlayerPistol : MonoBehaviour
         nextShot = Time.time + timeBetweenShots;
         ammunition -= ammoUsedPerShot;
         AmmoChanged?.Invoke();
+
+        if (aimDownSights)
+            playerLookControls.AddCameraRecoil(verticalRecoil, randomHorizontalRecoil);
+        else
+            playerLookControls.AddCameraRecoil(verticalRecoil/2, randomHorizontalRecoil/2);
     }
 }
