@@ -1,3 +1,5 @@
+using Assets.Scripts;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
@@ -24,11 +26,11 @@ public class MeshRenderDistance : MonoBehaviour
 
     void Update()
     {
-        if ((Camera.main.transform.position - transform.position).magnitude > RenderMinDistance && (transform.position - lastPos).magnitude > MinSpeed)
+        if ((Utils.CurrentCamera.transform.position - transform.position).magnitude > RenderMinDistance && (transform.position - lastPos).magnitude > MinSpeed)
         {
             GetComponent<MeshRenderer>().enabled = true;
 
-            transform.localScale = startScale * ScaleCurve.Evaluate(((Camera.main.transform.position - transform.position).magnitude - CurveStart) / (CurveEnd - CurveStart));
+            transform.localScale = startScale * ScaleCurve.Evaluate(((Utils.CurrentCamera.transform.position - transform.position).magnitude - CurveStart) / (CurveEnd - CurveStart));
         }
         else
         {
