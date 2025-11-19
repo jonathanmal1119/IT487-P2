@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Riten.Native.Cursors;
 
 public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -33,6 +34,14 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData) => hovering = true;
-    public void OnPointerExit(PointerEventData eventData) => hovering = false;
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        hovering = true;
+        NativeCursor.SetCursor(NTCursors.Link);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        hovering = false;
+        NativeCursor.ResetCursor();
+    }
 }
