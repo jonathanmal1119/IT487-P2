@@ -919,7 +919,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 90, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1388641287
 MonoBehaviour:
@@ -1028,6 +1028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   hoverColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+  transitionSpeed: 15
 --- !u!1 &1453367668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,8 +1088,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6ae9e937e0e38174d939b5c125a81640, type: 2}
-  m_sharedMaterial: {fileID: 4018167147427756813, guid: 6ae9e937e0e38174d939b5c125a81640, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5cdb0de7ae8e4894d87b972c28ebf438, type: 2}
+  m_sharedMaterial: {fileID: -3295292183083691622, guid: 5cdb0de7ae8e4894d87b972c28ebf438, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1202,7 +1203,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -40}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 90, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1580760012
 MonoBehaviour:
@@ -1311,6 +1312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   hoverColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
+  transitionSpeed: 15
 --- !u!1 &1637200400
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,8 +1374,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6ae9e937e0e38174d939b5c125a81640, type: 2}
-  m_sharedMaterial: {fileID: 4018167147427756813, guid: 6ae9e937e0e38174d939b5c125a81640, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5cdb0de7ae8e4894d87b972c28ebf438, type: 2}
+  m_sharedMaterial: {fileID: -3295292183083691622, guid: 5cdb0de7ae8e4894d87b972c28ebf438, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
