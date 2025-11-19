@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -135,8 +136,13 @@ public class PlayerLookControls : MonoBehaviour
 
     private void HandleCameraRecoil()
     {
-        float recoilForce = 15;
+        float recoilForce = 14;
         float restSpeed = 7;
+        if (GetComponent<PlayerWeaponManager>().N()?.ActiveWeapon.IsAiming == false)
+        {
+            recoilForce *= 0.4f;
+            restSpeed *= 0.6f;
+        }
 
         if (remainingVisualRecoil.x > 0)
         {

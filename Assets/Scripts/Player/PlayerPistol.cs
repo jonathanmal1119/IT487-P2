@@ -180,6 +180,6 @@ public class PlayerPistol : MonoBehaviour
         if (aimDownSights)
             playerLookControls.AddCameraRecoil(verticalRecoil, randomHorizontalRecoil);
         else
-            playerLookControls.AddCameraRecoil(verticalRecoil/2, randomHorizontalRecoil/2);
+            playerLookControls.AddCameraRecoil(verticalRecoil * 0.65f, randomHorizontalRecoil * 0.65f);
     }
 }
