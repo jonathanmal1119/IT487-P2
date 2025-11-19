@@ -2519,10 +2519,10 @@ RectTransform:
   - {fileID: 1047727406928277094}
   - {fileID: 6167376802921071527}
   - {fileID: 8638268502956982058}
+  - {fileID: 6923166562945063400}
   - {fileID: 1130396669874355419}
   - {fileID: 3664276708021558731}
   - {fileID: 2407225956152928058}
-  - {fileID: 6923166562945063400}
   m_Father: {fileID: 9099431963037790573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2957,8 +2957,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Weapon
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6ae9e937e0e38174d939b5c125a81640, type: 2}
-  m_sharedMaterial: {fileID: 4018167147427756813, guid: 6ae9e937e0e38174d939b5c125a81640, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5cdb0de7ae8e4894d87b972c28ebf438, type: 2}
+  m_sharedMaterial: {fileID: -3295292183083691622, guid: 5cdb0de7ae8e4894d87b972c28ebf438, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
