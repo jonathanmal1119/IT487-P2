@@ -62,6 +62,8 @@ public class PlayerHealth : MonoBehaviour
         HealthChanged?.Invoke();
         lastHitTime = Time.time;
 
+        GetComponent<PlayerLookControls>().AddScreenShake(UnityEngine.Random.Range(4, 8), UnityEngine.Random.Range(-3, 3), 5);
+
         if (health <= 0)
         {
             Die();
