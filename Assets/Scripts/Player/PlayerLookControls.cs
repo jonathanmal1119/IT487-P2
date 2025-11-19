@@ -84,8 +84,6 @@ public class PlayerLookControls : MonoBehaviour
 
         rotChange = lookAction.ReadValue<Vector2>();
 
-        Debug.Log("RotChange: " + rotChange);
-
         /*
         horizontalOrientation.Rotate(0f, rotChange.x * horizontalLookSpeed * Time.deltaTime, 0f);
         //verticalPivot.Rotate(rotChange.y * verticalLookSpeed * Time.deltaTime * -1f, 0f, 0f);
@@ -137,8 +135,8 @@ public class PlayerLookControls : MonoBehaviour
 
     private void HandleCameraRecoil()
     {
-        float recoilForce = 20;
-        float restSpeed = 10;
+        float recoilForce = 15;
+        float restSpeed = 7;
 
         if (remainingVisualRecoil.x > 0)
         {
@@ -168,7 +166,9 @@ public class PlayerLookControls : MonoBehaviour
 
     public void AddCameraRecoil(float vertical, float randomHorizontal = 0)
     {
-        remainingVisualRecoil.x += vertical;
-        remainingVisualRecoil.y += UnityEngine.Random.Range(-randomHorizontal, randomHorizontal);
+        float recoilSmoothing = Mathf.Clamp01(1 - (rotChange.magnitude / 2.5f));
+
+        remainingVisualRecoil.x += vertical * recoilSmoothing;
+        remainingVisualRecoil.y += UnityEngine.Random.Range(-randomHorizontal, randomHorizontal) * recoilSmoothing;
     }
 }
