@@ -168,9 +168,6 @@ public class PlayerLookControls : MonoBehaviour
             currentRecoilAngle.y = Mathf.Lerp(currentRecoilAngle.y, 0, restSpeed * Time.deltaTime);
         }
 
-        Debug.Log($"Recoil Angle: {currentRecoilAngle}");
-        Debug.Log($"Remaining VR: {remainingVisualRecoil}");
-
         return new(currentRecoilAngle.x, currentRecoilAngle.y, 0);
     }
 
