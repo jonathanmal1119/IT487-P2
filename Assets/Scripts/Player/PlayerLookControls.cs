@@ -51,7 +51,7 @@ public class PlayerLookControls : MonoBehaviour
             }
         }
     }
-    public float Sensitivity { get; set; } = 1;
+    public float Sensitivity { get; set; }
 
     private Vector2 remainingVisualRecoil = new();
     private Vector2 currentRecoilAngle = new();
@@ -61,6 +61,7 @@ public class PlayerLookControls : MonoBehaviour
         lookAction = InputSystem.actions.FindAction("Player/Look");
         interactAction = InputSystem.actions.FindAction("Player/Interact");
         OriginalFOV = playerCam.fieldOfView;
+        Sensitivity = PlayerPrefs.GetFloat("sensitivity", 1);
     }
 
     private void OnEnable()

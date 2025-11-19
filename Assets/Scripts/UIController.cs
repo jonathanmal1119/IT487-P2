@@ -92,6 +92,8 @@ public class UIController : MonoBehaviour
             {
                 playerLookControls.Sensitivity = newSensitivity;
                 sensValue.text = newSensitivity.ToString("0.00");
+                PlayerPrefs.SetFloat("sensitivity", newSensitivity);
+                PlayerPrefs.Save();
             }
             else
             {
