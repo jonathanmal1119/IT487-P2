@@ -503,6 +503,8 @@ MonoBehaviour:
   aimFireRandomSpread: {x: 0, y: 0}
   weaponXOffset: {fileID: 9061843439806742531}
   aimOffsetDistance: 0.35
+  aimDownSightsSpeed: 15
+  aimDownSightsFOVMultiplier: 1.5
   holdToAutomaticallyShoot: 1
   ammunition: 10
   ammoUsedPerShot: 1
@@ -543,6 +545,8 @@ MonoBehaviour:
   aimFireRandomSpread: {x: 0, y: 0}
   weaponXOffset: {fileID: 0}
   aimOffsetDistance: 0.3
+  aimDownSightsSpeed: 15
+  aimDownSightsFOVMultiplier: 1.25
   holdToAutomaticallyShoot: 0
   ammunition: 5
   ammoUsedPerShot: 1
@@ -588,6 +592,8 @@ MonoBehaviour:
   aimFireRandomSpread: {x: 0, y: 0}
   weaponXOffset: {fileID: 0}
   aimOffsetDistance: 0.3
+  aimDownSightsSpeed: 15
+  aimDownSightsFOVMultiplier: 1.25
   holdToAutomaticallyShoot: 0
   ammunition: 1
   ammoUsedPerShot: 0

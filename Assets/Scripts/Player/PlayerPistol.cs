@@ -54,6 +54,9 @@ public class PlayerPistol : MonoBehaviour
     public GameObject weaponXOffset;
     public float aimOffsetDistance = 0.3f;
 
+    public float aimDownSightsSpeed = 15f;
+    public float aimDownSightsFOVMultiplier = 1.25f;
+
     public bool holdToAutomaticallyShoot = false;
 
     [Header("Ammunition Stuff")]
@@ -66,10 +69,13 @@ public class PlayerPistol : MonoBehaviour
     public bool IsAiming => aimDownSights;
     public bool HasSpread => hipFireRandomSpread != Vector2.zero || bulletSpreadIncreasePerShot > 0f || aimFireRandomSpread != Vector2.zero;
 
+    PlayerLookControls playerLookControls;
+
     private void Awake()
     {
         shootAction = InputSystem.actions.FindAction("Player/Attack");
         //reloadAction = InputSystem.actions.FindAction("Player/Reload");
+        playerLookControls = GetComponent<PlayerLookControls>();
     }
 
     private void OnEnable()
@@ -101,15 +107,17 @@ public class PlayerPistol : MonoBehaviour
     {
         if(weaponXOffset != null)
         {
-            if (Mouse.current.rightButton.isPressed && GetComponent<PlayerLookControls>().EnableMouse)
+            if (Mouse.current.rightButton.isPressed && playerLookControls.EnableMouse)
             {
                 weaponXOffset.transform.localPosition = Vector3.Lerp(weaponXOffset.transform.localPosition, new(aimOffsetDistance * -1f, 0.1f, 0f), Time.deltaTime * 24);
                 aimDownSights = true;
+                playerLookControls.playerCam.fieldOfView = Mathf.Lerp(playerLookControls.playerCam.fieldOfView, playerLookControls.OriginalFOV / aimDownSightsFOVMultiplier, Time.deltaTime * aimDownSightsSpeed);
             }
             else
             {
                 weaponXOffset.transform.localPosition = Vector3.Lerp(weaponXOffset.transform.localPosition, new Vector3(0f, 0f, 0f), Time.deltaTime * 24);
                 aimDownSights = false;
+                playerLookControls.playerCam.fieldOfView = Mathf.Lerp(playerLookControls.playerCam.fieldOfView, playerLookControls.OriginalFOV, Time.deltaTime * aimDownSightsSpeed);
             }
         }
 
@@ -123,12 +131,12 @@ public class PlayerPistol : MonoBehaviour
             if (Time.time >= nextShot)
             {
                 //press button to shoot.
-                if (shootAction.WasPressedThisFrame() && GetComponent<PlayerLookControls>().EnableMouse)
+                if (shootAction.WasPressedThisFrame() && playerLookControls.EnableMouse)
                 {
                     Shoot();
                 }
                 //hold button to continuously shoot, if enabled.
-                else if (holdToAutomaticallyShoot && shootAction.IsPressed() && GetComponent<PlayerLookControls>().EnableMouse)
+                else if (holdToAutomaticallyShoot && shootAction.IsPressed() && playerLookControls.EnableMouse)
                 {
                     Shoot();
                 }

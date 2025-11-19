@@ -21,6 +21,8 @@ public class PlayerLookControls : MonoBehaviour
     public Camera playerCam;
     public LayerMask interactLayer;
 
+    public float OriginalFOV { get; set; }
+
     public VehicleController? VehicleController { get; set; }
     public Action? OnEnterExitVehicle;
     public bool InVehicle => VehicleController != null;
@@ -52,6 +54,7 @@ public class PlayerLookControls : MonoBehaviour
     {
         lookAction = InputSystem.actions.FindAction("Player/Look");
         interactAction = InputSystem.actions.FindAction("Player/Interact");
+        OriginalFOV = playerCam.fieldOfView;
     }
 
     private void OnEnable()
@@ -87,8 +90,8 @@ public class PlayerLookControls : MonoBehaviour
         verticalPivot.localEulerAngles = new Vector3(Vrot, verticalPivot.localEulerAngles.y, verticalPivot.localEulerAngles.z);
         */
 
-        Hrot += horizontalLookSpeed * rotChange.x * Sensitivity;
-        Vrot -= verticalLookSpeed * rotChange.y * Sensitivity;
+        Hrot += horizontalLookSpeed * rotChange.x * Sensitivity * (playerCam.fieldOfView / OriginalFOV);
+        Vrot -= verticalLookSpeed * rotChange.y * Sensitivity * (playerCam.fieldOfView / OriginalFOV);
 
         Vrot = Mathf.Clamp(Vrot, verticalLookClamp.x, verticalLookClamp.y);
 
