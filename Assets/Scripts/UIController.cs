@@ -26,6 +26,8 @@ public class UIController : MonoBehaviour
     private GameObject fuelUI;
     private float origFbWidth;
 
+    private GameObject speedUI;
+
     private GameObject weaponUI;
     private PlayerWeaponManager playerWeaponManager;
 
@@ -65,6 +67,8 @@ public class UIController : MonoBehaviour
         RectTransform fBar = fuelUI.transform.Find("Bar/ST").GetComponent<RectTransform>();
         origFbWidth = fBar.rect.width;
         fBar.sizeDelta = new(0, stBar.sizeDelta.y);
+
+        speedUI = transform.Find("HUD/Speed").gameObject;
 
         weaponUI = transform.Find("HUD/Weapon").gameObject;
         playerWeaponManager = Player.GetComponent<PlayerWeaponManager>();
@@ -138,12 +142,17 @@ public class UIController : MonoBehaviour
                 staminaUI.transform.localScale = new(1, 1, 1);
         }
 
-        // fuel bar
+        
         if (playerLookControls.InVehicle)
         {
+            // fuel bar
             Transform fuelBar = fuelUI.transform.Find("Bar/ST");
             fuelBar.GetComponent<RectTransform>().sizeDelta = new(-1 * origFbWidth * (1 - playerLookControls.VehicleController!.FuelPercent), fuelBar.GetComponent<RectTransform>().sizeDelta.y);
-            //stBar.GetComponent<Image>().color = Color.Lerp(new(1f, 1f, 1f), new(0.75f, 0.75f, 0.75f), 1 - (playerWalkControls.stamina * 2)); // change color based on stamina
+            fuelBar.GetComponent<Image>().color = Color.Lerp(new(1, 0.75f, 0), new(0.75f, 0.2f, 0), 1 - (playerLookControls.VehicleController!.FuelPercent * 2)); // change color based on fuel
+
+            // spedometer
+            Transform speedBar = speedUI.transform.Find("Bar");
+            speedBar.GetComponent<RectTransform>().rotation = Quaternion.Euler(new(0, 0, -1.0125f * playerLookControls.VehicleController!.Speed + 144));
         }
 
         UpdateHits();
@@ -193,6 +202,7 @@ public class UIController : MonoBehaviour
             weaponUI.transform.localScale = new(0, 0, 0);
             staminaUI.transform.localScale = new(0, 0, 0);
             fuelUI.transform.localScale = new(1, 1, 1);
+            speedUI.transform.localScale = new(1, 1, 1);
         }
 
         else
@@ -200,6 +210,7 @@ public class UIController : MonoBehaviour
             weaponUI.transform.localScale = new(1, 1, 1);
             staminaUI.transform.localScale = new(1, 1, 1);
             fuelUI.transform.localScale = new(0, 0, 0);
+            speedUI.transform.localScale = new(0, 0, 0);
         }
     }
 
