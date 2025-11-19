@@ -3172,7 +3172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89ee35f7b11b17e4fa8f72591123daa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  hoverColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  hoverColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
 --- !u!1 &5436600860487024804
 GameObject:
   m_ObjectHideFlags: 0
@@ -4248,7 +4248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89ee35f7b11b17e4fa8f72591123daa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  hoverColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  hoverColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
 --- !u!1 &7134734639832243589
 GameObject:
   m_ObjectHideFlags: 0

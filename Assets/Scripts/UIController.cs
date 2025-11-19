@@ -150,7 +150,7 @@ public class UIController : MonoBehaviour
             fuelBar.GetComponent<RectTransform>().sizeDelta = new(-1 * origFbWidth * (1 - playerLookControls.VehicleController!.FuelPercent), fuelBar.GetComponent<RectTransform>().sizeDelta.y);
             fuelBar.GetComponent<Image>().color = Color.Lerp(new(1, 0.75f, 0), new(0.75f, 0.2f, 0), 1 - (playerLookControls.VehicleController!.FuelPercent * 2)); // change color based on fuel
 
-            // spedometer
+            // speedometer
             Transform speedBar = speedUI.transform.Find("Bar");
             speedBar.GetComponent<RectTransform>().rotation = Quaternion.Euler(new(0, 0, -1.0125f * playerLookControls.VehicleController!.Speed + 144));
         }
