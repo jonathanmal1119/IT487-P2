@@ -19,8 +19,10 @@ public class PlayerHealth : MonoBehaviour
 
     public Action? HealthChanged;
 
-    public bool IsInvincible => Time.time - lastHitTime < 0.5f;
+    public bool IsInvincible => Time.time - lastHitTime < 0.25f;
     private float lastHitTime = float.MinValue;
+
+    public bool IsAlive => health > 0;
 
     void Start()
     {
@@ -59,6 +61,8 @@ public class PlayerHealth : MonoBehaviour
         
         HealthChanged?.Invoke();
         lastHitTime = Time.time;
+
+        GetComponent<PlayerLookControls>().AddScreenShake(UnityEngine.Random.Range(4, 8), UnityEngine.Random.Range(-3, 3), 5);
 
         if (health <= 0)
         {

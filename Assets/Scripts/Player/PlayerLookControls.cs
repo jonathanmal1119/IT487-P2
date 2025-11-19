@@ -51,16 +51,20 @@ public class PlayerLookControls : MonoBehaviour
             }
         }
     }
-    public float Sensitivity { get; set; } = 1;
+    public float Sensitivity { get; set; }
 
     private Vector2 remainingVisualRecoil = new();
     private Vector2 currentRecoilAngle = new();
+
+    private Vector3 remainingShake = new();
+    private Vector3 currentShake = new();
 
     private void Awake()
     {
         lookAction = InputSystem.actions.FindAction("Player/Look");
         interactAction = InputSystem.actions.FindAction("Player/Interact");
         OriginalFOV = playerCam.fieldOfView;
+        Sensitivity = PlayerPrefs.GetFloat("sensitivity", 1);
     }
 
     private void OnEnable()
@@ -109,7 +113,7 @@ public class PlayerLookControls : MonoBehaviour
             Interact();
         }
 
-        HandleCameraRecoil();
+        recoilPivot.localEulerAngles = HandleCameraRecoil() + HandleScreenShake();
     }
 
     void Interact()
@@ -134,7 +138,7 @@ public class PlayerLookControls : MonoBehaviour
         }
     }
 
-    private void HandleCameraRecoil()
+    private Vector3 HandleCameraRecoil()
     {
         float recoilForce = 14;
         float restSpeed = 7;
@@ -164,10 +168,45 @@ public class PlayerLookControls : MonoBehaviour
             currentRecoilAngle.y = Mathf.Lerp(currentRecoilAngle.y, 0, restSpeed * Time.deltaTime);
         }
 
-        Vector3 rotation = recoilPivot.localEulerAngles;
-        rotation.x = currentRecoilAngle.x;
-        rotation.y = currentRecoilAngle.y;
-        recoilPivot.localEulerAngles = rotation;
+        return new(currentRecoilAngle.x, currentRecoilAngle.y, 0);
+    }
+
+    private Vector3 HandleScreenShake()
+    {
+        float recoilForce = 22;
+        float restSpeed = 18;
+
+        if (remainingShake.x > 0)
+        {
+            remainingShake.x = Mathf.Clamp(remainingShake.x - restSpeed * 1.5f * Time.deltaTime, 0, 10);
+            currentShake.x = Mathf.Lerp(currentShake.x, -remainingShake.x, recoilForce * Time.deltaTime);
+        }
+        else if (remainingShake.x <= 0)
+        {
+            currentShake.x = Mathf.Lerp(currentShake.x, 0, restSpeed * Time.deltaTime);
+        }
+
+        if (remainingShake.y != 0)
+        {
+            remainingShake.y = Mathf.Clamp(Mathf.Sign(remainingShake.y) * Mathf.Max(0, Mathf.Abs(remainingShake.y) - restSpeed * 1.5f * Time.deltaTime), -20, 20);
+            currentShake.y = Mathf.Lerp(currentShake.y, remainingShake.y, recoilForce * Time.deltaTime);
+        }
+        else if (currentShake.y != 0)
+        {
+            currentShake.y = Mathf.Lerp(currentShake.y, 0, restSpeed * Time.deltaTime);
+        }
+
+        if (remainingShake.z != 0)
+        {
+            remainingShake.z = Mathf.Clamp(Mathf.Sign(remainingShake.z) * Mathf.Max(0, Mathf.Abs(remainingShake.z) - restSpeed * 1.5f * Time.deltaTime), -20, 20);
+            currentShake.z = Mathf.Lerp(currentShake.z, remainingShake.z, recoilForce * Time.deltaTime);
+        }
+        else if (currentShake.z != 0)
+        {
+            currentShake.z = Mathf.Lerp(currentShake.z, 0, restSpeed * Time.deltaTime);
+        }
+
+        return currentShake;
     }
 
     public void AddCameraRecoil(float vertical, float randomHorizontal = 0)
@@ -176,5 +215,12 @@ public class PlayerLookControls : MonoBehaviour
 
         remainingVisualRecoil.x += vertical * recoilSmoothing;
         remainingVisualRecoil.y += UnityEngine.Random.Range(-randomHorizontal, randomHorizontal) * recoilSmoothing;
+    }
+
+    public void AddScreenShake(float vertical, float horizontal, float twist)
+    {
+        remainingShake.x += vertical;
+        remainingShake.y += horizontal;
+        remainingShake.z += twist;
     }
 }

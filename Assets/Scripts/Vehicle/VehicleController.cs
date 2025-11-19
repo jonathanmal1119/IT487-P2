@@ -41,6 +41,8 @@ public class VehicleController : MonoBehaviour
 
     public float FuelPercent => fuelLevel / maxFuelLevel;
 
+    public float Speed => rb.linearVelocity.magnitude;
+
     [SerializeField]
     int engineHealth = 100;
 

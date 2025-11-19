@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -12,5 +13,7 @@ namespace Assets.Scripts
 
         public static float SineTime(double speed) => SineTime((float)speed);
         public static float SineTime(float speed) => (Mathf.Sin(Time.time * (float)speed) + 1) / 2;
+
+        public static Camera CurrentCamera => Camera.allCameras.First();
     }
 }

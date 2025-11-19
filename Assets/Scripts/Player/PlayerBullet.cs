@@ -33,7 +33,7 @@ public class PlayerBullet : MonoBehaviour
         }
         else if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerLookControls>().N()?.AddCameraRecoil(20, 15);
+            other.GetComponent<PlayerLookControls>().N()?.AddScreenShake(20, -15, 45);
         }
         else if(ignoreGround == false && other.gameObject.layer == 0 && other.CompareTag("Player") == false)
         {

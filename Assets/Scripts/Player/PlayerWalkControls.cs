@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,6 +36,8 @@ public class PlayerWalkControls : MonoBehaviour
     public float staminaRegenPerSecond = 0.1f;
     public bool waitForRefill = false;
 
+    PlayerHealth? playerHealth;
+
     //public int DEBUGFRAMERATE = 60;
 
     private void Awake()
@@ -43,6 +46,7 @@ public class PlayerWalkControls : MonoBehaviour
         walkAction = InputSystem.actions.FindAction("Player/Move");
         jumpAction = InputSystem.actions.FindAction("Player/Jump");
         sprintAction = InputSystem.actions.FindAction("Player/Sprint");
+        playerHealth = GetComponent<PlayerHealth>().N();
     }
 
     private void OnEnable()
@@ -63,6 +67,9 @@ public class PlayerWalkControls : MonoBehaviour
 
     void Update()
     {
+        if (playerHealth?.IsAlive == false)
+            return;
+
         //Application.targetFrameRate = DEBUGFRAMERATE;
 
         //WASD controls. The input system's axes are between -1 and 1, so I can multiply it by a desired value to set the player's speed.

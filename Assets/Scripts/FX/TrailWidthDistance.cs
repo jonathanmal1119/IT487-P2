@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using UnityEngine;
 
 [RequireComponent(typeof(TrailRenderer))]
@@ -20,6 +21,6 @@ public class TrailWidthDistance : MonoBehaviour
 
     void Update()
     {
-        trailRenderer.widthMultiplier = startWidth * WidthCurve.Evaluate(((Camera.main.transform.position - transform.position).magnitude - CurveStart) / (CurveEnd - CurveStart));
+        trailRenderer.widthMultiplier = startWidth * WidthCurve.Evaluate(((Utils.CurrentCamera.transform.position - transform.position).magnitude - CurveStart) / (CurveEnd - CurveStart));
     }
 }

@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,10 +18,13 @@ public class PlayerWeaponManager : MonoBehaviour
     public Action? OnHit;
     public Action? OnKill;
 
+    PlayerHealth? playerHealth;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         SetActiveWeapon(activeWeapon);
+        playerHealth = GetComponent<PlayerHealth>().N();
     }
 
     private void Awake()
@@ -39,6 +43,10 @@ public class PlayerWeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerHealth?.IsAlive == false)
+            return;
+
+
         if ((scrollAction.ReadValue<float>() > 0 || nextAction.WasPressedThisFrame()) && GetComponent<PlayerLookControls>().EnableMouse)
         {
             SetActiveWeapon(activeWeapon + 1);

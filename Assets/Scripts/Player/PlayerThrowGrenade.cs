@@ -21,6 +21,8 @@ public class PlayerThrowGrenade : PlayerPistol
     public float CurrentFuseTime => cookingGrenade ? fuseEndTime - Time.time : grenadeFuseLength;
     public bool IsCooking => cookingGrenade;
 
+    PlayerHealth? playerHealth;
+
     //---NOTE: these have been commented out because the parent class already does these. Also, Unity was throwing errors about managing the input stuff twice for some reason.-----
     /*
     private void Awake()
@@ -57,11 +59,15 @@ public class PlayerThrowGrenade : PlayerPistol
     {
         nextShot = Time.time + switchToWeaponTime;
         gunModel.SetActive(true);
+        playerHealth = GetComponent<PlayerHealth>().N();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (playerHealth?.IsAlive == false)
+            return;
+
         if (ammunition > 0 || ammoUsedPerShot <= 0)
         {
             if (gunModel.activeSelf == false && hideOnNoAmmo)
