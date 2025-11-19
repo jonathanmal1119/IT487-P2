@@ -19,7 +19,7 @@ public class PlayerHealth : MonoBehaviour
 
     public Action? HealthChanged;
 
-    public bool IsInvincible => Time.time - lastHitTime < 0.5f;
+    public bool IsInvincible => Time.time - lastHitTime < 0.25f;
     private float lastHitTime = float.MinValue;
 
     public bool IsAlive => health > 0;
