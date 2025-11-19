@@ -22,6 +22,8 @@ public class PlayerHealth : MonoBehaviour
     public bool IsInvincible => Time.time - lastHitTime < 0.5f;
     private float lastHitTime = float.MinValue;
 
+    public bool IsAlive => health > 0;
+
     void Start()
     {
         health = maxHealth;

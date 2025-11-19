@@ -74,11 +74,14 @@ public class PlayerPistol : MonoBehaviour
 
     PlayerLookControls playerLookControls;
 
+    PlayerHealth? playerHealth;
+
     private void Awake()
     {
         shootAction = InputSystem.actions.FindAction("Player/Attack");
         //reloadAction = InputSystem.actions.FindAction("Player/Reload");
         playerLookControls = GetComponent<PlayerLookControls>();
+        playerHealth = GetComponent<PlayerHealth>().N();
     }
 
     private void OnEnable()
@@ -108,7 +111,10 @@ public class PlayerPistol : MonoBehaviour
 
     void Update()
     {
-        if(weaponXOffset != null)
+        if (playerHealth?.IsAlive == false)
+            return;
+
+        if (weaponXOffset != null)
         {
             if (Mouse.current.rightButton.isPressed && playerLookControls.EnableMouse)
             {
