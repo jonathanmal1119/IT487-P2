@@ -84,6 +84,8 @@ public class PlayerLookControls : MonoBehaviour
 
         rotChange = lookAction.ReadValue<Vector2>();
 
+        Debug.Log("RotChange: " + rotChange);
+
         /*
         horizontalOrientation.Rotate(0f, rotChange.x * horizontalLookSpeed * Time.deltaTime, 0f);
         //verticalPivot.Rotate(rotChange.y * verticalLookSpeed * Time.deltaTime * -1f, 0f, 0f);
@@ -136,11 +138,11 @@ public class PlayerLookControls : MonoBehaviour
     private void HandleCameraRecoil()
     {
         float recoilForce = 20;
-        float restSpeed = 15;
+        float restSpeed = 10;
 
         if (remainingVisualRecoil.x > 0)
         {
-            remainingVisualRecoil.x = Mathf.Clamp(remainingVisualRecoil.x - 17.5f * Time.deltaTime, 0, 10);
+            remainingVisualRecoil.x = Mathf.Clamp(remainingVisualRecoil.x - restSpeed * 1.5f * Time.deltaTime, 0, 10);
             currentRecoilAngle.x = Mathf.Lerp(currentRecoilAngle.x, -remainingVisualRecoil.x, recoilForce * Time.deltaTime);
         }
         else if (remainingVisualRecoil.x <= 0)
@@ -150,7 +152,7 @@ public class PlayerLookControls : MonoBehaviour
 
         if (remainingVisualRecoil.y != 0)
         {
-            remainingVisualRecoil.y = Mathf.Clamp(Mathf.Sign(remainingVisualRecoil.y) * Mathf.Max(0, Mathf.Abs(remainingVisualRecoil.y) - 17.5f * Time.deltaTime), -20, 20);
+            remainingVisualRecoil.y = Mathf.Clamp(Mathf.Sign(remainingVisualRecoil.y) * Mathf.Max(0, Mathf.Abs(remainingVisualRecoil.y) - restSpeed * 1.5f * Time.deltaTime), -20, 20);
             currentRecoilAngle.y = Mathf.Lerp(currentRecoilAngle.y, remainingVisualRecoil.y, recoilForce * Time.deltaTime);
         }
         else if (currentRecoilAngle.y != 0)
