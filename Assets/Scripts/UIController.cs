@@ -191,7 +191,7 @@ public class UIController : MonoBehaviour
         else
             ammoCount.text = string.Empty;
 
-        weaponUI.GetComponent<RectTransform>().sizeDelta = new(weaponName.preferredWidth + 9, weaponUI.GetComponent<RectTransform>().sizeDelta.y);
+        weaponUI.GetComponent<RectTransform>().sizeDelta = new(weaponName.preferredWidth + 8.5f, weaponUI.GetComponent<RectTransform>().sizeDelta.y);
         weaponName.GetComponent<RectTransform>().sizeDelta = new(weaponName.preferredWidth, weaponUI.GetComponent<RectTransform>().sizeDelta.y);
     }
 
