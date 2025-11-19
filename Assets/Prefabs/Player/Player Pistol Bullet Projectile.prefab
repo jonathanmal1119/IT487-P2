@@ -5335,7 +5335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   rb: {fileID: 3230028675610728041}
-  launchForce: 8
+  launchForce: 7.5
   damage: 10
   lifetime: 5
   destroyOnHit: 1
