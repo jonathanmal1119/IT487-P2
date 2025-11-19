@@ -3985,7 +3985,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8533889079565467339}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -4024,7 +4024,10 @@ MonoBehaviour:
   attackAmt: 10
   attackTime: 1.5
   isDead: 0
+  audio: {fileID: 0}
+  growl: {fileID: 0}
   animator: {fileID: 0}
+  walk: {fileID: 0}
   death: {fileID: 9100000, guid: 6882b6fda1ca307409d32a3839b91e64, type: 2}
   attack: {fileID: 0}
   playerDetected: 0
