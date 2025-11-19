@@ -129,6 +129,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   CurveStart: 5
   CurveEnd: 75
+  MinSpeed: 0.1
 --- !u!1 &2828475897883554952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1512,7 +1513,7 @@ ParticleSystem:
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 32768
+        atime0: 45219
         atime1: 65535
         atime2: 0
         atime3: 0
