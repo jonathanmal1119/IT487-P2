@@ -42352,8 +42352,20 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3282894780114167723, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
+      propertyPath: ammunition
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3282894780114167723, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
       propertyPath: ammoCounter
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3282894780114167723, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
+      propertyPath: verticalRecoil
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3282894780114167723, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
+      propertyPath: randomHorizontalRecoil
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4818792995208578479, guid: ae05baf7c5b6eae48860b02c61e17213, type: 3}
       propertyPath: debugCurrentWeaponText

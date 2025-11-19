@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -18,7 +19,7 @@ public class PlayerBullet : MonoBehaviour
     {
         rb.AddForce(transform.forward * launchForce, ForceMode.Impulse);
         
-        Invoke("DisableBullet", lifetime); // disable bullet based on lifetime
+        Invoke(nameof(DisableBullet), lifetime); // disable bullet based on lifetime
         Destroy(gameObject, lifetime + 5); // keep object alive after disabling so the vfx can finish playing before destroying
     }
 
@@ -29,6 +30,10 @@ public class PlayerBullet : MonoBehaviour
         {
             //Debug.LogWarning("TODO: implement player bullets damaging enemies on hit");
             //Owner?.OnHit?.Invoke();
+        }
+        else if (other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerLookControls>().N()?.AddCameraRecoil(20, 15);
         }
         else if(ignoreGround == false && other.gameObject.layer == 0 && other.CompareTag("Player") == false)
         {

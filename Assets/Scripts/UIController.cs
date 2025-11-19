@@ -23,6 +23,9 @@ public class UIController : MonoBehaviour
 
     private PlayerLookControls playerLookControls;
 
+    private GameObject fuelUI;
+    private float origFbWidth;
+
     private GameObject weaponUI;
     private PlayerWeaponManager playerWeaponManager;
 
@@ -56,6 +59,12 @@ public class UIController : MonoBehaviour
         stBar.sizeDelta = new(-1 * origSbWidth * (1 - playerWalkControls.stamina), stBar.sizeDelta.y);
 
         playerLookControls = Player.GetComponent<PlayerLookControls>();
+        playerLookControls.OnEnterExitVehicle += OnEnterExitVehicle;
+
+        fuelUI = transform.Find("HUD/Fuel").gameObject;
+        RectTransform fBar = fuelUI.transform.Find("Bar/ST").GetComponent<RectTransform>();
+        origFbWidth = fBar.rect.width;
+        fBar.sizeDelta = new(0, stBar.sizeDelta.y);
 
         weaponUI = transform.Find("HUD/Weapon").gameObject;
         playerWeaponManager = Player.GetComponent<PlayerWeaponManager>();
@@ -77,11 +86,20 @@ public class UIController : MonoBehaviour
         transform.Find("Pause/Menu/Sensitivity/Value").GetComponent<TMP_InputField>().text = playerLookControls.Sensitivity.ToString("0.00");
         transform.Find("Pause/Menu/Sensitivity/Value").GetComponent<TMP_InputField>().onValueChanged.AddListener(value =>
         {
+            TMP_InputField sensValue = transform.Find("Pause/Menu/Sensitivity/Value").GetComponent<TMP_InputField>();
+
             if (float.TryParse(value, out float newSensitivity))
             {
                 playerLookControls.Sensitivity = newSensitivity;
+                sensValue.text = newSensitivity.ToString("0.00");
+            }
+            else
+            {
+                sensValue.text = playerLookControls.Sensitivity.ToString("0.00");
             }
         });
+
+        OnEnterExitVehicle();
     }
 
     private void Update()
@@ -107,16 +125,24 @@ public class UIController : MonoBehaviour
         }
 
         // stamina bar
+        if (!playerLookControls.InVehicle)
         {
             Transform stBar = staminaUI.transform.Find("Bar/ST");
             stBar.GetComponent<RectTransform>().sizeDelta = new(-1 * origSbWidth * (1 - playerWalkControls.stamina), stBar.GetComponent<RectTransform>().sizeDelta.y);
             //stBar.GetComponent<Image>().color = Color.Lerp(new(1f, 1f, 1f), new(0.75f, 0.75f, 0.75f), 1 - (playerWalkControls.stamina * 2)); // change color based on stamina
-            if (playerWalkControls.stamina >= 1 || playerLookControls.VehicleController != null)
+            if (playerWalkControls.stamina >= 1)
                 staminaUI.transform.localScale = new(0, 0, 0);
             else
                 staminaUI.transform.localScale = new(1, 1, 1);
         }
 
+        // fuel bar
+        if (playerLookControls.InVehicle)
+        {
+            Transform fuelBar = fuelUI.transform.Find("Bar/ST");
+            fuelBar.GetComponent<RectTransform>().sizeDelta = new(-1 * origFbWidth * (1 - playerLookControls.VehicleController!.FuelPercent), fuelBar.GetComponent<RectTransform>().sizeDelta.y);
+            //stBar.GetComponent<Image>().color = Color.Lerp(new(1f, 1f, 1f), new(0.75f, 0.75f, 0.75f), 1 - (playerWalkControls.stamina * 2)); // change color based on stamina
+        }
 
         UpdateHits();
         UpdateCrosshairLines();
@@ -156,6 +182,23 @@ public class UIController : MonoBehaviour
 
         weaponUI.GetComponent<RectTransform>().sizeDelta = new(weaponName.preferredWidth + 8, weaponUI.GetComponent<RectTransform>().sizeDelta.y);
         weaponName.GetComponent<RectTransform>().sizeDelta = new(weaponName.preferredWidth, weaponUI.GetComponent<RectTransform>().sizeDelta.y);
+    }
+
+    private void OnEnterExitVehicle()
+    {
+        if (playerLookControls.InVehicle)
+        {
+            weaponUI.transform.localScale = new(0, 0, 0);
+            staminaUI.transform.localScale = new(0, 0, 0);
+            fuelUI.transform.localScale = new(1, 1, 1);
+        }
+
+        else
+        {
+            weaponUI.transform.localScale = new(1, 1, 1);
+            staminaUI.transform.localScale = new(1, 1, 1);
+            fuelUI.transform.localScale = new(0, 0, 0);
+        }
     }
 
     private void OnWeaponHit(bool killed = false)
@@ -227,7 +270,6 @@ public class UIController : MonoBehaviour
         }
     }
 
-    //private void CreateCrosshairLines(int count = 3, int startAngle = 90) if you want the tri prong crosshair thing
     private void CreateCrosshairLines(int count = 4, int startAngle = 0)
     {
         // remove existing crosshair lines
@@ -298,15 +340,17 @@ public class UIController : MonoBehaviour
                     showLines = !playerWeaponManager.ActiveWeapon.IsAiming && playerWeaponManager.ActiveWeapon.HasSpread;
                     rectTransform.anchoredPosition = Mathf.Lerp(currentDistance, playerWeaponManager.ActiveWeapon.EffectiveSpread.x * 12 + 12, Time.deltaTime * 32) * direction;
                 }
+                if (playerLookControls.InVehicle)
+                    showLines = false;
 
                 Image image = crosshairElement.GetComponent<Image>();
-                if (!showLines)
+                if (!showLines && image.color.a > 0)
                 {
                     Color newColor = image.color;
                     newColor.a = Mathf.Lerp(newColor.a, 0, Time.deltaTime * 40);
                     image.color = newColor;
                 }
-                else
+                else if (showLines && image.color.a < 1)
                 {
                     Color newColor = image.color;
                     newColor.a = Mathf.Lerp(newColor.a, 1, Time.deltaTime * 40);
@@ -320,15 +364,17 @@ public class UIController : MonoBehaviour
                 {
                     showDot = playerWeaponManager.ActiveWeapon.IsAiming || !playerWeaponManager.ActiveWeapon.HasSpread;
                 }
+                if (playerLookControls.InVehicle)
+                    showDot = false;
 
                 Image image = crosshairElement.GetComponent<Image>();
-                if (!showDot)
+                if (!showDot && image.color.a > 0)
                 {
                     Color newColor = image.color;
                     newColor.a = Mathf.Lerp(newColor.a, 0, Time.deltaTime * 40);
                     image.color = newColor;
                 }
-                else
+                else if (showDot && image.color.a < 1)
                 {
                     Color newColor = image.color;
                     newColor.a = Mathf.Lerp(newColor.a, 1, Time.deltaTime * 40);

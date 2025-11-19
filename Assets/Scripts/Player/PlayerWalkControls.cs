@@ -93,7 +93,7 @@ public class PlayerWalkControls : MonoBehaviour
 
             walkVector = walkAction.ReadValue<Vector2>() * walkSpeed;
         }
-        
+
         moveVector.x = walkVector.x;
         moveVector.z = walkVector.y;
 
@@ -121,6 +121,6 @@ public class PlayerWalkControls : MonoBehaviour
         }
 
         //Finally, moving the charactercontroller.
-        controller.Move((playerLook.horizontalOrientation.right * moveVector.x * Time.deltaTime) + (playerLook.horizontalOrientation.forward * moveVector.z * Time.deltaTime) + (playerLook.horizontalOrientation.up * moveVector.y * Time.deltaTime));
+        controller.Move((moveVector.x * Time.deltaTime * playerLook.horizontalOrientation.right) + (moveVector.z * Time.deltaTime * playerLook.horizontalOrientation.forward) + (moveVector.y * Time.deltaTime * playerLook.horizontalOrientation.up));
     }
 }

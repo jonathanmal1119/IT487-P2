@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerLookControls))]
+[RequireComponent(typeof(PlayerWeaponManager))]
 public class PlayerPistol : MonoBehaviour
 {
     public string weaponName;
@@ -12,6 +13,9 @@ public class PlayerPistol : MonoBehaviour
     public Transform bulletSpawnSource;
     public GameObject bulletPrefab;
     public GameObject gunModel;
+
+    public Transform Muzzle;
+    public GameObject shootFX;
 
     public Animator animator;
 
@@ -29,6 +33,9 @@ public class PlayerPistol : MonoBehaviour
     public float bulletSpreadIncreasePerShot;
 
     public Vector2 aimFireRandomSpread;
+
+    public float verticalRecoil = 0;
+    public float randomHorizontalRecoil = 0;
 
     public Vector2 EffectiveSpread { 
         get {
@@ -50,6 +57,9 @@ public class PlayerPistol : MonoBehaviour
     public GameObject weaponXOffset;
     public float aimOffsetDistance = 0.3f;
 
+    public float aimDownSightsSpeed = 15f;
+    public float aimDownSightsFOVMultiplier = 1.25f;
+
     public bool holdToAutomaticallyShoot = false;
 
     [Header("Ammunition Stuff")]
@@ -62,10 +72,13 @@ public class PlayerPistol : MonoBehaviour
     public bool IsAiming => aimDownSights;
     public bool HasSpread => hipFireRandomSpread != Vector2.zero || bulletSpreadIncreasePerShot > 0f || aimFireRandomSpread != Vector2.zero;
 
+    PlayerLookControls playerLookControls;
+
     private void Awake()
     {
         shootAction = InputSystem.actions.FindAction("Player/Attack");
         //reloadAction = InputSystem.actions.FindAction("Player/Reload");
+        playerLookControls = GetComponent<PlayerLookControls>();
     }
 
     private void OnEnable()
@@ -97,15 +110,17 @@ public class PlayerPistol : MonoBehaviour
     {
         if(weaponXOffset != null)
         {
-            if (Mouse.current.rightButton.isPressed && GetComponent<PlayerLookControls>().EnableMouse)
+            if (Mouse.current.rightButton.isPressed && playerLookControls.EnableMouse)
             {
                 weaponXOffset.transform.localPosition = Vector3.Lerp(weaponXOffset.transform.localPosition, new(aimOffsetDistance * -1f, 0.1f, 0f), Time.deltaTime * 24);
                 aimDownSights = true;
+                playerLookControls.playerCam.fieldOfView = Mathf.Lerp(playerLookControls.playerCam.fieldOfView, playerLookControls.OriginalFOV / aimDownSightsFOVMultiplier, Time.deltaTime * aimDownSightsSpeed);
             }
             else
             {
                 weaponXOffset.transform.localPosition = Vector3.Lerp(weaponXOffset.transform.localPosition, new Vector3(0f, 0f, 0f), Time.deltaTime * 24);
                 aimDownSights = false;
+                playerLookControls.playerCam.fieldOfView = Mathf.Lerp(playerLookControls.playerCam.fieldOfView, playerLookControls.OriginalFOV, Time.deltaTime * aimDownSightsSpeed);
             }
         }
 
@@ -119,12 +134,12 @@ public class PlayerPistol : MonoBehaviour
             if (Time.time >= nextShot)
             {
                 //press button to shoot.
-                if (shootAction.WasPressedThisFrame() && GetComponent<PlayerLookControls>().EnableMouse)
+                if (shootAction.WasPressedThisFrame() && playerLookControls.EnableMouse)
                 {
                     Shoot();
                 }
                 //hold button to continuously shoot, if enabled.
-                else if (holdToAutomaticallyShoot && shootAction.IsPressed() && GetComponent<PlayerLookControls>().EnableMouse)
+                else if (holdToAutomaticallyShoot && shootAction.IsPressed() && playerLookControls.EnableMouse)
                 {
                     Shoot();
                 }
@@ -141,7 +156,7 @@ public class PlayerPistol : MonoBehaviour
 
     void Shoot()
     {
-        if(animator != null)
+        if (animator != null)
         {
             animator.SetTrigger("Shoot");
         }
@@ -149,14 +164,22 @@ public class PlayerPistol : MonoBehaviour
         GameObject pb = Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
         pb.transform.Rotate(UnityEngine.Random.Range(EffectiveSpread.x * -1, EffectiveSpread.x), UnityEngine.Random.Range(EffectiveSpread.y * -1, EffectiveSpread.y), 0f);
         if (pb.GetComponent<PlayerBullet>() != null)
-            pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>().N();
+            pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>();
         if (pb.GetComponent<PlayerGrenade>() != null)
-            pb.GetComponent<PlayerGrenade>().Owner = GetComponent<PlayerWeaponManager>().N();
+            pb.GetComponent<PlayerGrenade>().Owner = GetComponent<PlayerWeaponManager>();
+
+        if (shootFX != null && Muzzle != null)
+            Instantiate(shootFX, Muzzle);
 
         continuousShots++;
 
         nextShot = Time.time + timeBetweenShots;
         ammunition -= ammoUsedPerShot;
         AmmoChanged?.Invoke();
+
+        if (aimDownSights)
+            playerLookControls.AddCameraRecoil(verticalRecoil, randomHorizontalRecoil);
+        else
+            playerLookControls.AddCameraRecoil(verticalRecoil * 0.65f, randomHorizontalRecoil * 0.65f);
     }
 }

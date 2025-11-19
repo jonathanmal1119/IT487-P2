@@ -1,3 +1,5 @@
+using Assets.Scripts;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +7,8 @@ public class PlayerLookControls : MonoBehaviour
 {
     public Transform horizontalOrientation;
     public Transform verticalPivot;
+
+    public Transform recoilPivot;
 
     InputAction lookAction;
     InputAction interactAction;
@@ -20,7 +24,11 @@ public class PlayerLookControls : MonoBehaviour
     public Camera playerCam;
     public LayerMask interactLayer;
 
+    public float OriginalFOV { get; set; }
+
     public VehicleController? VehicleController { get; set; }
+    public Action? OnEnterExitVehicle;
+    public bool InVehicle => VehicleController != null;
 
     private bool enableMouse = true;
     public bool EnableMouse { 
@@ -45,10 +53,14 @@ public class PlayerLookControls : MonoBehaviour
     }
     public float Sensitivity { get; set; } = 1;
 
+    private Vector2 remainingVisualRecoil = new();
+    private Vector2 currentRecoilAngle = new();
+
     private void Awake()
     {
         lookAction = InputSystem.actions.FindAction("Player/Look");
         interactAction = InputSystem.actions.FindAction("Player/Interact");
+        OriginalFOV = playerCam.fieldOfView;
     }
 
     private void OnEnable()
@@ -84,8 +96,8 @@ public class PlayerLookControls : MonoBehaviour
         verticalPivot.localEulerAngles = new Vector3(Vrot, verticalPivot.localEulerAngles.y, verticalPivot.localEulerAngles.z);
         */
 
-        Hrot += horizontalLookSpeed * rotChange.x * Sensitivity;
-        Vrot -= verticalLookSpeed * rotChange.y * Sensitivity;
+        Hrot += horizontalLookSpeed * rotChange.x * Sensitivity * (playerCam.fieldOfView / OriginalFOV);
+        Vrot -= verticalLookSpeed * rotChange.y * Sensitivity * (playerCam.fieldOfView / OriginalFOV);
 
         Vrot = Mathf.Clamp(Vrot, verticalLookClamp.x, verticalLookClamp.y);
 
@@ -96,6 +108,8 @@ public class PlayerLookControls : MonoBehaviour
         {
             Interact();
         }
+
+        HandleCameraRecoil();
     }
 
     void Interact()
@@ -110,6 +124,7 @@ public class PlayerLookControls : MonoBehaviour
             {
                 VehicleController = hit.collider.gameObject.GetComponentInParent<VehicleController>();
                 VehicleController.enabled = true;
+                OnEnterExitVehicle?.Invoke();
                 gameObject.SetActive(false);
             }
         }
@@ -117,5 +132,49 @@ public class PlayerLookControls : MonoBehaviour
         {
             Debug.Log("Nothing hit.");
         }
+    }
+
+    private void HandleCameraRecoil()
+    {
+        float recoilForce = 14;
+        float restSpeed = 7;
+        if (GetComponent<PlayerWeaponManager>().N()?.ActiveWeapon.IsAiming == false)
+        {
+            recoilForce *= 0.4f;
+            restSpeed *= 0.6f;
+        }
+
+        if (remainingVisualRecoil.x > 0)
+        {
+            remainingVisualRecoil.x = Mathf.Clamp(remainingVisualRecoil.x - restSpeed * 1.5f * Time.deltaTime, 0, 10);
+            currentRecoilAngle.x = Mathf.Lerp(currentRecoilAngle.x, -remainingVisualRecoil.x, recoilForce * Time.deltaTime);
+        }
+        else if (remainingVisualRecoil.x <= 0)
+        {
+            currentRecoilAngle.x = Mathf.Lerp(currentRecoilAngle.x, 0, restSpeed * Time.deltaTime);
+        }
+
+        if (remainingVisualRecoil.y != 0)
+        {
+            remainingVisualRecoil.y = Mathf.Clamp(Mathf.Sign(remainingVisualRecoil.y) * Mathf.Max(0, Mathf.Abs(remainingVisualRecoil.y) - restSpeed * 1.5f * Time.deltaTime), -20, 20);
+            currentRecoilAngle.y = Mathf.Lerp(currentRecoilAngle.y, remainingVisualRecoil.y, recoilForce * Time.deltaTime);
+        }
+        else if (currentRecoilAngle.y != 0)
+        {
+            currentRecoilAngle.y = Mathf.Lerp(currentRecoilAngle.y, 0, restSpeed * Time.deltaTime);
+        }
+
+        Vector3 rotation = recoilPivot.localEulerAngles;
+        rotation.x = currentRecoilAngle.x;
+        rotation.y = currentRecoilAngle.y;
+        recoilPivot.localEulerAngles = rotation;
+    }
+
+    public void AddCameraRecoil(float vertical, float randomHorizontal = 0)
+    {
+        float recoilSmoothing = Mathf.Clamp01(1 - (rotChange.magnitude / 2.5f));
+
+        remainingVisualRecoil.x += vertical * recoilSmoothing;
+        remainingVisualRecoil.y += UnityEngine.Random.Range(-randomHorizontal, randomHorizontal) * recoilSmoothing;
     }
 }

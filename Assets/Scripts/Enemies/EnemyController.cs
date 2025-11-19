@@ -161,6 +161,10 @@ public class EnemyController : MonoBehaviour
                     Instantiate(drops[selection], rb.transform.position, transform.rotation);
             }
             
+
+            if (health > 0)
+                killed = true;
+
             isDead = true;
             StartCoroutine(Death());
         }
@@ -181,9 +185,11 @@ public class EnemyController : MonoBehaviour
             if (bulletInfo?.waitingToDestroy == false)
             {
                 TakeDamage(bulletInfo.damage, out bool killed);
+
+                // show kill marker if hit was a kill, otherwise show hit marker if still alive
                 if (killed)
                     bulletInfo?.Owner?.OnKill?.Invoke();
-                else
+                else if (!isDead)
                     bulletInfo?.Owner?.OnHit?.Invoke();
             }
             else
@@ -242,9 +248,11 @@ public class EnemyController : MonoBehaviour
             if (bulletInfo?.waitingToDestroy == false)
             {
                 TakeDamage(bulletInfo.damage, out bool killed);
+
+                // show kill marker if hit was a kill, otherwise show hit marker if still alive
                 if (killed)
                     bulletInfo?.Owner?.OnKill?.Invoke();
-                else
+                else if (!isDead)
                     bulletInfo?.Owner?.OnHit?.Invoke();
             }
             else
