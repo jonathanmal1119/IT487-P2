@@ -37,6 +37,7 @@ public class PlayerWalkControls : MonoBehaviour
     public bool waitForRefill = false;
 
     PlayerHealth? playerHealth;
+    PlayerWeaponManager? playerWeaponManager;
 
     //public int DEBUGFRAMERATE = 60;
 
@@ -47,6 +48,7 @@ public class PlayerWalkControls : MonoBehaviour
         jumpAction = InputSystem.actions.FindAction("Player/Jump");
         sprintAction = InputSystem.actions.FindAction("Player/Sprint");
         playerHealth = GetComponent<PlayerHealth>().N();
+        playerWeaponManager = GetComponent<PlayerWeaponManager>().N();
     }
 
     private void OnEnable()
@@ -125,6 +127,12 @@ public class PlayerWalkControls : MonoBehaviour
         else
         {
             moveVector.y -= gravity * Time.deltaTime;
+        }
+
+        if (playerWeaponManager?.ActiveWeapon.IsAiming == true)
+        {
+            moveVector.x *= 0.75f;
+            moveVector.z *= 0.75f;
         }
 
         //Finally, moving the charactercontroller.
