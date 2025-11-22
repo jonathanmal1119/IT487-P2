@@ -211,7 +211,7 @@ public class PlayerLookControls : MonoBehaviour
 
     public void AddCameraRecoil(float vertical, float randomHorizontal = 0)
     {
-        float recoilSmoothing = Mathf.Clamp01(1 - (rotChange.magnitude / 4f));
+        float recoilSmoothing = Mathf.Clamp01(1 - (rotChange.magnitude / 5));
 
         remainingVisualRecoil.x += vertical * recoilSmoothing;
         remainingVisualRecoil.y += UnityEngine.Random.Range(-randomHorizontal, randomHorizontal) * recoilSmoothing;
