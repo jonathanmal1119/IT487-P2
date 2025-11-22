@@ -534,8 +534,8 @@ MonoBehaviour:
   hipFireRandomSpread: {x: 1.5, y: 1.5}
   bulletSpreadIncreasePerShot: 0.5
   aimFireRandomSpread: {x: 0, y: 0}
-  verticalRecoil: 4
-  randomHorizontalRecoil: 3
+  verticalRecoil: 3
+  randomHorizontalRecoil: 2
   weaponXOffset: {fileID: 9061843439806742531}
   aimOffsetDistance: 0.35
   aimDownSightsSpeed: 15
