@@ -217,10 +217,5 @@ public class PlayerLookControls : MonoBehaviour
         remainingVisualRecoil.y += UnityEngine.Random.Range(-randomHorizontal, randomHorizontal) * recoilSmoothing;
     }
 
-    public void AddScreenShake(float vertical, float horizontal, float twist)
-    {
-        remainingShake.x += vertical;
-        remainingShake.y += horizontal;
-        remainingShake.z += twist;
-    }
+    public void AddScreenShake(float vertical, float horizontal, float twist) => remainingShake += new Vector3(vertical, horizontal, twist);
 }
