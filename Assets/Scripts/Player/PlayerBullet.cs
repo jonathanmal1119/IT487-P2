@@ -11,6 +11,9 @@ public class PlayerBullet : MonoBehaviour
     public bool destroyOnHit = true;
     public bool ignoreGround = false;
 
+    public GameObject solidImpactFX;
+    public GameObject enemyImpactFX;
+
     public bool waitingToDestroy = false;
 
     public PlayerWeaponManager? Owner { get; set; }
@@ -30,6 +33,10 @@ public class PlayerBullet : MonoBehaviour
         {
             //Debug.LogWarning("TODO: implement player bullets damaging enemies on hit");
             //Owner?.OnHit?.Invoke();
+            if (enemyImpactFX != null)
+            {
+                Instantiate(enemyImpactFX, transform.position, transform.rotation);
+            }
         }
         else if (other.CompareTag("Player"))
         {
@@ -39,6 +46,10 @@ public class PlayerBullet : MonoBehaviour
         {
             // keeping it alive lets the trail disappear normally instead of abruptly disappearing
             DisableBullet();
+            if (solidImpactFX != null)
+            {
+                Instantiate(solidImpactFX, transform.position, transform.rotation);
+            }
         }
     }
     private void OnCollisionEnter(Collision collision)
