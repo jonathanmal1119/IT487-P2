@@ -58,10 +58,10 @@ public class VehicleController : MonoBehaviour
     public WheelCollider rearLeftWheelCollider;
     public WheelCollider rearRightWheelCollider;
 
-    public Transform frontLeftWheelPos;
-    public Transform frontRightWheelPos;
-    public Transform rearLeftWheelPos;
-    public Transform rearRightWheelPos;
+    public GameObject frontLeftWheelPos;
+    public GameObject frontRightWheelPos;
+    public GameObject rearLeftWheelPos;
+    public GameObject rearRightWheelPos;
 
     Vector2 input = Vector2.zero;
 
@@ -199,7 +199,23 @@ public class VehicleController : MonoBehaviour
             //fuelLevelText.text = "Fuel: " + fuelLevel.ToString("0");
         }
 
-        
+        UpdateWheelVisual(frontLeftWheelCollider, frontLeftWheelPos.transform);
+        UpdateWheelVisual(frontRightWheelCollider, frontRightWheelPos.transform);
+        UpdateWheelVisual(rearLeftWheelCollider, rearLeftWheelPos.transform);
+        UpdateWheelVisual(rearRightWheelCollider, rearRightWheelPos.transform);
+    }
+
+    void UpdateWheelVisual(WheelCollider collider, Transform mesh)
+    {
+        collider.GetWorldPose(out Vector3 pos, out Quaternion rot);
+        mesh.position = pos;
+        mesh.rotation = rot;
+
+        mesh.localRotation = Quaternion.Euler(
+            mesh.localRotation.eulerAngles.x,
+            collider.steerAngle,
+            mesh.localRotation.eulerAngles.z
+        );
     }
 
     void FixedUpdate()
