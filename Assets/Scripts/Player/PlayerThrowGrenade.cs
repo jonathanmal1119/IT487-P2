@@ -23,6 +23,9 @@ public class PlayerThrowGrenade : PlayerPistol
 
     PlayerHealth? playerHealth;
 
+    public AudioClip pinSound;
+    public float pinVolume = 1f;
+
     //---NOTE: these have been commented out because the parent class already does these. Also, Unity was throwing errors about managing the input stuff twice for some reason.-----
     /*
     private void Awake()
@@ -89,6 +92,11 @@ public class PlayerThrowGrenade : PlayerPistol
                 {
                     cookingGrenade = true;
                     fuseEndTime = Time.time + grenadeFuseLength;
+
+                    if(soundSource != null && pinSound != null)
+                    {
+                        soundSource.PlayOneShot(pinSound, pinVolume);
+                    }
                 }
                 //throw a grenade when releasing the shoot button
                 else if (shootAction.WasReleasedThisFrame())
@@ -143,5 +151,10 @@ public class PlayerThrowGrenade : PlayerPistol
         nextShot = Time.time + timeBetweenShots;
         ammunition -= ammoUsedPerShot;
         AmmoChanged?.Invoke();
+
+        if (soundSource != null && attackSound != null)
+        {
+            soundSource.PlayOneShot(attackSound, attackSoundVolume);
+        }
     }
 }
