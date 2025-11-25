@@ -76,6 +76,14 @@ public class PlayerPistol : MonoBehaviour
 
     PlayerHealth? playerHealth;
 
+    [Header("Sounds")]
+
+    public AudioSource soundSource;
+    public AudioClip attackSound;
+    public float attackSoundVolume = 1f;
+    public AudioClip equipSound;
+    public float equipSoundVolume = 1f;
+
     private void Awake()
     {
         shootAction = InputSystem.actions.FindAction("Player/Attack");
@@ -95,7 +103,10 @@ public class PlayerPistol : MonoBehaviour
         {
             animator.SetTrigger("Equip");
         }
-
+        if(soundSource != null && equipSound != null)
+        {
+            soundSource.PlayOneShot(equipSound, equipSoundVolume);
+        }
     }
     private void OnDisable()
     {
@@ -187,5 +198,11 @@ public class PlayerPistol : MonoBehaviour
             playerLookControls.AddCameraRecoil(verticalRecoil, randomHorizontalRecoil);
         else
             playerLookControls.AddCameraRecoil(verticalRecoil * 0.65f, randomHorizontalRecoil * 0.65f);
+
+
+        if (soundSource != null && attackSound != null)
+        {
+            soundSource.PlayOneShot(attackSound, attackSoundVolume);
+        }
     }
 }

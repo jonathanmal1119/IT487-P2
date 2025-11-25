@@ -153,6 +153,135 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3657819693767899056}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &801742424651800481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6637447876783514155}
+  - component: {fileID: 1700179492054032713}
+  m_Layer: 2
+  m_Name: Weapon Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6637447876783514155
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801742424651800481}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0.681}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3192538926533650157}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1700179492054032713
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801742424651800481}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &899249572404524616
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +673,11 @@ MonoBehaviour:
   ammunition: 10
   ammoUsedPerShot: 1
   hideOnNoAmmo: 0
+  soundSource: {fileID: 1700179492054032713}
+  attackSound: {fileID: 8300000, guid: c14ac3dbd41708842946b9aec089b57a, type: 3}
+  attackSoundVolume: 1.25
+  equipSound: {fileID: 8300000, guid: 9d11a7fbd8c8ca94295204c20e79f12d, type: 3}
+  equipSoundVolume: 1
 --- !u!114 &4326226359377163052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,11 +722,18 @@ MonoBehaviour:
   ammunition: 5
   ammoUsedPerShot: 1
   hideOnNoAmmo: 1
+  soundSource: {fileID: 1700179492054032713}
+  attackSound: {fileID: 8300000, guid: cdba42210df156c4786b33b9faa7149c, type: 3}
+  attackSoundVolume: 0.5
+  equipSound: {fileID: 0}
+  equipSoundVolume: 1
   grenadeExplosion: {fileID: 8924261361647473477, guid: eefaf34098b1c1644bd306bb9470329f, type: 3}
   fuseDisplay: {fileID: 4668516930918270189}
   grenadeFuseLength: 3
   health: {fileID: 5450882390592699504}
   grenadeOvercookExplosionDamage: 50
+  pinSound: {fileID: 8300000, guid: 8d33e6cb9c903834e9e146afa8913c8d, type: 3}
+  pinVolume: 0.2
 --- !u!114 &1776395401915636146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,6 +778,11 @@ MonoBehaviour:
   ammunition: 1
   ammoUsedPerShot: 0
   hideOnNoAmmo: 0
+  soundSource: {fileID: 1700179492054032713}
+  attackSound: {fileID: 8300000, guid: cdba42210df156c4786b33b9faa7149c, type: 3}
+  attackSoundVolume: 1
+  equipSound: {fileID: 0}
+  equipSoundVolume: 1
 --- !u!54 &748773068724538717
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1349,6 +1495,7 @@ Transform:
   m_Children:
   - {fileID: 7134361081335340609}
   - {fileID: 3169252896886394467}
+  - {fileID: 6637447876783514155}
   - {fileID: 8586753673749981160}
   - {fileID: 6128416663737429754}
   m_Father: {fileID: 6935745364785013271}
