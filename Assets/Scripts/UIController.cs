@@ -36,10 +36,13 @@ public class UIController : MonoBehaviour
 
     private GameObject objectivesUI;
 
+    private GameObject informationUI;
+
     // turn objectives into a custom class instead of a tuple eventually hopefully we can just have a list of objectives that gets converted into the ui elements automatically idk
     private readonly List<(GameObject title, GameObject value)> objectives = new();
 
     private bool paused = false;
+    private bool started = false;
 
     void Start()
     {
@@ -105,11 +108,30 @@ public class UIController : MonoBehaviour
             }
         });
 
+        informationUI = transform.Find("InfoScreen").gameObject;
+        playerLookControls.EnableMouse = false;
+        Time.timeScale = 0;
+
         OnEnterExitVehicle();
     }
 
     private void Update()
     {
+        if (!started)
+        {
+            if (Keyboard.current.anyKey.wasPressedThisFrame ||
+            Mouse.current.leftButton.wasPressedThisFrame ||
+            Mouse.current.rightButton.wasPressedThisFrame ||
+            Mouse.current.middleButton.wasPressedThisFrame)
+            {
+                Time.timeScale = 1;
+                informationUI.SetActive(false);
+                started = true;
+                playerLookControls.EnableMouse = true;
+            }
+        }
+
+
         objectives.ElementAtOrDefault(0).value.GetComponent<TextMeshProUGUI>().text = GameObject.FindGameObjectWithTag("POI").GetComponent<poiMetaData>().enemiesInTrigger.Count().ToString();
         
         // TEMP we can replace with actual objective system.

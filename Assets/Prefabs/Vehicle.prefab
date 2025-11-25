@@ -98,7 +98,7 @@ Transform:
   m_GameObject: {fileID: 1150053069410801308}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.608, y: 0.684, z: 2.351}
+  m_LocalPosition: {x: 0.61, y: 0.684, z: 1.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -115,10 +115,10 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 100
+  m_Intensity: 50
   m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_SpotAngle: 61.076363
+  m_InnerSpotAngle: 52.87847
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -154,7 +154,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -266,7 +266,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 69b6e8fa160b23c42a4052f818eb166c, type: 2}
-  - {fileID: 2100000, guid: 69b6e8fa160b23c42a4052f818eb166c, type: 2}
+  - {fileID: 2100000, guid: ab035d7682921704a9015ac353311d57, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -335,7 +335,7 @@ Transform:
   m_GameObject: {fileID: 1625327773668478288}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.031, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -357,9 +357,10 @@ GameObject:
   - component: {fileID: 4639265462746021204}
   - component: {fileID: 5680545772774314315}
   - component: {fileID: 6628132766138880468}
+  - component: {fileID: 6006594788778746323}
   m_Layer: 0
   m_Name: Car Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -482,6 +483,24 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1818360609 &6006594788778746323
+RotationConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2289793616768709839}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources: []
 --- !u!1 &2599871932929960152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,7 +1041,7 @@ Transform:
   m_GameObject: {fileID: 7130414931271635417}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.63, y: 0.684, z: 2.351}
+  m_LocalPosition: {x: -0.63, y: 0.684, z: 1.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1039,10 +1058,10 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 100
+  m_Intensity: 50
   m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_SpotAngle: 61.076363
+  m_InnerSpotAngle: 52.87847
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -1078,7 +1097,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1400,7 +1419,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
+  m_Constraints: 64
   m_CollisionDetection: 2
 --- !u!114 &7985268385673720238
 MonoBehaviour:
@@ -1409,7 +1428,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9214906340906940121}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -1523,7 +1542,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9214906340906940121}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: beb5bb6fa9c862947a1eff62f6bf4c37, type: 3}
   m_Name: 
@@ -1531,15 +1550,15 @@ MonoBehaviour:
   move: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   handbrake: {fileID: -180009432325820009, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   exit: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  carPower: 1500
-  brakeingPower: 3000
+  carPower: 1000
+  brakeingPower: 30000
   maxSteeringAngle: 30
   steerRiseRateDegPerSec: 60
   steerFallRateDegPerSec: 120
   highSpeedKph: 80
-  highSpeedSteerPercent: 0.35
+  highSpeedSteerPercent: 0.16
   isPlayerInCar: 0
-  sidewaysDragCoefficient: 2
+  sidewaysDragCoefficient: 4
   fuelLevel: 100
   engineHealth: 100
   enginePerformance: 100
@@ -1548,10 +1567,10 @@ MonoBehaviour:
   frontRightWheelCollider: {fileID: 4218115016679748707}
   rearLeftWheelCollider: {fileID: 612318713330184738}
   rearRightWheelCollider: {fileID: 2666969866165958716}
-  frontLeftWheelPos: {fileID: 4756063354387468019}
-  frontRightWheelPos: {fileID: 5207065069708406486}
-  rearLeftWheelPos: {fileID: 5342727797192300372}
-  rearRightWheelPos: {fileID: 5969765966790768991}
+  frontLeftWheelPos: {fileID: 3686879970103435604}
+  frontRightWheelPos: {fileID: 5261112059571894179}
+  rearLeftWheelPos: {fileID: 7166157044615408857}
+  rearRightWheelPos: {fileID: 6958338145075065381}
   Player: {fileID: 0}
   carCamera: {fileID: 2289793616768709839}
   carHP: {fileID: 0}
