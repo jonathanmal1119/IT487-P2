@@ -5,6 +5,9 @@ public class RefuelPickup : MonoBehaviour
     public int fuelAmount = 25;
     public VehicleController vehicle;
 
+    public AudioClip pickupSound;
+    public float soundVolume = 1f;
+
     public void Start()
     {
         if (vehicle == null)
@@ -32,6 +35,12 @@ public class RefuelPickup : MonoBehaviour
             if (vehicle != null && vehicle.CanRefuel())
             {
                 vehicle.Refuel(fuelAmount);
+
+                if (pickupSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(pickupSound, transform.position, soundVolume);
+                }
+
                 Destroy(gameObject);
             }
         }

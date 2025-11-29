@@ -5,6 +5,9 @@ public class RepairPickup : MonoBehaviour
     public int repairAmount = 100;
     public VehicleController vehicle;
 
+    public AudioClip pickupSound;
+    public float soundVolume = 1f;
+
     public void Start()
     {
         if (vehicle == null)
@@ -32,6 +35,12 @@ public class RepairPickup : MonoBehaviour
             if (vehicle != null && vehicle.CanRepair())
             {
                 vehicle.Repair(repairAmount);
+
+                if (pickupSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(pickupSound, transform.position, soundVolume);
+                }
+
                 Destroy(gameObject);
             }
         }
