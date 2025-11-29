@@ -72,9 +72,9 @@ public class PlayerPistol : MonoBehaviour
     public bool IsAiming => aimDownSights;
     public bool HasSpread => hipFireRandomSpread != Vector2.zero || bulletSpreadIncreasePerShot > 0f || aimFireRandomSpread != Vector2.zero;
 
-    PlayerLookControls playerLookControls;
+    public PlayerLookControls playerLookControls;
 
-    PlayerHealth? playerHealth;
+    public PlayerHealth? playerHealth;
 
     [Header("Sounds")]
 
@@ -171,7 +171,7 @@ public class PlayerPistol : MonoBehaviour
             continuousShots = 0;
     }
 
-    void Shoot()
+    public virtual void Shoot()
     {
         if (animator != null)
         {

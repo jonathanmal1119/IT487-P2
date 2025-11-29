@@ -42,7 +42,7 @@ public class PlayerBullet : MonoBehaviour
         {
             other.GetComponent<PlayerLookControls>().N()?.AddScreenShake(20, -15, 45);
         }
-        else if(ignoreGround == false && other.gameObject.layer == 0 && other.CompareTag("Player") == false)
+        else if(ignoreGround == false && other.gameObject.layer == 0 && other.CompareTag("Player") == false && other.CompareTag("Bullet") == false)
         {
             // keeping it alive lets the trail disappear normally instead of abruptly disappearing
             DisableBullet();
