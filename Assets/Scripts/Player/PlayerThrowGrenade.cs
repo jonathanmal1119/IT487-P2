@@ -15,13 +15,12 @@ public class PlayerThrowGrenade : PlayerPistol
     public float grenadeFuseLength = 3f;
 
     public PlayerHealth health;
+
     //damage dealt to the player after cooking their grenade for too long
     public int grenadeOvercookExplosionDamage = 50;
 
     public float CurrentFuseTime => cookingGrenade ? fuseEndTime - Time.time : grenadeFuseLength;
     public bool IsCooking => cookingGrenade;
-
-    PlayerHealth? playerHealth;
 
     public AudioClip pinSound;
     public float pinVolume = 1f;
