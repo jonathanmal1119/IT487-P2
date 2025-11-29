@@ -5,6 +5,9 @@ public class ArmorPickup : MonoBehaviour
     public float percentNegation = 0.25f;
     public int armorPoints = 40;
 
+    public AudioClip pickupSound;
+    public float soundVolume = 1f;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -27,6 +30,11 @@ public class ArmorPickup : MonoBehaviour
             //destroy the item if it has been used
             if (itemUsed)
             {
+                if (pickupSound != null)
+                {
+                    AudioSource.PlayClipAtPoint(pickupSound, transform.position, soundVolume);
+                }
+
                 Destroy(gameObject);
             }
         }

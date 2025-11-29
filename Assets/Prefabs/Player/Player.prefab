@@ -729,10 +729,10 @@ MonoBehaviour:
   playerLookControls: {fileID: 551630824124643667}
   playerHealth: {fileID: 5450882390592699504}
   soundSource: {fileID: 1700179492054032713}
-  attackSound: {fileID: 8300000, guid: c14ac3dbd41708842946b9aec089b57a, type: 3}
-  attackSoundVolume: 1
-  equipSound: {fileID: 8300000, guid: 9d11a7fbd8c8ca94295204c20e79f12d, type: 3}
-  equipSoundVolume: 1
+  attackSound: {fileID: 8300000, guid: 519ed176bc2a38d44aafabbef942c87c, type: 3}
+  attackSoundVolume: 3
+  equipSound: {fileID: 8300000, guid: c1ad91e7b26d1a24182a83d37b810d93, type: 3}
+  equipSoundVolume: 0.75
   bulletsPerShot: 7
 --- !u!114 &4326226359377163052
 MonoBehaviour:
@@ -1272,7 +1272,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.35, y: -0.35000002, z: 0.5}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5454376813537441400}
@@ -1725,7 +1725,7 @@ Transform:
   m_GameObject: {fileID: 5122947866117054012}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.076, z: 3.43}
+  m_LocalPosition: {x: 0, y: 0.862, z: 3.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2553,7 +2553,7 @@ Transform:
   m_GameObject: {fileID: 8284553124637566001}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.35, y: -0.185, z: 0.99665}
+  m_LocalPosition: {x: 0.35, y: -0.185, z: 1.137}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2704,7 +2704,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5882db3edf1748548a511cf21d24d0d9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.66
+      value: 1.249
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5882db3edf1748548a511cf21d24d0d9, type: 3}
       propertyPath: m_LocalPosition.z

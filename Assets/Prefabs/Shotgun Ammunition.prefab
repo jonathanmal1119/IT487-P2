@@ -173,6 +173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewAmmunitionPickup
   amount: 10
   weaponIndex: 3
+  pickupSound: {fileID: 8300000, guid: c1ad91e7b26d1a24182a83d37b810d93, type: 3}
+  soundVolume: 1
 --- !u!1001 &8226763725577743638
 PrefabInstance:
   m_ObjectHideFlags: 0
