@@ -16,6 +16,8 @@ public class PlayerBullet : MonoBehaviour
 
     public bool waitingToDestroy = false;
 
+    public bool destroyImmediatelyOnGroundCollision = false;
+
     public PlayerWeaponManager? Owner { get; set; }
 
     void Start()
@@ -62,5 +64,7 @@ public class PlayerBullet : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         rb.isKinematic = false;
         rb.linearVelocity = Vector3.zero;
+
+        if (destroyImmediatelyOnGroundCollision) { Destroy(gameObject); }
     }
 }
