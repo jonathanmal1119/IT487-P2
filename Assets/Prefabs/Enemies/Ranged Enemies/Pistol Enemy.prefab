@@ -4573,7 +4573,7 @@ MonoBehaviour:
   health: 100
   movementSpeed: 5
   idleSpeed: 2
-  detectionRange: 10
+  detectionRange: 20
   attackRange: 0
   attackAmt: 10
   attackTime: 1.5
@@ -4593,6 +4593,7 @@ MonoBehaviour:
   head: {fileID: 8593446982861828058}
   model: {fileID: 3201076990701348392}
   bodyExplode: {fileID: 139314733489227346}
+  returningToStart: 0
   HeadshotEffect: {fileID: 3574390659308669501, guid: a77bae8a5a575ad4bbd11daa6e7c19c4, type: 3}
   isHeadshot: 0
   headshotSoundEffect: {fileID: 8300000, guid: 6ecd80f2439e5194588e884ed951b580, type: 3}
@@ -4611,7 +4612,7 @@ MonoBehaviour:
   EnemyController: {fileID: 5352073065775241368}
   bulletSpawnSource: {fileID: 1367167931730568328}
   bulletPrefab: {fileID: 5714155450476413498, guid: 3e737853cda45054aaacb683d9727b3f, type: 3}
-  gunModel: {fileID: 0}
+  gunModel: {fileID: 3357837404254647376}
   animator: {fileID: 0}
   timeBetweenShots: 1
   switchToWeaponTime: 0.5
