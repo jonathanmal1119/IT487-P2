@@ -5343,3 +5343,4 @@ MonoBehaviour:
   solidImpactFX: {fileID: 8924261361647473477, guid: 7e754c4d10ae25948b9fba8ea18cbed0, type: 3}
   enemyImpactFX: {fileID: 8924261361647473477, guid: 9a065ba5e8219b540a004e3b3a30f9a2, type: 3}
   waitingToDestroy: 0
+  destroyImmediatelyOnGroundCollision: 0
