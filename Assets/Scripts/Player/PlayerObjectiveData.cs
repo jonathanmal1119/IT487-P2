@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class PlayerObjectiveData : MonoBehaviour
 {
-    public bool hasWheel = false;
+    [SerializeField]
+    public bool hasExplosive = false;
 
-
-    public void UnlockWheel()
+    public void GiveExplosive()
     {
-        hasWheel = true;
+        hasExplosive = true;
     }
 }

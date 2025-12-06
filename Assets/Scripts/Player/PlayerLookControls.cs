@@ -1,5 +1,6 @@
 using Assets.Scripts;
 using System;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -130,6 +131,15 @@ public class PlayerLookControls : MonoBehaviour
                 VehicleController.enabled = true;
                 OnEnterExitVehicle?.Invoke();
                 gameObject.SetActive(false);
+            }
+            else if (hit.collider.gameObject.CompareTag("Blocker"))
+            {
+                Debug.LogError(this.gameObject.GetComponent<PlayerObjectiveData>().hasExplosive);
+                if (this.gameObject.GetComponent<PlayerObjectiveData>().hasExplosive)
+                {
+                    BlockerController bc = hit.collider.gameObject.GetComponent<BlockerController>();
+                    bc.Explode();
+                }
             }
         }
         else

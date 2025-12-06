@@ -131,16 +131,6 @@ public class UIController : MonoBehaviour
             }
         }
 
-
-        objectives.ElementAtOrDefault(0).value.GetComponent<TextMeshProUGUI>().text = GameObject.FindGameObjectWithTag("POI").GetComponent<poiMetaData>().enemiesInTrigger.Count().ToString();
-        
-        // TEMP we can replace with actual objective system.
-        if (GameObject.FindGameObjectWithTag("POI").GetComponent<poiMetaData>().CanShowWin())
-        {
-            objectives.ElementAtOrDefault(0).title.GetComponent<TextMeshProUGUI>().text = "Collect the wheel at the front.";
-            objectives.ElementAtOrDefault(0).value.GetComponent<TextMeshProUGUI>().text = "";
-        }
-
         // health bar
         {
             Transform hpBar = healthUI.transform.Find("Bar/HP");

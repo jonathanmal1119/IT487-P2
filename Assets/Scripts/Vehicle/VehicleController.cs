@@ -199,8 +199,8 @@ public class VehicleController : MonoBehaviour
             //fuelLevelText.text = "Fuel: " + fuelLevel.ToString("0");
         }
 
-        UpdateWheelVisual(frontLeftWheelCollider, frontLeftWheelPos.transform);
         UpdateWheelVisual(frontRightWheelCollider, frontRightWheelPos.transform);
+        UpdateWheelVisual(frontLeftWheelCollider, frontLeftWheelPos.transform);
         UpdateWheelVisual(rearLeftWheelCollider, rearLeftWheelPos.transform);
         UpdateWheelVisual(rearRightWheelCollider, rearRightWheelPos.transform);
     }
@@ -208,7 +208,7 @@ public class VehicleController : MonoBehaviour
     void UpdateWheelVisual(WheelCollider collider, Transform mesh)
     {
         collider.GetWorldPose(out Vector3 pos, out Quaternion rot);
-        mesh.position = pos;
+        //mesh.position = pos;
         mesh.rotation = rot;
 
         mesh.localRotation = Quaternion.Euler(
