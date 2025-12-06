@@ -8,8 +8,12 @@ public class poiMetaData : MonoBehaviour
 
 	private GameObject part = null;
 
+	public GameObject closeObj;
+	public GameObject openObj;
+
 	[Header("Enemies In Trigger")]
 	public HashSet<GameObject> enemiesInTrigger = new HashSet<GameObject>();
+
 
 	void Update()
 	{
@@ -25,7 +29,6 @@ public class poiMetaData : MonoBehaviour
 				{
 					part = Instantiate(POI_data.objectivePart);
 					part.transform.position = spawnLoc.transform.position;
-						
 				}
 
 				enemiesInTrigger.Remove(enemy);
@@ -43,5 +46,10 @@ public class poiMetaData : MonoBehaviour
 	public bool CanShowWin()
 	{
 		return part;
+	}
+
+	void ShowNextObj()
+	{
+
 	}
 }
