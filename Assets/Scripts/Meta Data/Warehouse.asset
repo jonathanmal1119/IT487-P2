@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Warehouse
   m_EditorClassIdentifier: Assembly-CSharp::ObjectiveData
   objectiveName: Warehouse
-  description: Clear out the warehouse to
-  objectivePart: {fileID: 0}
+  description: 'Clear out the warehouse of the Zombies
+
+'
+  objectivePart: {fileID: 7580810038495526054, guid: 51279681bf835c34ba4baf022ab76b09, type: 3}

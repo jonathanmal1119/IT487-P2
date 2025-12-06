@@ -13,6 +13,7 @@ TagManager:
   - POI
   - Collectible
   - UI
+  - Blocker
   layers:
   - Default
   - TransparentFX
