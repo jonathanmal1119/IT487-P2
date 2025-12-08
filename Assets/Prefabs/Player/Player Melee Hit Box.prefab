@@ -131,6 +131,8 @@ MonoBehaviour:
   lifetime: 0.25
   destroyOnHit: 1
   ignoreGround: 1
+  solidImpactFX: {fileID: 0}
+  enemyImpactFX: {fileID: 0}
   waitingToDestroy: 0
 --- !u!54 &1474810947156007723
 Rigidbody:

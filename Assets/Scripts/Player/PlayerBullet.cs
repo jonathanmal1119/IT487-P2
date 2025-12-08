@@ -11,6 +11,8 @@ public class PlayerBullet : MonoBehaviour
     public bool destroyOnHit = true;
     public bool ignoreGround = false;
 
+    public Vector3 PlayerHitScreenshake = Vector3.zero;
+
     public GameObject solidImpactFX;
     public GameObject enemyImpactFX;
 
@@ -40,7 +42,7 @@ public class PlayerBullet : MonoBehaviour
         }
         else if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerLookControls>().N()?.AddScreenShake(20, -15, 45);
+            other.GetComponent<PlayerLookControls>().N()?.AddScreenShake(PlayerHitScreenshake.x, PlayerHitScreenshake.y, PlayerHitScreenshake.z);
         }
         else if(ignoreGround == false && other.gameObject.layer == 0 && other.CompareTag("Player") == false && other.CompareTag("Bullet") == false)
         {
