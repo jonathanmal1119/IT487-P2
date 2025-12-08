@@ -130,7 +130,8 @@ MonoBehaviour:
   head: {fileID: 7965313612767201513}
   model: {fileID: 7825485384479487302}
   bodyExplode: {fileID: 3064860073699066855}
-  HeadshotEffect: {fileID: 3574390659308669501, guid: a77bae8a5a575ad4bbd11daa6e7c19c4, type: 3}
+  returningToStart: 0
+  HeadshotEffect: {fileID: 8924261361647473477, guid: 6b3a4709b9c754c45aec02ba994e317b, type: 3}
   isHeadshot: 0
   headshotSoundEffect: {fileID: 8300000, guid: 6ecd80f2439e5194588e884ed951b580, type: 3}
 --- !u!82 &-4586163658156742328

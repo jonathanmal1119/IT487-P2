@@ -1,17 +1,7 @@
 using Assets.Scripts;
 using System.Collections;
-//using Unity.VisualScripting;
-
-//using Unity.VisualScripting;
-//using UnityEditor.Experimental.GraphView;
-//using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
-//using TMPro;
-//using UnityEngine.WSA;
-//using UnityEngine.Audio;
-//using UnityEngine.Rendering;
-//using static UnityEngine.UI.GridLayoutGroup;
 
 public class EnemyController : MonoBehaviour
 {
@@ -227,6 +217,14 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator Death()
     {
+        // fix player collision with dead enemy
+        if (TryGetComponent(out Collider collider))
+            collider.excludeLayers = LayerMask.GetMask("Ignore Raycast"); 
+
+        // disable healthbar
+        foreach (Canvas canvas in GetComponentsInChildren<Canvas>())
+            canvas.enabled = false;
+
         if (isHeadshot == true)
         {
             Instantiate(HeadshotEffect, head.transform.position, transform.rotation);
