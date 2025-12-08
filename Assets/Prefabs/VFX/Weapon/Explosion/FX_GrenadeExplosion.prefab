@@ -287,7 +287,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 6.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5014,8 +5014,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 60
-      minScalar: 30
+      scalar: 75
+      minScalar: 25
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5715,7 +5715,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1500
+      scalar: 2000
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -9862,8 +9862,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3479960550617410261}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14966,7 +14966,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 20
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -19569,7 +19569,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.62458336, b: 0.09900004, a: 1}
-  m_Intensity: 50
+  m_Intensity: 75
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
