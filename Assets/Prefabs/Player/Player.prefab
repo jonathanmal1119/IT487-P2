@@ -602,6 +602,7 @@ GameObject:
   - component: {fileID: 1776395401915636146}
   - component: {fileID: 748773068724538717}
   - component: {fileID: 5450882390592699504}
+  - component: {fileID: 2336547656585244864}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -1044,6 +1045,20 @@ MonoBehaviour:
   armorDamageReductionPercent: 0
   armorPoints: 0
   RestartScreen: {fileID: 0}
+--- !u!114 &2336547656585244864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879561572952579700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030cf60cb39c3c848aab11bbba8ae28a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  ScreenDamageMaterial: {fileID: 2100000, guid: e1d9909938f338248ba03eaa64fc7b3f, type: 2}
+  TransitionSpeed: 3
 --- !u!1 &2043371132891884613
 GameObject:
   m_ObjectHideFlags: 0
