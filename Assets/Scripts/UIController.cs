@@ -114,11 +114,14 @@ public class UIController : MonoBehaviour
         });
 
         informationUI = transform.Find("InfoScreen").gameObject;
+        informationUI.gameObject.SetActive(true);
         playerLookControls.EnableMouse = false;
         Time.timeScale = 0;
 
         OnEnterExitVehicle();
     }
+
+    bool UiVisible = true;
 
     private void Update()
     {
@@ -134,7 +137,40 @@ public class UIController : MonoBehaviour
                 started = true;
                 playerLookControls.EnableMouse = true;
             }
+
+            return;
         }
+
+        if (Keyboard.current.f8Key.wasPressedThisFrame)
+        {
+            if (UiVisible)
+            {
+                foreach (Transform child in transform)
+                {
+                    if (child.name == "InfoScreen" || child.name == "Pause")
+                        continue;
+                    child.transform.localScale = new(0, 0, 0);
+                }
+
+                UiVisible = false;
+                Debug.Log("UI Hidden"); 
+            }
+            else
+            {
+
+                foreach (Transform child in transform)
+                {
+                    if (child.name == "InfoScreen" || child.name == "Pause")
+                        continue;
+                    child.transform.localScale = new(1, 1, 1);
+                }
+
+                UiVisible = true;
+                Debug.Log("UI Shown");
+            }
+
+        }
+            
 
         // health bar
         {
