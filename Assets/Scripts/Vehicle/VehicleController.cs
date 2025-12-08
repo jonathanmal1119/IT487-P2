@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -45,6 +46,9 @@ public class VehicleController : MonoBehaviour
 
     [SerializeField]
     int engineHealth = 100;
+
+    public Action? CarHealthChanged;
+    public int EngineHealth => engineHealth;
 
     [SerializeField]
     int enginePerformance = 100;
@@ -259,18 +263,15 @@ public class VehicleController : MonoBehaviour
     {
         engineHealth += amount;
         engineHealth = Mathf.Clamp(engineHealth, 0, 100);
-        //carHP.text = "Car: " + engineHealth.ToString();
+        CarHealthChanged?.Invoke();
     }
 
     public void TakeDamage(int damage)
     {
         engineHealth = Mathf.Clamp(engineHealth - damage, 0, 100);
         if (engineHealth <= 0)
-        {
             isEngineDestroyed = true;
-        }
-
-        //carHP.text = "Car: " + engineHealth.ToString();
+        CarHealthChanged?.Invoke();
     }
 
     public void SlowDown(float amt = 0.8f)

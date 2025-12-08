@@ -22,6 +22,9 @@ public class UIController : MonoBehaviour
 
     private PlayerLookControls playerLookControls;
 
+    private GameObject carHealthUI;
+    private float origCarHbWidth;
+
     private GameObject fuelUI;
     private float origFbWidth;
 
@@ -54,6 +57,10 @@ public class UIController : MonoBehaviour
         playerHealth.HealthChanged += HealthChanged;
         HealthChanged();
 
+        carHealthUI = transform.Find("HUD/CarHealth").gameObject;
+        RectTransform carHpBar = healthUI.transform.Find("Bar/HP").GetComponent<RectTransform>();
+        origCarHbWidth = carHpBar.rect.width;
+        carHpBar.sizeDelta = new(-1 * origCarHbWidth * (1 - PlayerHealthPercent), carHpBar.sizeDelta.y);
 
         playerWalkControls = Player.GetComponent<PlayerWalkControls>();
 
@@ -163,6 +170,16 @@ public class UIController : MonoBehaviour
             // speedometer
             Transform speedBar = speedUI.transform.Find("Bar");
             speedBar.GetComponent<RectTransform>().rotation = Quaternion.Euler(new(0, 0, -1.0125f * playerLookControls.VehicleController!.Speed + 144));
+
+            // car health bar
+            {
+                Transform hpBar = carHealthUI.transform.Find("Bar/HP");
+                hpBar.GetComponent<RectTransform>().sizeDelta = Vector2.Lerp(hpBar.GetComponent<RectTransform>().sizeDelta, new(-1 * origHbWidth * (1 - playerLookControls.VehicleController?.EngineHealth/100f ?? 1), hpBar.GetComponent<RectTransform>().sizeDelta.y), Time.deltaTime * 16);
+                if (PlayerHealthPercent < 0.25)
+                    hpBar.GetComponent<Image>().color = Color.Lerp(new(0.85f, 0.05f, 0.05f), new(0.5f, 0.075f, 0.075f), Utils.SineTime(2.5));
+                else
+                    hpBar.GetComponent<Image>().color = Color.white;
+            }
         }
 
         UpdateHits();
@@ -186,6 +203,7 @@ public class UIController : MonoBehaviour
     }
 
     private void HealthChanged() => healthUI.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = playerHealth.health.ToString();
+    private void CarHealthChanged() => carHealthUI.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = playerLookControls.VehicleController?.EngineHealth.ToString() ?? "100";
 
     private void WeaponUpdated()
     {
@@ -211,14 +229,18 @@ public class UIController : MonoBehaviour
         {
             weaponUI.transform.localScale = new(0, 0, 0);
             staminaUI.transform.localScale = new(0, 0, 0);
+            carHealthUI.transform.localScale = new(1, 1, 1);
             fuelUI.transform.localScale = new(1, 1, 1);
             speedUI.transform.localScale = new(1, 1, 1);
+            playerLookControls.VehicleController!.CarHealthChanged = CarHealthChanged;
+            CarHealthChanged();
         }
 
         else
         {
             weaponUI.transform.localScale = new(1, 1, 1);
             staminaUI.transform.localScale = new(1, 1, 1);
+            carHealthUI.transform.localScale = new(0, 0, 0);
             fuelUI.transform.localScale = new(0, 0, 0);
             speedUI.transform.localScale = new(0, 0, 0);
         }
