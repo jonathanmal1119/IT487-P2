@@ -4588,7 +4588,10 @@ MonoBehaviour:
   idle: {fileID: 0}
   aim: {fileID: 9100000, guid: 7de0b35ee45306a418f0e38aa629d611, type: 2}
   playerDetected: 0
-  drops: []
+  drops:
+  - {fileID: 8267886643902274698, guid: 7a0ea627bec2de841965541d8eb87d13, type: 3}
+  - {fileID: 5142690500720088064, guid: b33b9cc35859bed428e902f5e5885755, type: 3}
+  - {fileID: 5142690500720088064, guid: 25fcadcece360494687c53eab8f20b2f, type: 3}
   HealthSlider: {fileID: 6479244213543520302}
   head: {fileID: 8593446982861828058}
   model: {fileID: 3201076990701348392}
