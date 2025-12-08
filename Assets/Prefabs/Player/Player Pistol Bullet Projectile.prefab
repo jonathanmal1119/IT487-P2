@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6160299099134362388}
   - component: {fileID: 7684701567779441932}
   - component: {fileID: 3144418823495423400}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TracerSphere
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 2320197607751559328}
   - component: {fileID: 3030799754770809055}
   - component: {fileID: 1450791579507172}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SmokeRibbon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5049,7 +5049,7 @@ GameObject:
   - component: {fileID: 3937935174352785608}
   - component: {fileID: 3688086124980382831}
   - component: {fileID: 757956299493263802}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TracerTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5249,7 +5249,7 @@ GameObject:
   - component: {fileID: 4808872046250860606}
   - component: {fileID: 3230028675610728041}
   - component: {fileID: 3917294312952973257}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Pistol Bullet Projectile
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -5287,13 +5287,13 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 4
+    m_Bits: 68
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3230028675610728041
 Rigidbody:

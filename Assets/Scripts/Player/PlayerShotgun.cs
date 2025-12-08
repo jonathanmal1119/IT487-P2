@@ -1,8 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerShotgun : PlayerPistol
 {
     public int bulletsPerShot = 5;
+
+    public float recoilForceMultiplier = 1.25f;
+    public float recoilRestMultiplier = 1.5f;
+
+    public List<Vector2> pattern = new();
 
     private void OnDisable()
     {
@@ -51,14 +57,32 @@ public class PlayerShotgun : PlayerPistol
             animator.SetTrigger("Shoot");
         }
 
-        for(int i = 0; i < bulletcount; i++)
+
+        // if set pattern is set, use pattern, else use random spread
+        if (pattern.Count > 1)
         {
-            GameObject pb = Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
-            pb.transform.Rotate(UnityEngine.Random.Range(EffectiveSpread.x * -1, EffectiveSpread.x), UnityEngine.Random.Range(EffectiveSpread.y * -1, EffectiveSpread.y), 0f);
-            if (pb.GetComponent<PlayerBullet>() != null)
-                pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>();
-            if (pb.GetComponent<PlayerGrenade>() != null)
-                pb.GetComponent<PlayerGrenade>().Owner = GetComponent<PlayerWeaponManager>();
+            foreach (Vector2 point in pattern)
+            {
+                Vector2 deviatedPoint = point * Random.Range(1.25f, 0.75f); // add slight deviation so its not perfect
+
+                GameObject pb = Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
+                pb.transform.Rotate(deviatedPoint.x * EffectiveSpread.x * 2, deviatedPoint.y * EffectiveSpread.y * 2, 0f);
+                if (pb.GetComponent<PlayerBullet>() != null)
+                    pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>();
+
+            }
+        }
+        else
+        {
+            for (int i = 0; i < bulletcount; i++)
+            {
+                GameObject pb = Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
+                pb.transform.Rotate(Random.Range(EffectiveSpread.x * -1, EffectiveSpread.x), Random.Range(EffectiveSpread.y * -1, EffectiveSpread.y), 0f);
+                if (pb.GetComponent<PlayerBullet>() != null)
+                    pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>();
+                if (pb.GetComponent<PlayerGrenade>() != null)
+                    pb.GetComponent<PlayerGrenade>().Owner = GetComponent<PlayerWeaponManager>();
+            }
         }
 
         if (shootFX != null && Muzzle != null)
