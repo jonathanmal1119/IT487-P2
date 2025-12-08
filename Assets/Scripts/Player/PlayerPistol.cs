@@ -37,6 +37,8 @@ public class PlayerPistol : MonoBehaviour
     public float verticalRecoil = 0;
     public float randomHorizontalRecoil = 0;
 
+    public bool recoilSmoothing = true;
+
     public Vector2 EffectiveSpread { 
         get {
             if (aimDownSights)

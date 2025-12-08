@@ -152,7 +152,13 @@ public class PlayerLookControls : MonoBehaviour
     {
         float recoilForce = 14;
         float restSpeed = 7;
-        if (GetComponent<PlayerWeaponManager>().N()?.ActiveWeapon.IsAiming == false)
+
+        if (GetComponent<PlayerWeaponManager>().N()?.ActiveWeapon is PlayerShotgun shotgun)
+        {
+            recoilForce *= shotgun.recoilForceMultiplier;
+            restSpeed *= shotgun.recoilRestMultiplier;
+        }
+        else if (GetComponent<PlayerWeaponManager>().N()?.ActiveWeapon.IsAiming == false)
         {
             recoilForce *= 0.4f;
             restSpeed *= 0.6f;
@@ -221,7 +227,9 @@ public class PlayerLookControls : MonoBehaviour
 
     public void AddCameraRecoil(float vertical, float randomHorizontal = 0)
     {
-        float recoilSmoothing = Mathf.Clamp01(1 - (rotChange.magnitude / 5));
+        float recoilSmoothing = 1;
+        if (GetComponent<PlayerWeaponManager>().N()?.ActiveWeapon.recoilSmoothing == true)
+            Mathf.Clamp01(1 - (rotChange.magnitude / 5));
 
         remainingVisualRecoil.x += vertical * recoilSmoothing;
         remainingVisualRecoil.y += UnityEngine.Random.Range(-randomHorizontal, randomHorizontal) * recoilSmoothing;

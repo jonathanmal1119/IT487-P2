@@ -758,6 +758,7 @@ MonoBehaviour:
   aimFireRandomSpread: {x: 0, y: 0}
   verticalRecoil: 3
   randomHorizontalRecoil: 2
+  recoilSmoothing: 1
   weaponXOffset: {fileID: 9061843439806742531}
   aimOffsetDistance: 0.35
   aimDownSightsSpeed: 15
@@ -809,6 +810,7 @@ MonoBehaviour:
   aimFireRandomSpread: {x: 0, y: 0}
   verticalRecoil: 5
   randomHorizontalRecoil: 0
+  recoilSmoothing: 1
   weaponXOffset: {fileID: 2739650173326258141}
   aimOffsetDistance: 0.3455
   aimDownSightsSpeed: 15
@@ -852,14 +854,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  timeBetweenShots: 0.5
+  timeBetweenShots: 0.75
   switchToWeaponTime: 0.5
   nextShot: 0
-  hipFireRandomSpread: {x: 7, y: 7}
+  hipFireRandomSpread: {x: 4, y: 4}
   bulletSpreadIncreasePerShot: 1.5
-  aimFireRandomSpread: {x: 4, y: 4}
+  aimFireRandomSpread: {x: 3, y: 3}
   verticalRecoil: 15
   randomHorizontalRecoil: 5
+  recoilSmoothing: 0
   weaponXOffset: {fileID: 6952094429941880273}
   aimOffsetDistance: 0.3
   aimDownSightsSpeed: 15
@@ -876,6 +879,16 @@ MonoBehaviour:
   equipSound: {fileID: 8300000, guid: c1ad91e7b26d1a24182a83d37b810d93, type: 3}
   equipSoundVolume: 0.75
   bulletsPerShot: 7
+  recoilForceMultiplier: 1.25
+  recoilRestMultiplier: 1.5
+  pattern:
+  - {x: 0, y: 0}
+  - {x: 0.6, y: 0}
+  - {x: -0.6, y: 0}
+  - {x: 0.3, y: 0.5}
+  - {x: -0.3, y: -0.5}
+  - {x: 0.3, y: -0.5}
+  - {x: -0.3, y: 0.5}
 --- !u!114 &4326226359377163052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -912,6 +925,7 @@ MonoBehaviour:
   aimFireRandomSpread: {x: 0, y: 0}
   verticalRecoil: 0
   randomHorizontalRecoil: 0
+  recoilSmoothing: 1
   weaponXOffset: {fileID: 0}
   aimOffsetDistance: 0.3
   aimDownSightsSpeed: 15
@@ -970,6 +984,7 @@ MonoBehaviour:
   aimFireRandomSpread: {x: 0, y: 0}
   verticalRecoil: 0
   randomHorizontalRecoil: 0
+  recoilSmoothing: 1
   weaponXOffset: {fileID: 0}
   aimOffsetDistance: 0.3
   aimDownSightsSpeed: 15
