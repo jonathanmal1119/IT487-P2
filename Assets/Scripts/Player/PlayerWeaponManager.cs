@@ -3,6 +3,13 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum HitType
+{
+    Body,
+    Head,
+    Kill
+}
+
 [RequireComponent(typeof(PlayerLookControls))]
 public class PlayerWeaponManager : MonoBehaviour
 {
@@ -15,8 +22,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public Action? WeaponChanged;
     public Action? AmmoChanged;
-    public Action? OnHit;
-    public Action? OnKill;
+    public Action<HitType>? OnHit;
 
     PlayerHealth? playerHealth;
 

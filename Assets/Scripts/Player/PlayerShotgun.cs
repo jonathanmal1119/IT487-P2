@@ -66,7 +66,7 @@ public class PlayerShotgun : PlayerPistol
                 Vector2 deviatedPoint = point * Random.Range(1.25f, 0.75f); // add slight deviation so its not perfect
 
                 GameObject pb = Instantiate(bulletPrefab, bulletSpawnSource.position, bulletSpawnSource.rotation);
-                pb.transform.Rotate(deviatedPoint.x * EffectiveSpread.x * 2, deviatedPoint.y * EffectiveSpread.y * 2, 0f);
+                pb.transform.Rotate(deviatedPoint.y * EffectiveSpread.x * 2, deviatedPoint.x * EffectiveSpread.y * 2, 0f);
                 if (pb.GetComponent<PlayerBullet>() != null)
                     pb.GetComponent<PlayerBullet>().Owner = GetComponent<PlayerWeaponManager>();
 
