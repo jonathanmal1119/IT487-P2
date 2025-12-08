@@ -19563,7 +19563,7 @@ GameObject:
   - component: {fileID: 8803837993461274162}
   - component: {fileID: 6411843473914360616}
   m_Layer: 0
-  m_Name: Player Rocket Explosion
+  m_Name: RocketExplosion
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
