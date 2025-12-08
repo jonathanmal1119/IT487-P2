@@ -10,6 +10,7 @@ public class VehicleController : MonoBehaviour
     public InputActionReference move;
     public InputActionReference handbrake;
     public InputActionReference exit;
+    public InputActionReference flip;
 
     public float carPower = 1500f;
     public float brakeingPower = 3000f;
@@ -92,6 +93,7 @@ public class VehicleController : MonoBehaviour
         move.action.Enable();
         handbrake.action.Enable();
         exit.action.Enable();
+        if (flip) flip.action.Enable();
         if (handbrake) handbrake.action.Enable();
         carCamera.SetActive(true);
         isPlayerInCar = true;
@@ -103,7 +105,6 @@ public class VehicleController : MonoBehaviour
         // BUG WITH INPUT
         if (Keyboard.current.eKey.wasPressedThisFrame || isEngineDestroyed)
         {
-            ExplosionVFX.SetActive(true);
             Player.SetActive(true);
             Player.transform.position = transform.TransformPoint(new Vector3(3f, 1f, 0f));
             enabled = false;
@@ -122,6 +123,10 @@ public class VehicleController : MonoBehaviour
         {
             FlameVFX.SetActive(true);
         }
+        else if (engineHealth <= 0)
+        {
+            ExplosionVFX.SetActive(true);
+        }
         else
         {
             FlameVFX.SetActive(false);
@@ -135,7 +140,13 @@ public class VehicleController : MonoBehaviour
                 isPlayerInCar = true;
                 Player.transform.position = transform.position;
             }
-                
+
+        }
+
+        // Check for flip input
+        if (flip && flip.action.WasPressedThisFrame())
+        {
+            FlipCar();
         }
             
 
@@ -294,5 +305,31 @@ public class VehicleController : MonoBehaviour
     public bool CanGetHurtByCar()
     {
         return isPlayerInCar;
+    }
+
+    public void FlipCar()
+    {
+        if (rb == null) return;
+
+        // Check if car is already right side up
+        float upDot = Vector3.Dot(transform.up, Vector3.up);
+        
+        // If car is already upright (upDot > 0.7 means mostly upright), don't flip
+        if (upDot > 0.7f)
+        {
+            return;
+        }
+
+        // Car is flipped - set rotation to upright
+        Vector3 currentEuler = transform.eulerAngles;
+        Quaternion uprightRotation = Quaternion.Euler(0f, currentEuler.y, 0f);
+        
+        // Use Rigidbody methods to ensure physics respects the changes
+        rb.MoveRotation(uprightRotation);
+        rb.MovePosition(rb.position + Vector3.up);
+        
+        // Reset velocities to prevent immediate re-flipping
+        rb.angularVelocity = Vector3.zero;
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
     }
 }
