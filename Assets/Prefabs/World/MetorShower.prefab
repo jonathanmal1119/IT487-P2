@@ -77,6 +77,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7674876802035267311}
     m_Modifications:
+    - target: {fileID: 492516638571461066, guid: ae9bdcaa1a8496449b1068fd7844906c, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 492516638571461066, guid: ae9bdcaa1a8496449b1068fd7844906c, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3405538968963654794, guid: ae9bdcaa1a8496449b1068fd7844906c, type: 3}
       propertyPath: ColorModule.enabled
       value: 1
