@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using UnityEngine;
 
@@ -63,6 +64,8 @@ public class PlayerHealth : MonoBehaviour
         lastHitTime = Time.time;
 
         GetComponent<PlayerLookControls>().AddScreenShake(UnityEngine.Random.Range(4, 8), UnityEngine.Random.Range(-3, 3), 5);
+
+        GetComponent<PlayerScreenFX>().N()?.TookDamage();
 
         if (health <= 0)
         {

@@ -16,5 +16,12 @@ namespace Assets.Scripts
         public static float SineTime(float speed) => (Mathf.Sin(Time.time * (float)speed) + 1) / 2;
 
         public static Camera CurrentCamera => Camera.allCameras.First();
+
+        public static float Remap(this float value, float from1, float to1, float from2, float to2) => (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+        public static float Remap(this int value, float from1, float to1, float from2, float to2) => (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+        
+        public static float Clamp(this float value, float min, float max) => Mathf.Clamp(value, min, max);
+
+        public static float Invert(this float value) => 1 - value;
     }
 }
