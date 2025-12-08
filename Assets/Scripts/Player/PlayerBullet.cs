@@ -54,10 +54,7 @@ public class PlayerBullet : MonoBehaviour
             }
         }
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        OnTriggerEnter(collision.collider);
-    }
+    private void OnCollisionEnter(Collision collision) => OnTriggerEnter(collision.collider);
 
     public void DisableBullet()
     {
