@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fullscreen
+  m_Name: BloodSplatter
   m_Shader: {fileID: -6465566751694194690, guid: 1dcd4997ad63e2342a887b70a459c0e2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -38,9 +38,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _Noise: 0.5
-    - _Offset: 0.49999994
-    - _Opacity: 0.9999999
-    - _Power: 4.000001
+    - _Offset: 0.25
+    - _Opacity: 0
+    - _Power: 10
     m_Colors:
     - _Color: {r: 0.46226418, g: 0.032707367, b: 0.032707367, a: 1}
   m_BuildTextureStacks: []
