@@ -67,6 +67,9 @@ public class VehicleController : MonoBehaviour
     public GameObject rearLeftWheelPos;
     public GameObject rearRightWheelPos;
 
+    public GameObject FlameVFX;
+    public GameObject ExplosionVFX;
+
     Vector2 input = Vector2.zero;
 
     [Header("Player Refs")]
@@ -74,10 +77,6 @@ public class VehicleController : MonoBehaviour
     public GameObject carCamera;
 
     bool isEngineDestroyed = false;
-
-    [Header("UI Refs")]
-    public Text carHP;
-    public Text fuelLevelText;
 
     void Awake()
     {
@@ -104,6 +103,7 @@ public class VehicleController : MonoBehaviour
         // BUG WITH INPUT
         if (Keyboard.current.eKey.wasPressedThisFrame || isEngineDestroyed)
         {
+            ExplosionVFX.SetActive(true);
             Player.SetActive(true);
             Player.transform.position = transform.TransformPoint(new Vector3(3f, 1f, 0f));
             enabled = false;
@@ -116,6 +116,15 @@ public class VehicleController : MonoBehaviour
 
             isPlayerInCar = false;
             return;
+        }
+
+        if (engineHealth <= 25)
+        {
+            FlameVFX.SetActive(true);
+        }
+        else
+        {
+            FlameVFX.SetActive(false);
         }
 
         if (move)
@@ -207,6 +216,8 @@ public class VehicleController : MonoBehaviour
         UpdateWheelVisual(frontLeftWheelCollider, frontLeftWheelPos.transform);
         UpdateWheelVisual(rearLeftWheelCollider, rearLeftWheelPos.transform);
         UpdateWheelVisual(rearRightWheelCollider, rearRightWheelPos.transform);
+
+        
     }
 
     void UpdateWheelVisual(WheelCollider collider, Transform mesh)
