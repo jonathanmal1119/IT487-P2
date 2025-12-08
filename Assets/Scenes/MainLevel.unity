@@ -172455,6 +172455,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Death
       objectReference: {fileID: 0}
+    - target: {fileID: 7495325435072465705, guid: 123bafd39bb1b604dbdc4a3ae722d4e6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 7674876802035267311, guid: 123bafd39bb1b604dbdc4a3ae722d4e6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 739.7
