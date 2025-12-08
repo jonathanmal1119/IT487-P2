@@ -192,7 +192,7 @@ public class EnemyController : MonoBehaviour
         if (HealthSlider != null)
             HealthSlider.value = health;
 
-        HealthSlider.transform.LookAt(Player.transform.position);
+        HealthSlider?.transform.LookAt(Player.transform.position);
     }
     IEnumerator playSound()
     {
@@ -276,8 +276,8 @@ public class EnemyController : MonoBehaviour
             StartCoroutine(Death());
         }
 
-        if (!killed)
-            isHeadshot = false;
+        //if (!killed)
+            //isHeadshot = false;
         
         health -= Amt;
     }
@@ -306,15 +306,16 @@ public class EnemyController : MonoBehaviour
                 else
                 {
                     damage = bulletInfo.damage;
+                    isHeadshot = false;
                 }
 
                 TakeDamage(damage, out bool killed);
 
                 // show kill marker if hit was a kill, otherwise show hit marker if still alive
                 if (killed)
-                    bulletInfo?.Owner?.OnKill?.Invoke();
+                    bulletInfo?.Owner?.OnHit?.Invoke(HitType.Kill);
                 else if (!isDead)
-                    bulletInfo?.Owner?.OnHit?.Invoke();
+                    bulletInfo?.Owner?.OnHit?.Invoke(isHeadshot ? HitType.Head : HitType.Body);
             }
             else
             {
@@ -390,9 +391,9 @@ public class EnemyController : MonoBehaviour
 
                 // show kill marker if hit was a kill, otherwise show hit marker if still alive
                 if (killed)
-                    bulletInfo?.Owner?.OnKill?.Invoke();
+                    bulletInfo?.Owner?.OnHit?.Invoke(HitType.Kill);
                 else if (!isDead)
-                    bulletInfo?.Owner?.OnHit?.Invoke();
+                    bulletInfo?.Owner?.OnHit?.Invoke(isHeadshot ? HitType.Head : HitType.Body);
             }
             else
             {

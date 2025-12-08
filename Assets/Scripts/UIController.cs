@@ -1,6 +1,5 @@
 using Assets.Scripts;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -78,8 +77,7 @@ public class UIController : MonoBehaviour
         playerWeaponManager.WeaponChanged += WeaponUpdated;
         playerWeaponManager.AmmoChanged += WeaponUpdated;
         WeaponUpdated();
-        playerWeaponManager.OnHit += () => OnWeaponHit();
-        playerWeaponManager.OnKill += () => OnWeaponHit(true);
+        playerWeaponManager.OnHit += t => OnWeaponHit(t);
 
         crosshairUI = transform.Find("HUD/Crosshair").gameObject;
         CreateCrosshairLines();
@@ -226,7 +224,7 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void OnWeaponHit(bool killed = false)
+    private void OnWeaponHit(HitType hitType)
     {
         for (int i = 0; i < 4; i++)
         {
@@ -239,10 +237,14 @@ public class UIController : MonoBehaviour
             rectTransform.anchoredPosition = Vector2.zero;
 
             Image image = square.AddComponent<Image>();
-            if (killed)
+            if (hitType == HitType.Kill)
             {
                 rectTransform.sizeDelta = new Vector2(8.5f, 3.25f);
                 image.color = new(0.4f, 0.025f, 0.01f);
+            }
+            else if (hitType == HitType.Head)
+            {
+                image.color = new(0.4f, 0.3f, 0.01f);
             }
             else
             {
@@ -263,10 +265,14 @@ public class UIController : MonoBehaviour
             rectTransform.anchoredPosition = Vector2.zero;
 
             Image image = square.AddComponent<Image>();
-            if (killed)
+            if (hitType == HitType.Kill)
             {
                 rectTransform.sizeDelta = new Vector2(7.5f, 2.25f);
                 image.color = new(0.9f, 0.05f, 0.025f);
+            }
+            else if (hitType == HitType.Head)
+            {
+                image.color = new(1, 0.6f, 0.025f);
             }
             else
             {
