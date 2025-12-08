@@ -321,6 +321,7 @@ MonoBehaviour:
   bodyExplode: {fileID: 6638667040090049741}
   returningToStart: 0
   HeadshotEffect: {fileID: 8924261361647473477, guid: 6b3a4709b9c754c45aec02ba994e317b, type: 3}
+  DeathEffect: {fileID: 8924261361647473477, guid: 7a5d08131032d4744a80af2f7195f700, type: 3}
   isHeadshot: 0
   headshotSoundEffect: {fileID: 8300000, guid: 6ecd80f2439e5194588e884ed951b580, type: 3}
 --- !u!82 &-8059653910197611128
