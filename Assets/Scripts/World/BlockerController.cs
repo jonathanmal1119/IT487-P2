@@ -8,10 +8,10 @@ public class BlockerController : MonoBehaviour
 
     public void Explode()
     {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerObjectiveData>().ConsumeExplosive();
         Explosion.SetActive(true);
         ShowNextObj();
         Destroy(this.gameObject, 2);
-       
     }
 
     void ShowNextObj()
