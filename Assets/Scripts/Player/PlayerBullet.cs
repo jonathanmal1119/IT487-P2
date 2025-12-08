@@ -16,8 +16,6 @@ public class PlayerBullet : MonoBehaviour
 
     public bool waitingToDestroy = false;
 
-    public bool destroyImmediatelyOnGroundCollision = false;
-
     public PlayerWeaponManager? Owner { get; set; }
 
     void Start()
@@ -65,6 +63,9 @@ public class PlayerBullet : MonoBehaviour
         rb.isKinematic = false;
         rb.linearVelocity = Vector3.zero;
 
-        if (destroyImmediatelyOnGroundCollision) { Destroy(gameObject); }
+        foreach (MeshRenderer meshRenderer in GetComponentsInChildren<MeshRenderer>())
+            meshRenderer.enabled = false;
+        foreach (ParticleSystem particleSystem in GetComponentsInChildren<ParticleSystem>())
+            particleSystem.Stop();
     }
 }
