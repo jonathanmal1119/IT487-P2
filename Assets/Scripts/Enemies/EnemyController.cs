@@ -216,8 +216,14 @@ public class EnemyController : MonoBehaviour
         attacking = false;
     }
 
+    bool isDying = false;
+
     IEnumerator Death()
     {
+        // avoid dying "multiple" times
+        if (isDying) yield break;
+        isDying = true;
+
         // fix player collision with dead enemy
         if (TryGetComponent(out Collider collider))
             collider.excludeLayers = LayerMask.GetMask("Ignore Raycast"); 
