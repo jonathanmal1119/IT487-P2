@@ -79375,7 +79375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5268381875840687392, guid: 44fecb3efcce62b4db16a792d980ae93, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.78
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 5268381875840687392, guid: 44fecb3efcce62b4db16a792d980ae93, type: 3}
       propertyPath: m_LocalPosition.z
@@ -79383,19 +79383,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5268381875840687392, guid: 44fecb3efcce62b4db16a792d980ae93, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5268381875840687392, guid: 44fecb3efcce62b4db16a792d980ae93, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5268381875840687392, guid: 44fecb3efcce62b4db16a792d980ae93, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5268381875840687392, guid: 44fecb3efcce62b4db16a792d980ae93, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5268381875840687392, guid: 44fecb3efcce62b4db16a792d980ae93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -79407,7 +79407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5268381875840687392, guid: 44fecb3efcce62b4db16a792d980ae93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9214906340906940121, guid: 44fecb3efcce62b4db16a792d980ae93, type: 3}
       propertyPath: m_Name
@@ -151777,6 +151777,12 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 899047831}
+    - target: {fileID: 6144040883756037803, guid: 298f75550324364499136b4ab4edf1b2, type: 3}
+      propertyPath: m_text
+      value: 'Clear out the stops on Route 53 before the Metor Shower kills you!
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 7419431682084841540, guid: 298f75550324364499136b4ab4edf1b2, type: 3}
       propertyPath: m_IsActive
       value: 1

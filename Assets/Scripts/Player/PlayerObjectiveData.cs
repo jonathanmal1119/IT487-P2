@@ -9,4 +9,9 @@ public class PlayerObjectiveData : MonoBehaviour
     {
         hasExplosive = true;
     }
+
+    public void ConsumeExplosive()
+    {
+        hasExplosive = false;
+    }
 }

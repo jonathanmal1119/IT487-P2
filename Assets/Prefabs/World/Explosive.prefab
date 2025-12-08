@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8296203712660699146}
   - component: {fileID: 773023251071001277}
   - component: {fileID: 3771175514419044343}
+  - component: {fileID: -809037288097378801}
   m_Layer: 0
   m_Name: Explosive
   m_TagString: Collectible
@@ -68,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 69b6e8fa160b23c42a4052f818eb166c, type: 2}
+  - {fileID: 2100000, guid: c1eb50c585b286b4bbf3ad9b9f933ae7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -124,3 +125,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f5be945c5007545a89fad297692690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &-809037288097378801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7580810038495526054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 528b5811917d66141bf91a9f1b0d36b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RotateEffect
+  rotationRates: {x: 20, y: 90, z: 10}
