@@ -57,6 +57,7 @@ public class EnemyController : MonoBehaviour
     Vector3 Startpos;
 
     public GameObject HeadshotEffect;
+    public GameObject DeathEffect;
     public bool isHeadshot = false;
     public AudioClip headshotSoundEffect;
     void Start()
@@ -236,7 +237,11 @@ public class EnemyController : MonoBehaviour
         animator.runtimeAnimatorController = death;
         yield return new WaitForSeconds(0.8f);
         model.SetActive(false);
-        bodyExplode.SetActive(true);
+        if (collider != null)
+            collider.enabled = false;
+        if (TryGetComponent(out Rigidbody rb))
+            rb.useGravity = false;
+        Instantiate(DeathEffect, transform.position, transform.rotation);
         yield return new WaitForSeconds(1.5f);
         Destroy(this.gameObject);
     }
