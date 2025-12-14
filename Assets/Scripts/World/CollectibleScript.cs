@@ -7,6 +7,7 @@ public class CollectibleScript : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>().ShowExplosiveHUD();
             other.GetComponent<PlayerObjectiveData>().GiveExplosive();
         }
         Destroy(gameObject);
