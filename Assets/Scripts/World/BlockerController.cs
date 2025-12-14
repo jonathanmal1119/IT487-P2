@@ -12,6 +12,7 @@ public class BlockerController : MonoBehaviour
         Explosion.SetActive(true);
         ShowNextObj();
         Destroy(this.gameObject, 2);
+        GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>().HideExplosiveHUD();
     }
 
     void ShowNextObj()

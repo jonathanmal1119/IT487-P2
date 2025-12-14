@@ -473,6 +473,16 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void ShowExplosiveHUD()
+    {
+        transform.Find("HUD/ExplosiveHUD").gameObject.SetActive(true);
+    }
+
+    public void HideExplosiveHUD()
+    {
+        transform.Find("HUD/ExplosiveHUD").gameObject.SetActive(false);
+    }
+
     public void RestartGame()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLookControls>().enabled = true;
