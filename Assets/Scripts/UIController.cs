@@ -483,6 +483,17 @@ public class UIController : MonoBehaviour
         transform.Find("HUD/ExplosiveHUD").gameObject.SetActive(false);
     }
 
+    public void ShowWinScreen()
+    {
+        transform.Find("Win Screen").gameObject.SetActive(true);
+        Time.timeScale = 0f;
+        Player.GetComponent<PlayerLookControls>().enabled = false;
+        Player.GetComponent<PlayerWalkControls>().enabled = false;
+        Player.GetComponent<PlayerWeaponManager>().enabled = false;
+        Player.GetComponent<PlayerHealth>().enabled = false;
+        
+    }
+
     public void RestartGame()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLookControls>().enabled = true;

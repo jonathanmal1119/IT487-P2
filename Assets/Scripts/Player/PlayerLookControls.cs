@@ -133,7 +133,6 @@ public class PlayerLookControls : MonoBehaviour
             }
             else if (hit.collider.gameObject.CompareTag("Blocker"))
             {
-                Debug.LogError(this.gameObject.GetComponent<PlayerObjectiveData>().hasExplosive);
                 if (this.gameObject.GetComponent<PlayerObjectiveData>().hasExplosive)
                 {
                     BlockerController bc = hit.collider.gameObject.GetComponent<BlockerController>();
