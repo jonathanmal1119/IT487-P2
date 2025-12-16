@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4504554641958907322
 RectTransform:
   m_ObjectHideFlags: 0
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3609250815901152234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,12 +203,7 @@ MonoBehaviour:
   idle: {fileID: 9100000, guid: e5c689bb25e3a5b4dbeb4677f4810750, type: 2}
   aim: {fileID: 0}
   playerDetected: 0
-  drops:
-  - {fileID: 5142690500720088064, guid: c023411a557fd8445b843447f158e3dc, type: 3}
-  - {fileID: 5142690500720088064, guid: 2c8c40535e92d434d907ff97c5617e75, type: 3}
-  - {fileID: 8267886643902274698, guid: 207a8c19166fc7041bd6798a9ad0f42d, type: 3}
-  - {fileID: 5142690500720088064, guid: 25fcadcece360494687c53eab8f20b2f, type: 3}
-  - {fileID: 8267886643902274698, guid: 7a0ea627bec2de841965541d8eb87d13, type: 3}
+  drops: []
   HealthSlider: {fileID: 9203448561667999036}
   head: {fileID: 6462730728035444601}
   model: {fileID: 5256818421473741024}
@@ -717,8 +712,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8310093765954967641}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00012207031, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

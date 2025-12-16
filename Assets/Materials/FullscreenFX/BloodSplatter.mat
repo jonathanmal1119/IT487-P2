@@ -38,9 +38,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _Noise: 0.5
-    - _Offset: 0.25
-    - _Opacity: 0
-    - _Power: 10
+    - _Offset: 0.25000414
+    - _Opacity: 0.000027774016
+    - _Power: 9.999833
     m_Colors:
     - _Color: {r: 0.46226418, g: 0.032707367, b: 0.032707367, a: 1}
   m_BuildTextureStacks: []

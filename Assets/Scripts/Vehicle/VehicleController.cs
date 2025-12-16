@@ -234,13 +234,13 @@ public class VehicleController : MonoBehaviour
     void UpdateWheelVisual(WheelCollider collider, Transform mesh)
     {
         collider.GetWorldPose(out Vector3 pos, out Quaternion rot);
-        //mesh.position = pos;
+
         mesh.rotation = rot;
 
         mesh.localRotation = Quaternion.Euler(
             mesh.localRotation.eulerAngles.x,
             collider.steerAngle,
-            mesh.localRotation.eulerAngles.z
+            0
         );
     }
 

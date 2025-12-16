@@ -172,7 +172,7 @@ public class EnemyController : MonoBehaviour
             if (isPlayingSound == false && audio != null)
             {
                 isPlayingSound = true;
-                StartCoroutine(playSound());
+                //StartCoroutine(playSound());
             }
 
             /*if (rb.angularVelocity == new Vector3(0, 0, 0))
@@ -293,6 +293,16 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "Vehicle")
+        {
+            //if (!collision.gameObject.GetComponent<VehicleController>().isPlayerInCar)
+            //    return;
+
+            StartCoroutine(launchCorpse());
+            TakeDamage(1000, out _);
+
+        }
+
         if (collision.gameObject.tag == "Bullet")
         {
             playerDetected = true;
@@ -339,15 +349,6 @@ public class EnemyController : MonoBehaviour
                 bulletInfo.waitingToDestroy = true;
             }
         }
-
-        if (collision.gameObject.tag == "Vehicle")
-        {
-            if (!collision.gameObject.GetComponent<VehicleController>().isPlayerInCar)
-                return;
-
-            TakeDamage(100, out _);
-            StartCoroutine(launchCorpse());
-        }
     }
 
     IEnumerator launchCorpse()
@@ -386,6 +387,13 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Vehicle")
+        {
+
+            StartCoroutine(launchCorpse());
+            TakeDamage(1000, out _);
+
+        }
         if (other.gameObject.tag == "Bullet")
         {
             playerDetected = true;
