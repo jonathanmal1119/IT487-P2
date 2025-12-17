@@ -101,7 +101,10 @@ public class EnemyController : MonoBehaviour
 
                 rb.MovePosition(newPosition);
 
-                transform.LookAt(Player.transform.position);
+                Vector3 lookPos = Player.transform.position - transform.position;
+                lookPos.y = 0f; // remove vertical rotation
+                Quaternion targetRot = Quaternion.LookRotation(lookPos);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime * 10f);
             }
 
             if (Vector3.Distance(rb.position, Player.transform.position) <= attackRange && !attacking)
@@ -205,7 +208,7 @@ public class EnemyController : MonoBehaviour
 
     IEnumerator DamageCoroutine()
     {
-        while (Vector3.Distance(rb.position, Player.transform.position) <= attackRange)
+        while (Player.activeInHierarchy && Vector3.Distance(rb.position, Player.transform.position) <= attackRange)
         {
             Player.GetComponent<PlayerHealth>().TakeDamage(attackAmt);
             animator.runtimeAnimatorController = attack;

@@ -498,7 +498,7 @@ public class UIController : MonoBehaviour
 
     public void RestartGame()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLookControls>().enabled = true;
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerLookControls>().enabled = true;
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         SceneManager.LoadScene("MainMenu");
     }
