@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 773023251071001277}
   - component: {fileID: 3771175514419044343}
   - component: {fileID: -809037288097378801}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Explosive
-  m_TagString: Collectible
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

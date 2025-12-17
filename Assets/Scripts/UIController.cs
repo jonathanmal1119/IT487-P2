@@ -227,12 +227,14 @@ public class UIController : MonoBehaviour
             {
                 transform.Find("HUD").gameObject.SetActive(false);
                 transform.Find("Pause").gameObject.SetActive(true);
+                Time.timeScale = 0;
                 playerLookControls.EnableMouse = false;
             }
             else
             {
                 transform.Find("HUD").gameObject.SetActive(true);
                 transform.Find("Pause").gameObject.SetActive(false);
+                Time.timeScale = 1;
                 playerLookControls.EnableMouse = true;
             }
         }
