@@ -41,6 +41,8 @@ public class PlayerWalkControls : MonoBehaviour
 
     //public int DEBUGFRAMERATE = 60;
 
+    public GameObject player;
+
     private void Awake()
     {
         //I don't know how else to access the project-wide input actions. This is my punishment for not learning the new Input System sooner.
@@ -71,6 +73,16 @@ public class PlayerWalkControls : MonoBehaviour
     {
         if (playerHealth?.IsAlive == false)
             return;
+
+        if (transform.position.y <= -100)
+        {
+            controller.enabled = false;
+            transform.position = new Vector3(transform.position.x, 20f, transform.position.z);
+            controller.enabled = true;
+
+            moveVector = Vector3.zero;
+            Debug.Log("FALL");
+        }
 
         //Application.targetFrameRate = DEBUGFRAMERATE;
 

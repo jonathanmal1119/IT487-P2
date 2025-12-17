@@ -9,7 +9,7 @@ public class CollectibleScript : MonoBehaviour
         {
             GameObject.FindGameObjectWithTag("UI").GetComponent<UIController>().ShowExplosiveHUD();
             other.GetComponent<PlayerObjectiveData>().GiveExplosive();
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }

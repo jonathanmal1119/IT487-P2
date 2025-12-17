@@ -682,6 +682,7 @@ MonoBehaviour:
   runStaminaPerSecond: 0.35
   staminaRegenPerSecond: 0.25
   waitForRefill: 0
+  player: {fileID: 1879561572952579700}
 --- !u!114 &551630824124643667
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -284,9 +284,6 @@ public class EnemyController : MonoBehaviour
             isDead = true;
             StartCoroutine(Death());
         }
-
-        //if (!killed)
-            //isHeadshot = false;
         
         health -= Amt;
     }

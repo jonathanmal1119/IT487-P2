@@ -140,7 +140,6 @@ public class VehicleController : MonoBehaviour
                 isPlayerInCar = true;
                 Player.transform.position = transform.position;
             }
-
         }
 
         // Check for flip input
