@@ -74,7 +74,7 @@ public class PlayerWalkControls : MonoBehaviour
         if (playerHealth?.IsAlive == false)
             return;
 
-        if (transform.position.y <= -100)
+        if (transform.position.y <= -20)
         {
             controller.enabled = false;
             transform.position = new Vector3(transform.position.x, 20f, transform.position.z);

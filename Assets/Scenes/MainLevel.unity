@@ -5168,11 +5168,11 @@ MonoBehaviour:
     Use (Scroll Wheel) to switch Weapons
 
     Press
-    (F) to flip the car
+    (F) to flip the car, whilst in the car
 
 
-    Refuel and Repair at the Gas Stations on the yellow
-    pad.
+    Refuel and Repair at the Gas Stations
+    on the yellow pad.
 
     Zombies drop different Ammo, Health, and other items.'
   m_isRightToLeft: 0

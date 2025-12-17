@@ -4582,9 +4582,9 @@ MonoBehaviour:
   growl: {fileID: 0}
   animator: {fileID: 8198661182599702248}
   walk: {fileID: 9100000, guid: 8ef7e5141b2277b46b5847ecce8211c7, type: 2}
-  death: {fileID: 9100000, guid: 6882b6fda1ca307409d32a3839b91e64, type: 2}
+  death: {fileID: 9100000, guid: 22121a2e5a82f1448bf8666a59e9eac9, type: 2}
   attack: {fileID: 0}
-  takeDamage: {fileID: 9100000, guid: 2a72f32275c21e546843cd191be2679f, type: 2}
+  takeDamage: {fileID: 9100000, guid: 669040d3ff8496b4497b592d8f25c0dc, type: 2}
   idle: {fileID: 0}
   aim: {fileID: 9100000, guid: 7de0b35ee45306a418f0e38aa629d611, type: 2}
   playerDetected: 0
